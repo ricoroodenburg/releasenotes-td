@@ -2,33 +2,73 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <title>API Fetch Demo</title>
+  <title>TOPdesk Release Notes</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    #data { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
+    body { 
+      font-family: Arial; 
+      padding: 20px; 
+      background: #f7f7f7;
+    }
+    .release {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+    .release h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .meta {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>Weer in Amsterdam</h1>
-  <button onclick="loadData()">Haal Weer Op</button>
 
-  <div id="data">Nog geen data opgehaald...</div>
+  <h1>TOPdesk Release Notes</h1>
+  <button onclick="loadNotes()">Laad Release Notes</button>
+
+  <div id="output" style="margin-top: 20px;">Nog geen data geladen...</div>
 
   <script>
-    function loadData() {
-      fetch("https://api.open-meteo.com/v1/forecast?latitude=52.37&longitude=4.89&current_weather=true")
-        .then(response => response.json())
-        .then(json => {
-          document.getElementById("data").innerHTML = `
-            <strong>Temperatuur:</strong> ${json.current_weather.temperature}°C<br>
-            <strong>Wind:</strong> ${json.current_weather.windspeed} km/u<br>
-            <strong>Weercode:</strong> ${json.current_weather.weathercode}
-          `;
+    function loadNotes() {
+      const url = "https://releasenotes.topdesk.com/v1/releasenotes/releases";
+
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          const container = document.getElementById("output");
+
+          if (!data.notes || data.notes.length === 0) {
+            container.innerHTML = "Geen release notes gevonden.";
+            return;
+          }
+
+          container.innerHTML = ""; // leegmaken
+
+          data.notes.forEach(note => {
+            const html = `
+              <div class="release">
+                <h2>Release ${note.release}</h2>
+                <div class="meta">
+                  Datum: ${note.releaseDate} <br>
+                  Categorie: ${note.category} > ${note.subcategory}
+                </div>
+                <div>${note.descriptionHtml}</div>
+              </div>
+            `;
+            container.innerHTML += html;
+          });
         })
         .catch(err => {
-          document.getElementById("data").textContent = "Fout bij ophalen: " + err;
+          document.getElementById("output").textContent = "Fout bij laden: " + err;
         });
     }
   </script>
+
 </body>
 </html>
