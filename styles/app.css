@@ -982,13 +982,16 @@
 }
 
 .button.primary:hover:not(:disabled) {
-  	box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
+  	box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);	
+	border-color: var(--ds-color-border-primary-emphasis);
+	background-color: var(--ds-color-bg-default);
+	color: var(--ds-color-fg-primary-emphasis);
 }
 
 .button.primary:active:not(:disabled) {
-  background-color: var(--ds-color-bg-primary-default);
-  color: var(--ds-color-fg-primary-emphasis);
-  border-color: var(--ds-color-border-primary-emphasis);
+	background-color: var(--ds-color-bg-primary-default);
+	color: var(--ds-color-fg-primary-emphasis);
+	border-color: var(--ds-color-border-primary-emphasis);
 }
 
 .button.primary:disabled {
