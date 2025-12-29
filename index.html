@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TOPdesk Release Notes</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TOPdesk Release Notes</title>
+	
+	<!-- Syncfusion CSS -->
+	<link href="https://cdn.syncfusion.com/ej2/26.2.5/fluent2.css" rel="stylesheet">
+	
+	<!-- Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
 
-<!-- Syncfusion CSS -->
-<link href="https://cdn.syncfusion.com/ej2/26.2.5/fluent2.css" rel="stylesheet">
-
-<!-- Font -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-  
-<link href="./styles/app.css" rel="stylesheet">
- 
+	<!-- Stylesheet -->
+	<link href="./styles/app.css" rel="stylesheet">
 </head>
 <body>
-
 	<div class="header">
         <div class="header__container">
           <div class="header__navigation">
@@ -39,7 +38,6 @@
           </div>
         </div>
       </div>
-
 <div data-v-72cbc74f="" class="content">
 	<div id="grid"></div>
 </div>
@@ -52,84 +50,119 @@
 
 <!-- Syncfusion UMD bundle -->
 <script src="https://cdn.syncfusion.com/ej2/32.1.19/dist/ej2.min.js"></script>
-
 <script>
 
 	ej.base.registerLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXVVRmBeWUB0VkFWYEs=");
 
-  async function loadData() {
-    try {
-      const res = await fetch("https://topdesk-release-notes.r-roodenburg.workers.dev/");
-      const json = await res.json();
-      return json.notes.map(n => ({ ...n, releaseDate: new Date(n.releaseDate) }));
-    } catch(e) {
-      console.error("Failed to load data", e);
-      return [];
-    }
-  }
+  	async function loadData() {
+		try {
+	  		const res = await fetch("https://topdesk-release-notes.r-roodenburg.workers.dev/");
+	      	const json = await res.json();
+	      	return json.notes.map(n => ({ ...n, releaseDate: new Date(n.releaseDate) }));
+		} catch(e) {
+	  		console.error("Failed to load data", e);
+	      	return [];
+	    }
+	}
 
-  async function init() {
-    const data = await loadData();
-	
-	const toolbarOptions = [
-	  { text: 'Search', align: 'Left' },
-	  //{ text: 'Refresh', align: 'Right', tooltipText: 'Reload data', prefixIcon: 'e-refresh', id: 'refresh' }
-	];
-	
-	const filterSettings = {
-		type: 'Excel'
-	};
+  	async function init() {
+    	const data = await loadData();
+		const toolbarOptions = [
+	  		{ 
+				text: 'Search', align: 'Left' 
+			},
+		  //{ text: 'Refresh', align: 'Right', tooltipText: 'Reload data', prefixIcon: 'e-refresh', id: 'refresh' }
+		];
+		const filterSettings = {
+			type: 'Excel'
+		};
 
-    const grid = new ej.grids.Grid({
-      dataSource: data,
-      height: '100%',
-      allowPaging: true,
-      pageSettings: { pageSize: 10 },
-      allowSorting: true,
-	  allowMultiSorting: true,
-	  showColumnMenu: true,
-      allowFiltering: true,
-	  filterSettings: filterSettings,
-      allowGrouping: false,
-	  toolbar: toolbarOptions,
-      groupSettings: { columns: ['releaseDate'], showDropArea: true },
-		allowResizing: true,
-		allowReordering: true,
-      columns: [
-        { field: "release", headerText: "Release", width: 100 },
-        { field: "releaseDate", headerText: "Release Date", width: 140, type:'date', format:'yyyy-MM-dd' },
-        { field: "descriptionHtml", headerText: "Description", width: 350,
-          template: data => `<div style="white-space:normal;">${data.descriptionHtml}</div>` },
-        { field: "category", headerText: "Category", width:150 },
-        { field: "subcategory", headerText: "Subcategory", width:150 },
-        { headerText:"Source", width:100, template: data => {
-            if(data.source==="production") return `<span class="status-badge success">Feature</span>`;
-            if(data.source==="api") return `<span class="status-badge primary">API</span>`;
-            return "";
-        }},
-        { headerText:"Hosting", width:150, template: data => {
-            let html="";
-            if(data.hosting?.saas) html+= `<span class="status-badge success" style="margin-right:5px">SAAS</span>`;
-            if(data.hosting?.onpremisesvirtualappliance) html+= `<span class="status-badge danger">Virtual Appliance</span>`;
-            return html;
-        }, allowFiltering:false, allowSorting:false },
-        { field:"isTosNote", headerText:"TOS", width:80, template: data => {
-            return data.isTosNote ? `<span class="status-badge success">True</span>` : `<span class="status-badge danger">False</span>`;
-        }, visible:false}
-      ],
-	    rowDataBound: function(args) {
-        // Check je data object voor highlight
-        if(args.data.attentions?.highlight) {
-            // Voeg een class toe aan de hele row
-            args.row.classList.add('highlight-row');
-        }
-    }
-    });
-
-    grid.appendTo('#grid');
-  }
-
-  init();
+    	const grid = new ej.grids.Grid({
+			dataSource: data,
+			height: '100%',
+			allowPaging: true,
+			pageSettings: { pageSize: 10 },
+			allowSorting: true,
+			allowMultiSorting: true,
+			showColumnMenu: true,
+			allowFiltering: true,
+			filterSettings: filterSettings,
+			allowGrouping: false,
+			toolbar: toolbarOptions,
+			groupSettings: { columns: ['releaseDate'], showDropArea: true },
+			allowResizing: true,
+			allowReordering: true,
+	      	columns: [
+				{ 
+					field: "release", 
+					headerText: "Release", 
+					width: 100 
+				},
+        		{ 
+					field: "releaseDate", 
+					headerText: "Release Date", 
+					width: 140, 
+					type:'date', 
+					format:'yyyy-MM-dd' 
+				},
+        		{
+					field: "descriptionHtml", 
+					headerText: "Description", 
+					width: 350,
+					template: data => `<div style="white-space:normal;">${data.descriptionHtml}</div>` 
+				},
+        		{ 
+					field: "category", 
+					headerText: "Category", 
+					width:150 
+				},
+				{ 
+					field: "subcategory", 
+					headerText: "Subcategory", 
+					width:150 
+				},
+				{ 
+					headerText:"Source", 
+					width:100, 
+					template: data => {
+						if(data.source==="production") 
+							return `<span class="status-badge success">Feature</span>`;
+						if(data.source==="api") 
+							return `<span class="status-badge primary">API</span>`;
+						return "";
+					}
+				},
+				{ 
+					headerText:"Hosting", 
+					width:150, 
+					template: data => {
+						let html="";
+						if(data.hosting?.saas) html+= `<span class="status-badge success" style="margin-right:5px">SAAS</span>`;
+						if(data.hosting?.onpremisesvirtualappliance) html+= `<span class="status-badge danger">Virtual Appliance</span>`;
+						return html;
+					}, 
+					allowFiltering:false, 
+					allowSorting:false 
+				},
+				{ 
+					field:"isTosNote", 
+					headerText:"TOS", 
+					width:80, 
+					template: data => {
+						return data.isTosNote ? `<span class="status-badge success">True</span>` : `<span class="status-badge danger">False</span>`;
+					}, 
+					visible:false
+				}
+			],
+			rowDataBound: function(args) {
+        		if(args.data.attentions?.highlight) {
+		            args.row.classList.add('highlight-row');
+		        }
+			}
+		});
+		grid.appendTo('#grid');
+	}
+	init();
 </script>
 
 </body>
