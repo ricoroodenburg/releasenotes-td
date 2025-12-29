@@ -1049,7 +1049,9 @@
   filter: grayscale(50%);
   opacity: 0.5;
 }
-
+.highlight-row {
+    background-color: var(--ds-color-fg-attention-subtle);
+}
 
 </style>
 </head>
@@ -1072,7 +1074,7 @@
                   <span>TOPdesk Release Notes</span>
                 </h1>
               </slot>
-              <p class="header__text-body">Version  2512.01-beta</p>
+              <p class="header__text-body">Version 2512.01-beta</p>
             </div>
           </div>
           <div class="header__actions">
@@ -1147,8 +1149,8 @@
         { field: "category", headerText: "Category", width:150 },
         { field: "subcategory", headerText: "Subcategory", width:150 },
         { headerText:"Source", width:100, template: data => {
-            if(data.SourceTag==="Feature") return `<span class="status-badge success">Feature</span>`;
-            if(data.SourceTag==="API") return `<span class="status-badge primary">API</span>`;
+            if(data.source==="production") return `<span class="status-badge success">Feature</span>`;
+            if(data.source==="api") return `<span class="status-badge primary">API</span>`;
             return "";
         }},
         { headerText:"Hosting", width:150, template: data => {
@@ -1159,8 +1161,15 @@
         }, allowFiltering:false, allowSorting:false },
         { field:"isTosNote", headerText:"TOS", width:80, template: data => {
             return data.isTosNote ? `<span class="status-badge success">True</span>` : `<span class="status-badge danger">False</span>`;
-        }}
-      ]
+        }, visible:false}
+      ],
+	    rowDataBound: function(args) {
+        // Check je data object voor highlight
+        if(args.data.attentions?.highlight) {
+            // Voeg een class toe aan de hele row
+            args.row.classList.add('highlight-row');
+        }
+    }
     });
 
     grid.appendTo('#grid');
