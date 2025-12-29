@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TOPdesk Release Notes</title>
 
-<!-- Externe styling -->
+<!-- Externe styling 
 <link rel="stylesheet" href="https://developers.topdesk.com/odata_ui/assets/the-app-BMSxduOa.css">
 <link rel="stylesheet" href="https://developers.topdesk.com/odata_ui/assets/index-ByzTjbNn.css">
+-->
 
 <!-- Syncfusion CSS -->
 <link href="https://cdn.syncfusion.com/ej2/26.2.5/fluent2.css" rel="stylesheet">
@@ -19,27 +20,444 @@
   
   
 <style>
+:root {
+  --ds-color-fg-subtle: rgb(163, 163, 163);
+  --ds-color-fg-soft: rgb(111, 111, 111);
+  --ds-color-fg-muted: rgb(87, 87, 87);
+  --ds-color-fg-default: rgb(64, 64, 64);
+  --ds-color-bg-default: rgb(255, 255, 255);
+  --ds-color-bg-subtle: rgb(246, 246, 246);
+  --ds-color-bg-mild: rgb(232, 232, 232);
+  --ds-color-bg-soft: rgb(218, 218, 218);
+  --ds-color-bg-muted: rgb(163, 163, 163);
+  --ds-color-border-muted: rgb(218, 218, 218);
+  --ds-color-border-default: rgb(137, 137, 137);
+
+  /* Font */
+  --ds-color-fg-primary-subtle: rgb(236, 249, 252);
+  --ds-color-fg-primary-mild: rgb(202, 239, 247);
+  --ds-color-fg-primary-soft: rgb(174, 226, 238);
+  --ds-color-fg-primary-muted: rgb(62, 177, 203);
+  --ds-color-fg-primary-default: rgb(12, 121, 154);
+  --ds-color-fg-primary-emphasis: rgb(4, 70, 90);
+
+
+  --ds-color-bg-primary-default: rgb(236, 249, 252);
+  --ds-color-bg-primary-mild: rgb(202, 239, 247);
+  --ds-color-bg-primary-soft: rgb(174, 226, 238);
+  --ds-color-bg-primary-muted: rgb(62, 177, 203);
+  --ds-color-bg-primary-mid: rgb(12, 121, 154);
+  --ds-color-bg-primary-emphasis: rgb(4, 70, 90);
+  --ds-color-border-primary-subtle: rgb(236, 249, 252);
+  --ds-color-border-primary-mild: rgb(202, 239, 247);
+  --ds-color-border-primary-soft: rgb(174, 226, 238);
+  --ds-color-border-primary-muted: rgb(62, 177, 203);
+  --ds-color-border-primary-default: rgb(12, 121, 154);
+  --ds-color-border-primary-emphasis: rgb(4, 70, 90);
+  --ds-color-fg-success-subtle: rgb(239, 249, 242);
+  --ds-color-fg-success-mild: rgb(207, 240, 218);
+  --ds-color-fg-success-soft: rgb(177, 230, 198);
+  --ds-color-fg-success-muted: rgb(59, 183, 132);
+  --ds-color-fg-success-default: rgb(18, 126, 97);
+  --ds-color-fg-success-emphasis: rgb(6, 73, 55);
+  --ds-color-bg-success-default: rgb(239, 249, 242);
+  --ds-color-bg-success-mild: rgb(207, 240, 218);
+  --ds-color-bg-success-soft: rgb(177, 230, 198);
+  --ds-color-bg-success-muted: rgb(59, 183, 132);
+  --ds-color-bg-success-mid: rgb(18, 126, 97);
+  --ds-color-bg-success-emphasis: rgb(6, 73, 55);
+  --ds-color-border-success-subtle: rgb(239, 249, 242);
+  --ds-color-border-success-mild: rgb(207, 240, 218);
+  --ds-color-border-success-soft: rgb(177, 230, 198);
+  --ds-color-border-success-muted: rgb(59, 183, 132);
+  --ds-color-border-success-default: rgb(18, 126, 97);
+  --ds-color-border-success-emphasis: rgb(6, 73, 55);
+  --ds-color-fg-danger-subtle: rgb(253, 245, 245);
+  --ds-color-fg-danger-mild: rgb(250, 227, 227);
+  --ds-color-fg-danger-soft: rgb(247, 210, 210);
+  --ds-color-fg-danger-muted: rgb(251, 125, 126);
+  --ds-color-fg-danger-default: rgb(207, 51, 53);
+  --ds-color-fg-danger-emphasis: rgb(124, 27, 27);
+  --ds-color-bg-danger-default: rgb(253, 245, 245);
+  --ds-color-bg-danger-mild: rgb(250, 227, 227);
+  --ds-color-bg-danger-soft: rgb(247, 210, 210);
+  --ds-color-bg-danger-muted: rgb(251, 125, 126);
+  --ds-color-bg-danger-mid: rgb(207, 51, 53);
+  --ds-color-bg-danger-emphasis: rgb(124, 27, 27);
+  --ds-color-border-danger-subtle: rgb(253, 245, 245);
+  --ds-color-border-danger-mild: rgb(250, 227, 227);
+  --ds-color-border-danger-soft: rgb(247, 210, 210);
+  --ds-color-border-danger-muted: rgb(251, 125, 126);
+  --ds-color-border-danger-default: rgb(207, 51, 53);
+  --ds-color-border-danger-emphasis: rgb(124, 27, 27);
+  --ds-color-fg-warning-subtle: rgb(255, 245, 231);
+  --ds-color-fg-warning-mild: rgb(255, 228, 192);
+  --ds-color-fg-warning-soft: rgb(254, 211, 149);
+  --ds-color-fg-warning-muted: rgb(246, 133, 60);
+  --ds-color-fg-warning-default: rgb(184, 80, 17);
+  --ds-color-fg-warning-emphasis: rgb(111, 43, 1);
+  --ds-color-bg-warning-default: rgb(255, 245, 231);
+  --ds-color-bg-warning-mild: rgb(255, 228, 192);
+  --ds-color-bg-warning-soft: rgb(254, 211, 149);
+  --ds-color-bg-warning-muted: rgb(246, 133, 60);
+  --ds-color-bg-warning-mid: rgb(184, 80, 17);
+  --ds-color-bg-warning-emphasis: rgb(111, 43, 1);
+  --ds-color-border-warning-subtle: rgb(255, 245, 231);
+  --ds-color-border-warning-mild: rgb(255, 228, 192);
+  --ds-color-border-warning-soft: rgb(254, 211, 149);
+  --ds-color-border-warning-muted: rgb(246, 133, 60);
+  --ds-color-border-warning-default: rgb(184, 80, 17);
+  --ds-color-border-warning-emphasis: rgb(111, 43, 1);
+  --ds-color-fg-insight-subtle: rgb(251, 245, 248);
+  --ds-color-fg-insight-mild: rgb(244, 228, 236);
+  --ds-color-fg-insight-soft: rgb(236, 211, 223);
+  --ds-color-fg-insight-muted: rgb(196, 149, 184);
+  --ds-color-fg-insight-default: rgb(141, 97, 139);
+  --ds-color-fg-insight-emphasis: rgb(85, 51, 94);
+  --ds-color-bg-insight-default: rgb(251, 245, 248);
+  --ds-color-bg-insight-mild: rgb(244, 228, 236);
+  --ds-color-bg-insight-soft: rgb(236, 211, 223);
+  --ds-color-bg-insight-muted: rgb(196, 149, 184);
+  --ds-color-bg-insight-mid: rgb(141, 97, 139);
+  --ds-color-bg-insight-emphasis: rgb(85, 51, 94);
+  --ds-color-border-insight-subtle: rgb(251, 245, 248);
+  --ds-color-border-insight-mild: rgb(244, 228, 236);
+  --ds-color-border-insight-soft: rgb(236, 211, 223);
+  --ds-color-border-insight-muted: rgb(196, 149, 184);
+  --ds-color-border-insight-default: rgb(141, 97, 139);
+  --ds-color-border-insight-emphasis: rgb(85, 51, 94);
+  --ds-color-fg-attention-subtle: rgb(255, 247, 214);
+  --ds-color-fg-attention-mild: rgb(255, 232, 144);
+  --ds-color-fg-attention-soft: rgb(255, 215, 53);
+  --ds-color-fg-attention-muted: rgb(199, 158, 10);
+  --ds-color-fg-attention-default: rgb(137, 108, 9);
+  --ds-color-fg-attention-emphasis: rgb(79, 62, 4);
+  --ds-color-bg-attention-default: rgb(255, 247, 214);
+  --ds-color-bg-attention-mild: rgb(255, 232, 144);
+  --ds-color-bg-attention-soft: rgb(255, 215, 53);
+  --ds-color-bg-attention-muted: rgb(199, 158, 10);
+  --ds-color-bg-attention-mid: rgb(137, 108, 9);
+  --ds-color-bg-attention-emphasis: rgb(79, 62, 4);
+  --ds-color-border-attention-subtle: rgb(255, 247, 214);
+  --ds-color-border-attention-mild: rgb(255, 232, 144);
+  --ds-color-border-attention-soft: rgb(255, 215, 53);
+  --ds-color-border-attention-muted: rgb(199, 158, 10);
+  --ds-color-border-attention-default: rgb(137, 108, 9);
+  --ds-color-border-attention-emphasis: rgb(79, 62, 4);
+  --_ds-field-border-width-focus: 1px;
+  --ds-color-field-border: var(--ds-color-border-default, rgb(137, 137, 137));
+  --ds-color-field-bg: var(--ds-color-bg-default, rgb(255, 255, 255));
+  --ds-color-field-fg: var(--ds-color-fg-default, rgb(64, 64, 64));
+  --ds-color-field-outline-outer: var(--ds-color-border-primary-emphasis, rgb(4, 70, 90));
+  --ds-color-field-outline-inner: var(--ds-color-border-primary-soft, rgb(174, 226, 238));
+  --ds-color-field-border-focus: var(--ds-color-border-primary-emphasis, rgb(4, 70, 90));
+  --ds-color-field-button-fg: var(--ds-color-fg-default, rgb(64, 64, 64));
+  --ds-color-field-button-fg-hover: var(--ds-color-fg-primary-subtle, rgb(236, 249, 252));
+  --ds-color-field-button-bg-hover: var(--ds-color-bg-primary-mid, rgb(12, 121, 154));
+  --ds-color-field-icon-fg: var(--ds-color-fg-muted, rgb(87, 87, 87));
+  --ds-color-field-icon-fg-hover: var(--ds-color-fg-primary-subtle, rgb(236, 249, 252));
+  --ds-color-field-label-fg: var(--ds-color-fg-muted, rgb(87, 87, 87));
+  --ds-interactive-focus-ring-width: 4px;
+  --ds-interactive-outline-ring-width: 2px;
+  --ds-interactive-focus-outline-offset: 2px;
+  --ds-interactive-transition-timing-function: ease-in-out;
+  --ds-interactive-transition-hover-timing-function: ease-in-out;
+  --ds-layout-gap: calc(var(--ds-spacer-1x, 4px) * 4);
+  --ds-layout-padding: calc(var(--ds-spacer-1x, 4px) * 4);
+  --ds-layout-columns: 4;
+  --ds-layout-column-span: var(--ds-layout-columns, 4);
+  --ds-spacer-1x: 4px;
+  --ds-spacer-border: 1px;
+  --ds-spacer-1x-em: 0.25em;
+  --ds-spacer-radius-rounded: 9999px;
+  --ds-text-family-primary: Open Sans;
+  --ds-text-family-secondary: Bree Serif;
+  --ds-text-title-brand-font-size: 1.5rem;
+  --ds-text-title-brand-font-line-height: 1.6666666667;
+  --ds-text-title-1-font-size: 1.375rem;
+  --ds-text-title-1-font-line-height: 1.4545454545;
+  --ds-text-title-2-font-size: 1.25rem;
+  --ds-text-title-2-font-line-height: 1.6;
+  --ds-text-title-3-font-size: 1.125rem;
+  --ds-text-title-3-font-line-height: 1.3333333333;
+  --ds-text-title-4-font-size: 1rem;
+  --ds-text-paragraph-font-size: 1rem;
+  --ds-text-body-font-size: 1rem;
+  --ds-text-body-line-height: 1.5;
+  --ds-text-subtext-body-font-size: 0.875rem;
+  --ds-text-subtext-paragraph-font-size: 0.875rem;
+  --ds-text-subtext-line-height: 1.4285714286;
+  --ds-text-tag-font-size: 0.875rem;
+  --ds-text-tag-line-height: 1.1428571429;
+  --ds-link-fg-color: var(--ds-color-fg-primary-default, rgb(12, 121, 154));
+  --ds-link-bg-color: transparent;
+  --ds-link-text-decoration-color: var(--ds-link-fg-color, var(--ds-color-fg-primary-default, rgb(12, 121, 154)));
+  --ds-link-hover-fg-color: var(--ds-color-fg-primary-emphasis, rgb(4, 70, 90));
+  --ds-link-hover-text-decoration-color: var(--ds-color-fg-primary-soft, rgb(174, 226, 238));
+  --ds-link-focus-fg-color: var(--ds-color-fg-primary-subtle, rgb(236, 249, 252));
+  --ds-link-focus-bg-color: var(--ds-color-bg-primary-mid, rgb(12, 121, 154));
+  --ds-link-focus-text-decoration-color: var(--ds-color-fg-primary-emphasis, rgb(4, 70, 90));
+  --ds-link-text-decoration: underline;
+  --ds-link-text-decoration-thickness: var(--ds-spacer-border, 1px);
+  --ds-color-option-checkbox-bg: var(--ds-color-bg-primary-emphasis, rgb(4, 70, 90));
+  --ds-color-option-checkbox-border: var(--ds-color-bg-primary-emphasis, rgb(4, 70, 90));
+  --_ds-button-group-child-min-height: 36px;
+  --_ds-button-group-child-min-width: 36px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ds-color-fg-subtle: rgb(180, 180, 180);
+    --ds-color-fg-soft: rgb(200, 200, 200);
+    --ds-color-fg-muted: rgb(215, 215, 215);
+    --ds-color-fg-default: rgb(240, 240, 240);
+
+    --ds-color-bg-default: rgb(36, 36, 36);
+    --ds-color-bg-subtle: rgb(28, 28, 28);
+    --ds-color-bg-mild: rgb(36, 36, 36);
+    --ds-color-bg-soft: rgb(48, 48, 48);
+    --ds-color-bg-muted: rgb(80, 80, 80);
+
+    --ds-color-border-muted: rgb(60, 60, 60);
+    --ds-color-border-default: rgb(100, 100, 100);
+
+    /* Primary */
+    --ds-color-fg-primary-subtle: rgb(236, 249, 252);
+    --ds-color-fg-primary-mild: rgb(202, 239, 247);
+    --ds-color-fg-primary-soft: rgb(174, 226, 238);
+    --ds-color-fg-primary-muted: rgb(62, 177, 203);
+    --ds-color-fg-primary-default: rgb(12, 121, 154);
+    --ds-color-fg-primary-emphasis: rgb(236, 249, 252);
+
+    --ds-color-bg-primary-default: rgb(4, 70, 90);
+    --ds-color-bg-primary-mild: rgb(202, 239, 247);
+    --ds-color-bg-primary-soft: rgb(174, 226, 238);
+    --ds-color-bg-primary-muted: rgb(62, 177, 203);
+    --ds-color-bg-primary-mid: rgb(12, 121, 154);
+    --ds-color-bg-primary-emphasis: rgb(4, 70, 90);
+
+    --ds-color-border-primary-subtle: rgb(236, 249, 252);
+    --ds-color-border-primary-mild: rgb(202, 239, 247);
+    --ds-color-border-primary-soft: rgb(174, 226, 238);
+    --ds-color-border-primary-muted: rgb(62, 177, 203);
+    --ds-color-border-primary-default: rgb(12, 121, 154);
+    --ds-color-border-primary-emphasis: rgb(236, 249, 252);
+
+    /* Success */
+    --ds-color-fg-success-subtle: rgb(31, 42, 38);
+    --ds-color-fg-success-mild: rgb(207, 240, 218);
+    --ds-color-fg-success-soft: rgb(177, 230, 198);
+    --ds-color-fg-success-muted: rgb(59, 183, 132);
+    --ds-color-fg-success-default: rgb(18, 126, 97);
+    --ds-color-fg-success-emphasis: rgb(170, 235, 210);
+
+    --ds-color-bg-success-default: rgb(31, 42, 38);
+    --ds-color-bg-success-mild: rgb(207, 240, 218);
+    --ds-color-bg-success-soft: rgb(177, 230, 198);
+    --ds-color-bg-success-muted: rgb(59, 183, 132);
+    --ds-color-bg-success-mid: rgb(18, 126, 97);
+    --ds-color-bg-success-emphasis: rgb(170, 235, 210);
+
+    --ds-color-border-success-subtle: rgb(31, 42, 38);
+    --ds-color-border-success-mild: rgb(207, 240, 218);
+    --ds-color-border-success-soft: rgb(177, 230, 198);
+    --ds-color-border-success-muted: rgb(59, 183, 132);
+    --ds-color-border-success-default: rgb(18, 126, 97);
+    --ds-color-border-success-emphasis: rgb(170, 235, 210);
+
+    /* Danger */
+    --ds-color-fg-danger-subtle: rgb(50, 20, 20);
+    --ds-color-fg-danger-mild: rgb(90, 40, 40);
+    --ds-color-fg-danger-soft: rgb(140, 50, 50);
+    --ds-color-fg-danger-muted: rgb(251, 125, 126);
+    --ds-color-fg-danger-default: rgb(247, 210, 210);
+    --ds-color-fg-danger-emphasis: rgb(255, 245, 245);
+
+    --ds-color-bg-danger-default: rgb(50, 20, 20);
+    --ds-color-bg-danger-mild: rgb(90, 40, 40);
+    --ds-color-bg-danger-soft: rgb(140, 50, 50);
+    --ds-color-bg-danger-muted: rgb(251, 125, 126);
+    --ds-color-bg-danger-mid: rgb(247, 210, 210);
+    --ds-color-bg-danger-emphasis: rgb(255, 245, 245);
+
+    --ds-color-border-danger-subtle: rgb(140, 50, 50);
+    --ds-color-border-danger-mild: rgb(251, 125, 126);
+    --ds-color-border-danger-soft: rgb(247, 210, 210);
+    --ds-color-border-danger-muted: rgb(250, 227, 227);
+    --ds-color-border-danger-default: rgb(253, 245, 245);
+    --ds-color-border-danger-emphasis: rgb(255, 255, 255);
+
+    /* Warning, Insight, Attention — zelfde principe: tint behouden, basis donker, accenten lichter */
+    --ds-color-fg-warning-subtle: rgb(45, 32, 20);
+    --ds-color-fg-warning-mild: rgb(79, 51, 25);
+    --ds-color-fg-warning-soft: rgb(122, 69, 17);
+    --ds-color-fg-warning-muted: rgb(194, 115, 40);
+    --ds-color-fg-warning-default: rgb(255, 153, 0);
+    --ds-color-fg-warning-emphasis: rgb(255, 190, 87);
+
+    --ds-color-bg-warning-default: rgb(45, 32, 20);
+    --ds-color-bg-warning-mild: rgb(79, 51, 25);
+    --ds-color-bg-warning-soft: rgb(122, 69, 17);
+    --ds-color-bg-warning-muted: rgb(194, 115, 40);
+    --ds-color-bg-warning-mid: rgb(255, 153, 0);
+    --ds-color-bg-warning-emphasis: rgb(255, 190, 87);
+
+    --ds-color-border-warning-subtle: rgb(45, 32, 20);
+    --ds-color-border-warning-mild: rgb(79, 51, 25);
+    --ds-color-border-warning-soft: rgb(122, 69, 17);
+    --ds-color-border-warning-muted: rgb(194, 115, 40);
+    --ds-color-border-warning-default: rgb(255, 153, 0);
+    --ds-color-border-warning-emphasis: rgb(255, 190, 87);
+
+    --ds-color-fg-insight-subtle: rgb(36, 29, 35);
+    --ds-color-fg-insight-mild: rgb(53, 36, 51);
+    --ds-color-fg-insight-soft: rgb(82, 52, 78);
+    --ds-color-fg-insight-muted: rgb(140, 97, 133);
+    --ds-color-fg-insight-default: rgb(193, 143, 184);
+    --ds-color-fg-insight-emphasis: rgb(231, 193, 222);
+
+    --ds-color-bg-insight-default: rgb(36, 29, 35);
+    --ds-color-bg-insight-mild: rgb(53, 36, 51);
+    --ds-color-bg-insight-soft: rgb(82, 52, 78);
+    --ds-color-bg-insight-muted: rgb(140, 97, 133);
+    --ds-color-bg-insight-mid: rgb(193, 143, 184);
+    --ds-color-bg-insight-emphasis: rgb(231, 193, 222);
+
+    --ds-color-border-insight-subtle: rgb(36, 29, 35);
+    --ds-color-border-insight-mild: rgb(53, 36, 51);
+    --ds-color-border-insight-soft: rgb(82, 52, 78);
+    --ds-color-border-insight-muted: rgb(140, 97, 133);
+    --ds-color-border-insight-default: rgb(193, 143, 184);
+    --ds-color-border-insight-emphasis: rgb(231, 193, 222);
+
+    --ds-color-fg-attention-subtle: rgb(38, 34, 18);
+    --ds-color-fg-attention-mild: rgb(81, 61, 11);
+    --ds-color-fg-attention-soft: rgb(127, 96, 6);
+    --ds-color-fg-attention-muted: rgb(186, 144, 5);
+    --ds-color-fg-attention-default: rgb(238, 193, 37);
+    --ds-color-fg-attention-emphasis: rgb(255, 224, 105);
+
+    --ds-color-bg-attention-default: rgb(38, 34, 18);
+    --ds-color-bg-attention-mild: rgb(81, 61, 11);
+    --ds-color-bg-attention-soft: rgb(127, 96, 6);
+    --ds-color-bg-attention-muted: rgb(186, 144, 5);
+    --ds-color-bg-attention-mid: rgb(238, 193, 37);
+    --ds-color-bg-attention-emphasis: rgb(255, 224, 105);
+
+    --ds-color-border-attention-subtle: rgb(38, 34, 18);
+    --ds-color-border-attention-mild: rgb(81, 61, 11);
+    --ds-color-border-attention-soft: rgb(127, 96, 6);
+    --ds-color-border-attention-muted: rgb(186, 144, 5);
+    --ds-color-border-attention-default: rgb(238, 193, 37);
+    --ds-color-border-attention-emphasis: rgb(255, 224, 105);
+
+
+    /* Veldspecifiek */
+    --ds-color-field-border: var(--ds-color-border-default);
+    --ds-color-field-bg: var(--ds-color-bg-soft);
+    --ds-color-field-fg: var(--ds-color-fg-default);
+    --ds-color-field-outline-outer: var(--ds-color-border-primary-default);
+    --ds-color-field-outline-inner: var(--ds-color-border-primary-soft);
+    --ds-color-field-border-focus: var(--ds-color-border-primary-emphasis);
+    --ds-color-field-button-fg: var(--ds-color-fg-default);
+    --ds-color-field-button-fg-hover: var(--ds-color-fg-primary-subtle);
+    --ds-color-field-button-bg-hover: var(--ds-color-bg-primary-mid);
+    --ds-color-field-icon-fg: var(--ds-color-fg-muted);
+    --ds-color-field-icon-fg-hover: var(--ds-color-fg-primary-subtle);
+    --ds-color-field-label-fg: var(--ds-color-fg-muted);
+
+    /* Link */
+    --ds-link-fg-color: var(--ds-color-fg-primary-default);
+    --ds-link-bg-color: transparent;
+    --ds-link-text-decoration-color: var(--ds-link-fg-color);
+    --ds-link-hover-fg-color: var(--ds-color-fg-primary-emphasis);
+    --ds-link-hover-text-decoration-color: var(--ds-color-fg-primary-soft);
+    --ds-link-focus-fg-color: var(--ds-color-fg-primary-subtle);
+    --ds-link-focus-bg-color: var(--ds-color-bg-primary-mid);
+    --ds-link-focus-text-decoration-color: var(--ds-color-fg-primary-emphasis);
+
+  }
+}
+
 
   html, body {
     height: 100%;
     margin: 0;
     font-family: "Segoe UI", sans-serif;
-    background: #f8f8f8;
+	background-color: var(--ds-color-bg-default);
   }
   body {
     display: flex;
     flex-direction: column;
   }
 
-  .header {
-    padding:16px;
-    background:#fff;
-    border-bottom:1px solid #e1dfdd;
-    flex: 0 0 auto;
-  }
-  .header__main-title { margin:0; font-size:1.8rem; font-weight:600; }
-  .header__description { margin:4px 0 0; color:#555; }
 
+/* Header en footer vaste hoogte, full width */
+.header {
+  display: grid;
+  padding: var(--_ds-page-header-padding, calc(var(--ds-spacer-1x) * 4));
+  background-color: var(--ds-color-bg-subtle);
+  border-bottom: 1px solid var(--ds-color-border-default);
+
+}
+
+.header__navigation {
+  display: flex;
+  gap: calc(var(--ds-spacer-1x) * 2);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.header__text {
+  color: var(--ds-color-fg-muted);
+
+}
+
+.header__text-title {
+  font-size: var(--ds-text-title-1-font-size) !important;
+  font-weight: 700;
+  line-height: var(--ds-text-title-1-font-line-height);
+  font-family: var(--ds-text-family-primary), Roboto, Helvetica, sans-serif;
+  margin-block-start: 0px !important;
+
+}
+
+.header__text-body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.header__actions {
+  flex: 1 1 0px;
+  flex-wrap: nowrap;
+  max-width: max-content;
+  min-width: auto;
+  display: flex;
+  flex-shrink: 1;
+  align-items: center;
+  gap: calc(var(--ds-spacer-1x, 4px) * 2);
+  white-space: nowrap;
+}
+
+.header__container {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-between;
+  align-items: center;
+  /* Optioneel, maar helpt vaak bij verticale uitlijning */
+}
+
+/* Content rechts naast sidebar, flex-grow en scroll */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 25px;
+  padding-right: 25px;
+  padding-left: 25px;
+  padding-bottom: 0px;
+  min-width: 0;
+  /* voorkomt horizontale scrollbar door flex */
+}
 
   .table-container {
     flex: 1 1 auto; /* neemt alle resterende ruimte */
@@ -153,6 +571,7 @@
   border-left: var(--ds-spacer-1x) solid var(--ds-color-border-primary-emphasis) !important;
 
 }
+
 
 .e-dropdownbase .e-list-item {
   border-left: var(--ds-spacer-1x) solid transparent !important;
@@ -428,6 +847,8 @@
   background-color: var(--ds-color-bg-default) !important;
 }
 
+
+
 .e-footer-content {
   background-color: var(--ds-color-bg-default) !important;
 }
@@ -565,8 +986,10 @@
   color: var(--ds-color-fg-default) !important;
 }
 
-.e-contextmenu-wrapper ul .e-menu-item.e-focused {
+.e-contextmenu-wrapper ul .e-menu-item.e-focused,
+.e-contextmenu-wrapper ul .e-menu-item.e-selected {
   background-color: var(--ds-color-bg-primary-default) !important;
+  color:  var(--ds-color-fg-default) !important;
 }
 
 .e-contextmenu-wrapper ul {
@@ -591,17 +1014,77 @@
   align-content: center;
 }
 
+.e-checkbox-wrapper .e-label, .e-css.e-checkbox-wrapper .e-label {
+	color: var(--ds-color-fg-default) !important;
+}
+
+
+/* Button Primary */
+.button.primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--ds-color-bg-default);
+  color: var(--ds-color-fg-default);
+  border: var(--ds-spacer-border) solid var(--ds-color-border-default);
+  height: 36px;
+  border-radius: var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x) * 2));
+  min-width: var(--_ds-button-group-child-min-width);
+  max-height: var(--_ds-button-group-child-min-height);
+}
+
+.button.primary:hover:not(:disabled) {
+  box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
+}
+
+.button.primary:active:not(:disabled) {
+  background-color: var(--ds-color-bg-primary-default);
+  color: var(--ds-color-fg-primary-emphasis);
+  border-color: var(--ds-color-border-primary-emphasis);
+}
+
+.button.primary:disabled {
+  cursor: not-allowed;
+  background-color: rgb(218, 218, 218);
+  filter: grayscale(50%);
+  opacity: 0.5;
+}
+
+
 </style>
 </head>
 <body>
 
+<!--
 <div data-v-6cef0fad="" data-v-72cbc74f="" class="header__content" data-testid="header-content">
   <h1 data-v-6cef0fad="" class="header__main-title" data-testid="main-title">TOPdesk Release Notes</h1>
   <p data-v-6cef0fad="" class="header__description" data-testid="description">Version 2512.01-beta</p>
 </div>
+-->
 
+	<div class="header">
+        <div class="header__container">
+          <div class="header__navigation">
+            <slot name="navigation"></slot>
+            <div class="header__text">
+              <slot name="header">
+                <h1 class="header__text-title">
+                  <span>TOPdesk Release Notes</span>
+                </h1>
+              </slot>
+              <p class="header__text-body">Version  2512.01-beta</p>
+            </div>
+          </div>
+          <div class="header__actions">
+            <!--<button onClick={openAboutModal} class="button primary">
+              About
+            </button>
+			-->
+          </div>
+        </div>
+      </div>
 
-<div data-v-72cbc74f="" class="table-container">
+<div data-v-72cbc74f="" class="content">
 	<div id="grid"></div>
 </div>
 
@@ -634,7 +1117,7 @@
 	
 	const toolbarOptions = [
 	  { text: 'Search', align: 'Left' },
-	  { text: 'Refresh', align: 'Right', tooltipText: 'Reload data', prefixIcon: 'e-refresh', id: 'refresh' }
+	  //{ text: 'Refresh', align: 'Right', tooltipText: 'Reload data', prefixIcon: 'e-refresh', id: 'refresh' }
 	];
 	
 	const filterSettings = {
