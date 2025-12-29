@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TOPdesk Release Notes Viewer</title>
 
+  <!-- Fluent UI styling (CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/office-ui-fabric-core/11.0.0/css/fabric.min.css" integrity="sha512-+RmQ6VNRDmQp/YuO8f7hJ6nV9EEmH2/pnH1XlfqV32DBD0TVlGxUOlD1DW/s5nC5Gd29xk0/rpXc3iK9MQcLg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <!-- Syncfusion CSS & JS -->
   <link href="https://cdn.syncfusion.com/ej2/26.2.5/material.css" rel="stylesheet">
   <script src="https://cdn.syncfusion.com/ej2/26.2.5/dist/ej2.min.js"></script>
@@ -17,28 +20,28 @@
   <style>
     :root {
       --bg: #ffffff;
-      --bg-alt: #f2f2f2;
-      --text: #222;
-      --card-bg: #fff;
-      --card-border: #ddd;
+      --bg-alt: #f3f2f1;
+      --text: #212121;
+      --card-bg: #ffffff;
+      --card-border: #e1dfdd;
     }
 
     [data-theme="dark"] {
-      --bg: #1e1e1e;
-      --bg-alt: #2a2a2a;
+      --bg: #1b1b1b;
+      --bg-alt: #252525;
       --text: #e7e7e7;
-      --card-bg: #2a2a2a;
-      --card-border: #444;
+      --card-bg: #252525;
+      --card-border: #3a3a3a;
     }
 
     body {
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font-family: system-ui, sans-serif;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* NAVBAR */
+    /* Navbar */
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -50,13 +53,17 @@
       z-index: 1000;
     }
 
+    .navbar button {
+      margin-right: 6px;
+    }
+
     button {
-      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
       border: 1px solid var(--card-border);
+      padding: 6px 10px;
       background: var(--bg);
       color: var(--text);
-      cursor: pointer;
-      border-radius: 6px;
     }
 
     button:hover {
@@ -68,9 +75,10 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(3px);
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(2px);
       z-index: 2000;
+      display: flex;
       align-items: center;
       justify-content: center;
       color: white;
@@ -79,46 +87,50 @@
     }
 
     /* Views */
-    #gridView,
-    #tilesView,
-    #detailsView,
-    #calendarView {
+    .view {
       display: none;
       padding: 16px;
     }
 
-    /* Tiles layout */
+    /* Tiles */
     #tilesView {
       display: grid;
       gap: 16px;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     }
 
     .tile {
       border: 1px solid var(--card-border);
       padding: 16px;
-      border-radius: 8px;
+      border-radius: 6px;
       background: var(--card-bg);
+    }
+
+    /* Details */
+    #detailsView .detail-card {
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 16px;
+      padding-bottom: 16px;
     }
 
     /* Calendar placeholder */
     #calendarView {
-      min-height: 350px;
+      min-height: 400px;
       border: 2px dashed var(--card-border);
-      border-radius: 8px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 20px;
+      color: var(--text);
     }
   </style>
 </head>
-
 <body>
 
-  <!-- LOADING -->
   <div id="loading">⏳ Loading...</div>
 
-  <!-- NAVIGATION -->
+  <!-- NAVBAR -->
   <div class="navbar">
     <div>
       <button onclick="setView('grid')">📊 Grid</button>
@@ -126,137 +138,119 @@
       <button onclick="setView('details')">📄 Details</button>
       <button onclick="setView('calendar')">📅 Calendar</button>
     </div>
-
     <div>
       <button onclick="toggleTheme()">🌓</button>
     </div>
   </div>
 
   <!-- VIEWS -->
-  <div id="gridView"></div>
-  <div id="tilesView"></div>
-  <div id="detailsView"></div>
-  <div id="calendarView">📅 Kalenderweergave komt hier</div>
+  <div id="gridView" class="view"></div>
+  <div id="tilesView" class="view"></div>
+  <div id="detailsView" class="view"></div>
+  <div id="calendarView" class="view">📅 Calendar placeholder</div>
 
   <script>
     let releaseData = [];
+    let renderedViews = {};
 
-    /* -------------------------
-         THEME SWITCHER
-    --------------------------*/
+    // THEME
     function toggleTheme() {
       const root = document.documentElement;
-      const theme = root.getAttribute("data-theme");
-      root.setAttribute("data-theme", theme === "light" ? "dark" : "light");
+      root.setAttribute("data-theme", root.getAttribute("data-theme")==='light'?'dark':'light');
     }
 
-    /* -------------------------
-         LOADING OVERLAY
-    --------------------------*/
-    function showLoading() { 
-      document.getElementById("loading").style.display = "flex"; 
-    }
-    function hideLoading() { 
-      document.getElementById("loading").style.display = "none"; 
+    // LOADING
+    function showLoading(){document.getElementById("loading").style.display="flex";}
+    function hideLoading(){document.getElementById("loading").style.display="none";}
+
+    // VIEW SWITCHER
+    function setView(view){
+      ['gridView','tilesView','detailsView','calendarView'].forEach(v=>document.getElementById(v).style.display='none');
+      if(view==='grid') document.getElementById('gridView').style.display='block';
+      if(view==='tiles') document.getElementById('tilesView').style.display='grid';
+      if(view==='details') document.getElementById('detailsView').style.display='block';
+      if(view==='calendar') document.getElementById('calendarView').style.display='flex';
+
+      // Lazy render views once
+      if(!renderedViews[view]){
+        if(view==='grid') renderGrid();
+        if(view==='tiles') renderTiles();
+        if(view==='details') renderDetails();
+        renderedViews[view]=true;
+      }
     }
 
-    /* -------------------------
-         FETCH DATA FROM WORKER
-    --------------------------*/
-    async function loadData() {
+    // FETCH DATA
+    async function loadData(){
       showLoading();
-      
       const res = await fetch("https://topdesk-release-notes.r-roodenburg.workers.dev/");
       const json = await res.json();
-
       releaseData = json.notes;
-
       hideLoading();
-
-      renderGrid();
-      renderTiles();
-      renderDetails();
+      setView('grid');
     }
 
-    /* -------------------------
-         VIEW SWITCHER
-    --------------------------*/
-    function setView(view) {
-      document.getElementById("gridView").style.display = "none";
-      document.getElementById("tilesView").style.display = "none";
-      document.getElementById("detailsView").style.display = "none";
-      document.getElementById("calendarView").style.display = "none";
-
-      if (view === "grid") document.getElementById("gridView").style.display = "block";
-      if (view === "tiles") document.getElementById("tilesView").style.display = "grid";
-      if (view === "details") document.getElementById("detailsView").style.display = "block";
-      if (view === "calendar") document.getElementById("calendarView").style.display = "flex";
+    // VIRTUALIZED BATCH RENDERING
+    function batchRender(container, items, renderFn, batchSize=50){
+      let index=0;
+      function renderBatch(){
+        const frag=document.createDocumentFragment();
+        for(let i=0;i<batchSize && index<items.length;i++,index++){
+          frag.appendChild(renderFn(items[index]));
+        }
+        container.appendChild(frag);
+        if(index<items.length) requestIdleCallback(renderBatch);
+      }
+      renderBatch();
     }
 
-    /* -------------------------
-         SYNCFUSION GRID
-    --------------------------*/
-    function renderGrid() {
-      document.getElementById("gridView").innerHTML = "";
-
+    // GRID
+    function renderGrid(){
       const grid = new ej.grids.Grid({
         dataSource: releaseData,
-        allowPaging: true,
-        allowSorting: true,
-        allowFiltering: true,
-        allowGrouping: true,
-        groupSettings: { columns: ['releaseDate'] },
-        height: "650",
-        columns: [
-          { field: "releaseDate", headerText: "Datum", width: 150 },
-          { field: "release", headerText: "Release", width: 150 },
-          { field: "category", headerText: "Categorie", width: 200 },
-          { field: "subcategory", headerText: "Subcategorie", width: 200 }
-        ]
+        allowPaging:true,
+        allowSorting:true,
+        allowFiltering:true,
+        allowGrouping:true,
+        groupSettings:{columns:['releaseDate']},
+        height:650,
+        columns:[
+          { field:"releaseDate", headerText:"Datum", width:150, type:'date', format:'yyyy-MM-dd' },
+          { field:"release", headerText:"Release", width:150 },
+          { field:"category", headerText:"Categorie", width:200 },
+          { field:"subcategory", headerText:"Subcategorie", width:200 },
+          { field:"descriptionHtml", headerText:"Description", width:400, template: "<div>${descriptionHtml}</div>" }
+        ],
+        enableVirtualization:true,
+        rowHeight:60
       });
-
-      grid.appendTo("#gridView");
+      grid.appendTo('#gridView');
     }
 
-    /* -------------------------
-         TILES VIEW
-    --------------------------*/
-    function renderTiles() {
-      const el = document.getElementById("tilesView");
-      el.innerHTML = "";
-
-      releaseData.forEach(r => {
-        el.innerHTML += `
-          <div class="tile">
-            <h3>${r.release}</h3>
-            <p><strong>${r.releaseDate}</strong></p>
-            <p>${r.category} → ${r.subcategory}</p>
-            <div>${r.descriptionHtml}</div>
-          </div>
-        `;
+    // TILES
+    function renderTiles(){
+      const container=document.getElementById('tilesView');
+      batchRender(container, releaseData, item=>{
+        const div=document.createElement('div');
+        div.className='tile';
+        div.innerHTML=`<h3>${item.release}</h3><p><strong>${item.releaseDate}</strong></p><p>${item.category} → ${item.subcategory}</p>${item.descriptionHtml}`;
+        return div;
       });
     }
 
-    /* -------------------------
-         DETAILS VIEW
-    --------------------------*/
-    function renderDetails() {
-      const el = document.getElementById("detailsView");
-      el.innerHTML = "";
-
-      releaseData.forEach(r => {
-        el.innerHTML += `
-          <div style="margin-bottom:20px; border-bottom:1px solid var(--card-border); padding-bottom:20px">
-            <h2>${r.release}</h2>
-            <p>${r.releaseDate} — ${r.category} / ${r.subcategory}</p>
-            <div>${r.descriptionHtml}</div>
-          </div>
-        `;
+    // DETAILS
+    function renderDetails(){
+      const container=document.getElementById('detailsView');
+      batchRender(container, releaseData, item=>{
+        const div=document.createElement('div');
+        div.className='detail-card';
+        div.innerHTML=`<h2>${item.release}</h2><p>${item.releaseDate} — ${item.category} / ${item.subcategory}</p>${item.descriptionHtml}`;
+        return div;
       });
     }
 
-    /* Start */
-    loadData().then(() => setView("grid"));
+    // INIT
+    loadData();
   </script>
 </body>
 </html>
