@@ -17,7 +17,11 @@
   .header, .footer { padding:16px; background:#fff; border-bottom:1px solid #e1dfdd; }
   .header__main-title { margin:0; font-size:1.8rem; font-weight:600; }
   .header__description { margin:4px 0 0; color:#555; }
-  #gridContainer { flex:1; overflow:auto; padding:16px; }
+
+  /* **Fix voor grid zichtbaarheid** */
+  .table-container { flex: 1; min-height: 0; overflow:auto; padding:16px; }
+  #grid { height: 100%; }
+
   .footer { border-top:1px solid #e1dfdd; margin-top:auto; text-align:center; color:#666; font-size:0.9rem; }
 </style>
 </head>
