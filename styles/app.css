@@ -1010,3 +1010,25 @@ a:focus-visible {
 .e-radio+label .e-label {
 	color: var(--ds-color-fg-default) !important;
 }
+
+.e-grid .e-groupdroparea,
+.e-grid .e-groupheadercell,
+.e-grid .e-groupdroparea.e-grouped ,
+.e-grid .e-groupcaption,
+.e-grid .e-indentcell,
+.e-grid .e-recordpluscollapse,
+.e-grid .e-recordplusexpand {
+	background-color: var(--ds-color-bg-subtle) !important;
+	color: var(--ds-color-fg-default) !important;
+}
+
+.e-grid .e-grouptopleftcell {
+	background-color: var(--ds-color-bg-default) !important;	
+}
+
+.e-grid .e-indentcell,
+.e-grid .e-recordplusexpand,
+.e-grid .e-recordpluscollapse,
+.e-grid .e-groupcaption {
+    border-color: var(--ds-color-border-muted) !important;
+}
