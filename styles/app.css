@@ -361,7 +361,7 @@ a {
     background-color: var(--ds-link-bg-color);
     text-decoration: var(--ds-link-text-decoration);
     text-decoration-color: var(--ds-link-text-decoration-color, var(--ds-link-fg-color, var(--ds-color-fg-primary-default)));
-    text-decoration-thickness: var(--ds-link-text-decoration-thickness, var(--ds-spacer-border);
+    text-decoration-thickness: var(--ds-link-text-decoration-thickness, var(--ds-spacer-border));
     cursor: pointer;
     text-underline-offset: .125em
 }
