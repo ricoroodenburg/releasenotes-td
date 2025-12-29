@@ -32,12 +32,18 @@
           </div>
           <div class="header__actions">
             <button onClick={openAboutModal} class="button primary">
-              Refresh
+              1
+            </button>
+            <button onClick={openAboutModal} class="button primary">
+              2
             </button>
           </div>
         </div>
       </div>
 <div data-v-72cbc74f="" class="content">
+	<script id="captiontemplate" type="text/x-template">
+		<div>${template(data)}</div>
+	</script>
 	<div id="grid"></div>
 </div>
 
@@ -50,8 +56,19 @@
 <!-- Syncfusion UMD bundle -->
 <script src="https://cdn.syncfusion.com/ej2/32.1.19/dist/ej2.min.js"></script>
 <script>
-
+	
+	let grid;
 	ej.base.registerLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXVVRmBeWUB0VkFWYEs=");
+	function template(args) { 
+		const date = args.key; // dit is een Date-object
+		if (!(date instanceof Date)) return `${args.headerText}: ${args.key}`;
+
+		const day   = String(date.getDate()).padStart(2, '0');
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const year  = date.getFullYear();
+
+		return `${args.headerText}: ${day}-${month}-${year}`;
+	}
 
   	async function loadData() {
 		try {
@@ -64,33 +81,78 @@
 	    }
 	}
 
+	function clickHandler(args) {
+		switch (args.item.id){
+		
+			case 'expandall':
+				console.debug(`${args.item.id} invoked`);
+				grid.groupModule.expandAll();
+				break;
+
+			case 'collapseall':
+				console.debug(`${args.item.id} invoked`);
+				grid.groupModule.collapseAll();
+				break;
+				
+			default:
+				console.warning(`No action found for ${args.item.id}`);
+				
+		};
+		
+	}
+
   	async function init() {
     	const data = await loadData();
 		const toolbarOptions = [
 	  		{ 
-				text: 'Search', align: 'Left' 
+				text: 'Search', 
+				align: 'Left' 
 			},
-		  //{ text: 'Refresh', align: 'Right', tooltipText: 'Reload data', prefixIcon: 'e-refresh', id: 'refresh' }
+			{ 
+				text: 'Expand All', 
+				align: 'Right', 
+				tooltipText: 'Expand All', 
+				prefixIcon: 'e-chevron-down', 
+				id: 'expandall' 
+			},
+			{ 
+				text: 'Collapse All', 
+				align: 'Right', 
+				tooltipText: 'Collapse All', 
+				prefixIcon: 'e-chevron-up', 
+				id: 'collapseall' 
+			}
 		];
 		const filterSettings = {
 			type: 'Excel'
 		};
 
-    	const grid = new ej.grids.Grid({
+    	grid = new ej.grids.Grid({
 			dataSource: data,
+			enablePersistence: true,
 			enableAdaptiveUI: true,
 			adaptiveUIMode: 'Mobile',
 			height: '100%',
 			allowPaging: true,
-			pageSettings: { pageSize: 10 },
+			pageSettings: { pageSize: 20 },
 			allowSorting: true,
+			sortSettings: {
+				columns: [
+					{ field: 'releaseDate', direction: 'Descending' }
+				]
+			},
 			allowMultiSorting: true,
 			showColumnMenu: true,
 			allowFiltering: true,
 			filterSettings: filterSettings,
-			allowGrouping: false,
+			allowGrouping: true,
 			toolbar: toolbarOptions,
-			groupSettings: { columns: ['releaseDate'], showDropArea: true },
+			toolbarClick: clickHandler,
+			groupSettings: { 
+				columns: ['releaseDate'], 
+				showDropArea: false, 
+				captionTemplate: '#captiontemplate' 
+			},
 			allowResizing: true,
 			allowReordering: true,
 	      	columns: [
@@ -110,7 +172,8 @@
 					field: "descriptionHtml", 
 					headerText: "Description", 
 					width: 350,
-					template: data => `<div style="white-space:normal;">${data.descriptionHtml}</div>` 
+					template: data => `<div style="white-space:normal;">${data.descriptionHtml}</div>`,
+					allowGrouping: false
 				},
         		{ 
 					field: "category", 
@@ -141,9 +204,7 @@
 						if(data.hosting?.saas) html+= `<span class="status-badge success" style="margin-right:5px">SAAS</span>`;
 						if(data.hosting?.onpremisesvirtualappliance) html+= `<span class="status-badge danger">Virtual Appliance</span>`;
 						return html;
-					}, 
-					allowFiltering:false, 
-					allowSorting:false 
+					}
 				},
 				{ 
 					field:"isTosNote", 
@@ -163,8 +224,9 @@
 		});
 		grid.appendTo('#grid');
 	}
+	
+
 	init();
 </script>
-
 </body>
 </html>
