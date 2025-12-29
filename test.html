@@ -1,74 +1,84 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <title>TOPdesk Release Notes Beta</title>
-  <style>
-    body { 
-      font-family: Arial; 
-      padding: 20px; 
-      background: #f7f7f7;
-    }
-    .release {
-      background: white;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-    }
-    .release h2 {
-      margin: 0;
-      font-size: 20px;
-    }
-    .meta {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOPdesk Release Notes Grid</title>
+
+<!-- Externe moderne styling -->
+<link rel="stylesheet" href="https://developers.topdesk.com/odata_ui/assets/the-app-BMSxduOa.css">
+
+<!-- Syncfusion CSS -->
+<link href="https://cdn.syncfusion.com/ej2/26.2.5/material.css" rel="stylesheet">
+
+<style>
+  body { margin:0; font-family: "Segoe UI", sans-serif; background:#f8f8f8; display:flex; flex-direction:column; height:100vh; }
+  .header, .footer { padding:16px; background:#fff; border-bottom:1px solid #e1dfdd; }
+  .header__main-title { margin:0; font-size:1.8rem; font-weight:600; }
+  .header__description { margin:4px 0 0; color:#555; }
+  #gridContainer { flex:1; overflow:auto; padding:16px; }
+  .footer { border-top:1px solid #e1dfdd; margin-top:auto; text-align:center; color:#666; font-size:0.9rem; }
+</style>
 </head>
 <body>
 
-  <h1>TOPdesk Release Notes</h1>
-  <button onclick="loadNotes()">Laad Release Notes</button>
+<div class="header">
+  <h1 class="header__main-title">TOPdesk Release Notes</h1>
+  <p class="header__description">Bekijk alle releases en details, met filtering, grouping en zoekfunctionaliteit.</p>
+</div>
 
-  <div id="output" style="margin-top: 20px;">Nog geen data geladen...</div>
+<div id="gridContainer">
+  <div id="grid"></div>
+</div>
 
-  <script>
-    function loadNotes() {
-      const url = "https://topdesk-release-notes.r-roodenburg.workers.dev/";
+<div class="footer">
+  &copy; 2025 IT Services / TOPdesk Release Viewer
+</div>
 
-      fetch(url)
-        .then(res => res.json())
-        .then(data => {
-          const container = document.getElementById("output");
+<!-- Syncfusion JS -->
+<script src="https://cdn.syncfusion.com/ej2/26.2.5/dist/ej2.min.js"></script>
+<script>
+  // Syncfusion License
+  ej.base.License.register("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXRSR2lcVkxyWEJWYEs=");
 
-          if (!data.notes || data.notes.length === 0) {
-            container.innerHTML = "Geen release notes gevonden.";
-            return;
-          }
+  async function loadData() {
+    const res = await fetch("https://topdesk-release-notes.r-roodenburg.workers.dev/");
+    const json = await res.json();
 
-          container.innerHTML = ""; // leegmaken
+    // releaseDate strings naar Date objects
+    return json.notes.map(n => ({ ...n, releaseDate: new Date(n.releaseDate) }));
+  }
 
-          data.notes.forEach(note => {
-            const html = `
-              <div class="release">
-                <h2>Release ${note.release}</h2>
-                <div class="meta">
-                  Datum: ${note.releaseDate} <br>
-                  Categorie: ${note.category} > ${note.subcategory}
-                </div>
-                <div>${note.descriptionHtml}</div>
-              </div>
-            `;
-            container.innerHTML += html;
-          });
-        })
-        .catch(err => {
-          document.getElementById("output").textContent = "Fout bij laden: " + err;
-        });
-    }
-  </script>
+  function renderGrid(data) {
+    const grid = new ej.grids.Grid({
+      dataSource: data,
+      height: "100%",
+      allowPaging: true,
+      pageSettings: { pageSize: 20 },
+      allowSorting: true,
+      allowFiltering: true,
+      allowGrouping: true,
+      toolbar: ['Search'],
+      groupSettings: { columns: ['releaseDate'] },
+      columns: [
+        { field: "release", headerText: "Release", width: 100 },
+        { field: "releaseDate", headerText: "Release Date", width: 140, type:'date', format:'yyyy-MM-dd' },
+        { field: "descriptionHtml", headerText: "Description", width: 350, template:"<div style='white-space:normal'>${descriptionHtml}</div>", allowGrouping:false },
+        { field: "category", headerText: "Category", width:150 },
+        { field: "subcategory", headerText: "Subcategory", width:150 },
+        { field: "SourceTag", headerText: "Source", width:100 },
+        { field: "hosting", headerText: "Hosting", width:150 },
+        { field: "isTosNote", headerText: "TOS", width:80 }
+      ]
+    });
+    grid.appendTo('#grid');
+  }
+
+  (async function init() {
+    const data = await loadData();
+    renderGrid(data);
+  })();
+</script>
 
 </body>
 </html>
