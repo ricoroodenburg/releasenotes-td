@@ -18,21 +18,61 @@
 <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
   
 <style>
-  body { margin:0; font-family: "Segoe UI", sans-serif; background:#f8f8f8; display:flex; flex-direction:column; height:100vh; }
-  .header, .footer { padding:16px; background:#fff; border-bottom:1px solid #e1dfdd; }
-  .header__main-title { margin:0; font-size:1.8rem; font-weight:600; }
-  .header__description { margin:4px 0 0; color:#555; }
+  body { 
+    margin:0; 
+    font-family: "Segoe UI", sans-serif; 
+    background:#f8f8f8; 
+    display:flex; 
+    flex-direction:column; 
+    height:100vh; 
+  }
+  .header, .footer { 
+    padding:16px; 
+    background:#fff; 
+    border-bottom:1px solid #e1dfdd; 
+  }
+  .header__main-title {
+    margin:0; 
+    font-size:1.8rem; 
+    font-weight:600; 
+  }
+  .header__description { 
+    margin:4px 0 0; 
+    color:#555; 
+  }
 
   /* Fix voor grid zichtbaarheid */
-  .table-container { flex: 1; min-height: 0; overflow:auto; padding:16px; }
-  #grid { height: 100%; }
+  .table-container {
+    height: calc(100vh - 140px) !important;
+    min-height: 0 !important;
+    overflow: auto !important;
+  }
+  #grid { 
+    height: 100%; 
+  }
 
-  .footer { border-top:1px solid #e1dfdd; margin-top:auto; text-align:center; color:#666; font-size:0.9rem; }
+  .footer { 
+    border-top:1px solid #e1dfdd; 
+    margin-top:auto; 
+    text-align:center; 
+    color:#666; 
+    font-size:0.9rem; 
+  }
 
   /* Badges */
-  .badge { padding:2px 6px; border-radius:4px; font-size:0.8rem; color:white; display:inline-block; }
-  .success { background-color:#107C10; }
-  .info { background-color:#0078D4; }
+  .badge { 
+    padding:2px 6px; 
+    border-radius:4px; 
+    font-size:0.8rem; 
+    color:white; 
+    display:inline-block; 
+  }
+  .success { 
+    background-color:#107C10; 
+  }
+  .info { 
+    background-color:#0078D4; 
+  }
 </style>
 </head>
 <body>
