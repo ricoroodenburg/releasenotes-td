@@ -356,6 +356,50 @@
   }
 }
 
+a {
+    color: var(--ds-link-fg-color, var(--ds-color-fg-primary-default));
+    background-color: var(--ds-link-bg-color);
+    text-decoration: var(--ds-link-text-decoration);
+    text-decoration-color: var(--ds-link-text-decoration-color, var(--ds-link-fg-color, var(--ds-color-fg-primary-default)));
+    text-decoration-thickness: var(--ds-link-text-decoration-thickness, var(--ds-spacer-border);
+    cursor: pointer;
+    text-underline-offset: .125em
+}
+
+@media (any-hover: hover) {
+    a:hover {
+        text-decoration-skip-ink:none;
+        --ds-link-text-decoration-thickness: .1875em ;
+        --ds-link-fg-color: var(--ds-link-hover-fg-color, var(--ds-color-fg-primary-emphasis));
+        --ds-link-text-decoration: underline;
+        --ds-link-text-decoration-color: var(--ds-link-hover-text-decoration-color, var(--ds-color-fg-primary-soft))
+    }
+}
+
+a:focus-visible,a:active {
+    text-decoration-skip-ink: none;
+    --ds-link-text-decoration-thickness: .1875em ;
+    --ds-link-fg-color: var(--ds-link-focus-fg-color, var(--ds-color-fg-primary-subtle));
+    --ds-link-bg-color: var(--ds-link-focus-bg-color, var(--ds-color-bg-primary-mid));
+    --ds-link-text-decoration: underline;
+    --ds-link-text-decoration-color: var(--ds-link-focus-text-decoration-color, var(--ds-color-fg-primary-emphasis));
+    box-shadow: calc(var(--ds-spacer-1x) / 2) 0 0 var(--ds-link-focus-bg-color, var(--ds-color-bg-primary-mid)),calc(var(--ds-spacer-1x) / 2) calc(var(--ds-spacer-1x) / 2) 0 var(--ds-link-focus-bg-color, var(--ds-color-bg-primary-mid)),calc(var(--ds-spacer-1x) / 2 * -1) 0 0 var(--ds-link-focus-bg-color, var(--ds-color-bg-primary-mid)),calc(var(--ds-spacer-1x) / 2 * -1) calc(var(--ds-spacer-1x) / 2) 0 var(--ds-link-focus-bg-color, var(--ds-color-bg-primary-mid));
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone
+}
+
+a:focus-visible {
+    outline: calc(var(--ds-spacer-1x) / 2) solid transparent
+}
+
+@media (forced-colors: active) {
+    a:focus-visible {
+        text-decoration-skip-ink: auto!important;
+        --ds-link-text-decoration-thickness: var(--ds-spacer-border) !important
+    }
+}
+
+
   html, body {
     height: 100%;
     margin: 0;
