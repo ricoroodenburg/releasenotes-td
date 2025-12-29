@@ -989,3 +989,24 @@ a:focus-visible {
 .highlight-row {
     background-color: var(--ds-color-fg-attention-subtle);
 }
+
+/* Syncfusion */
+.e-bigger .e-responsive-dialog .e-dlg-header-content, .e-bigger.e-responsive-dialog .e-dlg-header-content  {
+	background: var(--ds-color-bg-subtle);
+}
+
+.e-bigger.e-responsive-dialog .e-dlg-content {
+	background: var(--ds-color-bg-default) !important;
+}
+
+.e-dialog {
+	background: var(--ds-color-bg-default) !important;
+}
+
+.e-dlg-custom-header {
+	color: var(--ds-color-fg-default) !important;
+}
+
+.e-radio+label .e-label {
+	color: var(--ds-color-fg-default) !important;
+}
