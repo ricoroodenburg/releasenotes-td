@@ -990,10 +990,11 @@
 }
 
 .button.primary:disabled {
-  cursor: not-allowed;
-  background-color: rgb(218, 218, 218);
-  filter: grayscale(50%);
-  opacity: 0.5;
+ 	cursor: not-allowed;
+  	background-color: rgb(218, 218, 218);
+  	filter: grayscale(50%);
+  	opacity: 0.5;
+	padding: var(--_ds-button-group-child-padding-block, calc(var(--ds-spacer-1x, 4px) - var(--ds-spacer-border, 1px))) var(--_ds-button-group-child-padding-right, calc(var(--ds-spacer-1x, 4px) * 6 - var(--ds-spacer-border, 1px))) var(--_ds-button-group-child-padding-block, calc(var(--ds-spacer-1x, 4px) - var(--ds-spacer-border, 1px))) var(--_ds-button-group-child-padding-left, calc(var(--ds-spacer-1x, 4px) * 6 - var(--ds-spacer-border, 1px)));
 }
 
 .highlight-row {
