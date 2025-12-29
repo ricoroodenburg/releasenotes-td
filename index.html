@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TOPdesk Release Notes Viewer</title>
 
+  <!-- Syncfusion CSS & JS -->
+  <link href="https://cdn.syncfusion.com/ej2/26.2.5/material.css" rel="stylesheet">
+  <script src="https://cdn.syncfusion.com/ej2/26.2.5/dist/ej2.min.js"></script>
+
   <style>
     :root {
       --bg: #ffffff;
@@ -24,12 +28,12 @@
 
     body {
       margin: 0;
-      font-family: system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
+      font-family: system-ui, sans-serif;
     }
 
-    /* Navbar */
+    /* NAVBAR */
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -38,153 +42,180 @@
       border-bottom: 1px solid var(--card-border);
       position: sticky;
       top: 0;
-      z-index: 100;
-    }
-
-    .nav-left, .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      z-index: 1000;
     }
 
     button {
       padding: 8px 12px;
-      background: var(--bg);
       border: 1px solid var(--card-border);
-      border-radius: 6px;
-      cursor: pointer;
+      background: var(--bg);
       color: var(--text);
+      cursor: pointer;
+      border-radius: 6px;
     }
 
     button:hover {
       background: var(--bg-alt);
     }
 
-    /* Main container */
-    .container {
+    /* Views */
+    #gridView,
+    #detailsView,
+    #tilesView,
+    #calendarView {
+      display: none;
       padding: 16px;
+    }
+
+    /* Simple tiles layout (placeholder) */
+    #tilesView {
       display: grid;
       gap: 16px;
-    }
-
-    /* Card style */
-    .card {
-      padding: 16px;
-      border-radius: 8px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-    }
-
-    /* Tiles layout */
-    .tiles {
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     }
 
-    /* List layout */
-    .list .card {
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Details view (full width) */
-    .details {
-      max-width: 800px;
-      margin: auto;
+    .tile {
+      border: 1px solid var(--card-border);
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--card-bg);
     }
 
     /* Calendar placeholder */
-    .calendar {
-      min-height: 400px;
+    #calendarView {
+      min-height: 350px;
       border: 2px dashed var(--card-border);
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 8px;
     }
-
   </style>
 </head>
+
 <body>
 
   <!-- NAVIGATION -->
   <div class="navbar">
-    <div class="nav-left">
-      <button onclick="setView('details')">Details</button>
-      <button onclick="setView('list')">List</button>
-      <button onclick="setView('tiles')">Tiles</button>
-      <button onclick="setView('calendar')">Calendar</button>
+    <div>
+      <button onclick="setView('grid')">📊 Grid</button>
+      <button onclick="setView('tiles')">🔳 Tiles</button>
+      <button onclick="setView('details')">📄 Details</button>
+      <button onclick="setView('calendar')">📅 Calendar</button>
     </div>
 
-    <div class="nav-right">
+    <div>
       <button onclick="toggleTheme()">🌓</button>
     </div>
   </div>
 
-  <!-- CONTENT -->
-  <div id="content" class="container list">
-    <!-- Hier komt straks de release note data -->
-  </div>
-
+  <!-- VIEWS -->
+  <div id="gridView"></div>
+  <div id="tilesView"></div>
+  <div id="detailsView"></div>
+  <div id="calendarView">📅 Kalenderweergave komt hier</div>
 
   <script>
-    let currentView = "list";
+    let releaseData = [];
 
-    function setView(view) {
-      currentView = view;
-
-      const content = document.getElementById("content");
-      content.className = "container " + view;
-
-      renderData();
-    }
-
-    // Light/Dark mode
+    // ---------------------------------------------
+    // THEME SWITCHER
+    // ---------------------------------------------
     function toggleTheme() {
       const root = document.documentElement;
-      const current = root.getAttribute("data-theme");
-      root.setAttribute("data-theme", current === "light" ? "dark" : "light");
+      const theme = root.getAttribute("data-theme");
+      root.setAttribute("data-theme", theme === "light" ? "dark" : "light");
     }
 
-    // Dummydata om UI te testen (straks vervangen door fetch)
-    const testData = [
-      {
-        release: "15.12.010",
-        releaseDate: "2025-12-14",
-        category: "TOPdesk for application managers",
-        subcategory: "Other",
-        descriptionHtml: "<p>Filter toegevoegd voor actieve/archief operators.</p>"
-      },
-      {
-        release: "15.12.009",
-        releaseDate: "2025-12-07",
-        category: "Self Service Portal",
-        subcategory: "Improvements",
-        descriptionHtml: "<p>Nieuwe interface verbeteringen.</p>"
-      }
-    ];
+    // ---------------------------------------------
+    // FETCH DATA FROM CLOUDFLARE WORKER
+    // ---------------------------------------------
+    async function loadData() {
+      const res = await fetch("https://topdesk-release-notes.r-roodenburg.workers.dev/");
+      const json = await res.json();
+      releaseData = json.notes;
+      renderGrid();
+      renderTiles();
+      renderDetails();
+    }
 
-    function renderData() {
-      const container = document.getElementById("content");
-      container.innerHTML = "";
+    // ---------------------------------------------
+    // VIEW SWITCHER
+    // ---------------------------------------------
+    function setView(view) {
+      document.getElementById("gridView").style.display = "none";
+      document.getElementById("tilesView").style.display = "none";
+      document.getElementById("detailsView").style.display = "none";
+      document.getElementById("calendarView").style.display = "none";
 
-      if (currentView === "calendar") {
-        container.innerHTML = `<div class="calendar">📅 Calendar view komt hier</div>`;
-        return;
-      }
+      if (view === "grid") document.getElementById("gridView").style.display = "block";
+      if (view === "tiles") document.getElementById("tilesView").style.display = "grid";
+      if (view === "details") document.getElementById("detailsView").style.display = "block";
+      if (view === "calendar") document.getElementById("calendarView").style.display = "flex";
+    }
 
-      testData.forEach(item => {
-        container.innerHTML += `
-          <div class="card">
-            <h2>Release ${item.release}</h2>
-            <small>${item.releaseDate} — ${item.category} / ${item.subcategory}</small>
-            <div style="margin-top: 10px">${item.descriptionHtml}</div>
+    // ---------------------------------------------
+    // SYNCFUSION DATA GRID
+    // ---------------------------------------------
+    function renderGrid() {
+      document.getElementById("gridView").innerHTML = "";
+
+      const grid = new ej.grids.Grid({
+        dataSource: releaseData,
+        allowPaging: true,
+        allowSorting: true,
+        allowFiltering: true,
+        height: "600",
+        columns: [
+          { field: "release", headerText: "Release", width: 150 },
+          { field: "releaseDate", headerText: "Datum", width: 150 },
+          { field: "category", headerText: "Categorie", width: 200 },
+          { field: "subcategory", headerText: "Subcategorie", width: 200 }
+        ]
+      });
+
+      grid.appendTo("#gridView");
+    }
+
+    // ---------------------------------------------
+    // TILES VIEW
+    // ---------------------------------------------
+    function renderTiles() {
+      const el = document.getElementById("tilesView");
+      el.innerHTML = "";
+
+      releaseData.forEach(r => {
+        el.innerHTML += `
+          <div class="tile">
+            <h3>${r.release}</h3>
+            <p><strong>${r.releaseDate}</strong></p>
+            <p>${r.category} → ${r.subcategory}</p>
+            <div>${r.descriptionHtml}</div>
           </div>
         `;
       });
     }
 
-    renderData();
-  </script>
+    // ---------------------------------------------
+    // DETAILS VIEW
+    // ---------------------------------------------
+    function renderDetails() {
+      const el = document.getElementById("detailsView");
+      el.innerHTML = "";
 
+      releaseData.forEach(r => {
+        el.innerHTML += `
+          <div style="margin-bottom:20px; border-bottom:1px solid var(--card-border); padding-bottom:20px">
+            <h2>${r.release}</h2>
+            <p>${r.releaseDate} — ${r.category} / ${r.subcategory}</p>
+            <div>${r.descriptionHtml}</div>
+          </div>
+        `;
+      });
+    }
+
+    // Load data + default view
+    loadData().then(() => setView("grid"));
+  </script>
 </body>
 </html>
