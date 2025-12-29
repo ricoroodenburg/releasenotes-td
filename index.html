@@ -136,16 +136,16 @@
       allowFiltering:true,
       allowGrouping:true,
       groupSettings:{columns:['releaseDate']},
-      height:650,
+      height:400,
       columns:[
-        { field:"releaseDate", headerText:"Datum", width:150, type:'date', format:'yyyy-MM-dd' },
+        { field:"releaseDate", headerText:"Release Date", width:150, type:'date', format:'yyyy-MM-dd' },
         { field:"release", headerText:"Release", width:150 },
         { field:"descriptionHtml", headerText:"Description", width:400, template:"<div>${descriptionHtml}</div>" 
-        { field:"category", headerText:"Categorie", width:200 },
-        { field:"subcategory", headerText:"Subcategorie", width:200 },
+        { field:"category", headerText:"Category", width:200 },
+        { field:"subcategory", headerText:"Subcategory", width:200 },
         }
       ],
-      enableVirtualization:false,
+      enableVirtualization:true,
       rowHeight:60
     });
     grid.appendTo('#gridView');
