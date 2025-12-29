@@ -3,20 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TOPdesk Release Notes</title>
+  <title>TOPdesk Release Notes Viewer</title>
 
   <!-- Werkende Fluent UI CSS -->
   <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
 
-  <!-- Syncfusion CSS & JS -->
+  <!-- Syncfusion CSS -->
   <link href="https://cdn.syncfusion.com/ej2/26.2.5/material.css" rel="stylesheet">
-  <script src="https://cdn.syncfusion.com/ej2/26.2.5/dist/ej2.min.js"></script>
-
-  <!-- Syncfusion License -->
-  <script>
-    // Plaats dit **na** ej2.min.js
-    ej.base.License.register("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXRSR2lcVkxyWEJWYEs=");
-  </script>
 
   <style>
     :root {
@@ -44,6 +37,9 @@
     .tile{border:1px solid var(--card-border); padding:16px; border-radius:6px; background:var(--card-bg);}
     #detailsView .detail-card{border-bottom:1px solid var(--card-border); margin-bottom:16px; padding-bottom:16px;}
     #calendarView{min-height:400px;border:2px dashed var(--card-border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text);}
+    .e-badge { padding: 2px 6px; border-radius: 4px; color: white; font-size: 0.8rem; }
+    .e-success { background-color: #107C10; }
+    .e-info { background-color: #0078D4; }
   </style>
 </head>
 <body>
@@ -52,10 +48,10 @@
 
 <div class="navbar">
   <div>
-    <button onclick="setView('grid')">📊 Grid v1</button>
-    <!-- <button onclick="setView('tiles')">🔳 Tiles</button> -->
-    <!-- <button onclick="setView('details')">📄 Details</button> -->
-    <!-- <button onclick="setView('calendar')">📅 Calendar</button> -->
+    <button onclick="setView('grid')">📊 Grid</button>
+    <button onclick="setView('tiles')">🔳 Tiles</button>
+    <button onclick="setView('details')">📄 Details</button>
+    <button onclick="setView('calendar')">📅 Calendar</button>
   </div>
   <div>
     <button onclick="toggleTheme()">🌓</button>
@@ -67,114 +63,141 @@
 <div id="detailsView" class="view"></div>
 <div id="calendarView" class="view">📅 Calendar placeholder</div>
 
+<!-- Syncfusion JS -->
+<script src="https://cdn.syncfusion.com/ej2/26.2.5/dist/ej2.min.js"></script>
 <script>
-  let releaseData=[];
-  let renderedViews={};
+  // License registreren **na het laden van ej2.min.js**
+  ej.base.License.register("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXRSR2lcVkxyWEJWYEs=");
+</script>
 
-  // THEME
-  function toggleTheme(){
-    const root=document.documentElement;
-    root.setAttribute("data-theme", root.getAttribute("data-theme")==='light'?'dark':'light');
+<script>
+let releaseData=[];
+let renderedViews={};
+
+// THEME
+function toggleTheme(){
+  const root=document.documentElement;
+  root.setAttribute("data-theme", root.getAttribute("data-theme")==='light'?'dark':'light');
+}
+
+// LOADING
+function showLoading(){document.getElementById("loading").style.display="flex";}
+function hideLoading(){document.getElementById("loading").style.display="none";}
+
+// VIEW SWITCHER
+function setView(view){
+  ['gridView','tilesView','detailsView','calendarView'].forEach(v=>document.getElementById(v).style.display='none');
+  if(view==='grid') document.getElementById('gridView').style.display='block';
+  if(view==='tiles') document.getElementById('tilesView').style.display='grid';
+  if(view==='details') document.getElementById('detailsView').style.display='block';
+  if(view==='calendar') document.getElementById('calendarView').style.display='flex';
+
+  if(!renderedViews[view]){
+    if(view==='grid') renderGrid();
+    if(view==='tiles') renderTiles();
+    if(view==='details') renderDetails();
+    renderedViews[view]=true;
   }
+}
 
-  // LOADING
-  function showLoading(){document.getElementById("loading").style.display="flex";}
-  function hideLoading(){document.getElementById("loading").style.display="none";}
+// FETCH DATA
+async function loadData(){
+  showLoading();
+  const res = await fetch("https://topdesk-release-notes.r-roodenburg.workers.dev/");
+  const json = await res.json();
 
-  // VIEW SWITCHER
-  function setView(view){
-    ['gridView','tilesView','detailsView','calendarView'].forEach(v=>document.getElementById(v).style.display='none');
-    if(view==='grid') document.getElementById('gridView').style.display='block';
-    if(view==='tiles') document.getElementById('tilesView').style.display='grid';
-    if(view==='details') document.getElementById('detailsView').style.display='block';
-    if(view==='calendar') document.getElementById('calendarView').style.display='flex';
+  // Convert releaseDate strings to Date objects
+  releaseData = json.notes.map(r=>{
+    return {...r, releaseDate: new Date(r.releaseDate)};
+  });
 
-    // Lazy render
-    if(!renderedViews[view]){
-      if(view==='grid') renderGrid();
-      if(view==='tiles') renderTiles();
-      if(view==='details') renderDetails();
-      renderedViews[view]=true;
+  hideLoading();
+  setView('grid');
+}
+
+// Virtualized batch rendering
+function batchRender(container, items, renderFn, batchSize=50){
+  let index=0;
+  function renderBatch(){
+    const frag=document.createDocumentFragment();
+    for(let i=0;i<batchSize && index<items.length;i++,index++){
+      frag.appendChild(renderFn(items[index]));
     }
+    container.appendChild(frag);
+    if(index<items.length) requestIdleCallback(renderBatch);
   }
+  renderBatch();
+}
 
-  // FETCH DATA
-  async function loadData(){
-    showLoading();
-    const res = await fetch("https://topdesk-release-notes.r-roodenburg.workers.dev/");
-    const json = await res.json();
+// GRID
+function renderGrid(){
+  const grid = new ej.grids.Grid({
+    dataSource: releaseData,
+    allowPaging: true,
+    allowSorting: true,
+    allowFiltering: true,
+    allowGrouping: true,
+    groupSettings: { columns: ['releaseDate'] },
+    height: 650,
+    columns: [
+      { field: "release", headerText: "Release", width: 100 },
+      { field: "releaseDate", headerText: "Release Date", width: 120, type:'date', format:'yyyy-MM-dd' },
+      { field: "descriptionHtml", headerText: "Description", width: 400, template:"<div style='white-space: normal;'>${descriptionHtml}</div>", allowGrouping:false },
+      { field: "category", headerText: "Category", width:150 },
+      { field: "subcategory", headerText: "Subcategory", width:150 },
+      { headerText:"Source", width:100, template: function(data){
+          if(data.SourceTag === "Feature") return "<span class='e-badge e-success'>Feature</span>";
+          if(data.SourceTag === "API") return "<span class='e-badge e-info'>API</span>";
+          return "";
+      }},
+      { headerText:"Hosting", width:150, template: function(data){
+          let html="";
+          if(data.hosting.saas) html+="<span class='e-badge e-success' style='margin-right:5px'>SAAS</span>";
+          if(data.hosting.onpremisesvirtualappliance) html+="<span class='e-badge e-info'>Virtual Appliance</span>";
+          return html;
+      }, allowFiltering:false, allowSorting:false },
+      { field:"isTosNote", headerText:"TOS", width:80, template:function(data){
+          return data.isTosNote ? "<span class='e-badge e-success'>True</span>" : "<span class='e-badge e-info'>False</span>";
+      }, headerTooltip:"True: legacy system, False: modern system." }
+    ],
+    enableVirtualization:true,
+    rowHeight:60
+  });
+  grid.appendTo('#gridView');
+}
 
-    // Convert releaseDate strings to Date objects
-    releaseData = json.notes.map(r=>{
-      return {...r, releaseDate: new Date(r.releaseDate)};
-    });
+// TILES
+function renderTiles(){
+  const container=document.getElementById('tilesView');
+  batchRender(container, releaseData, item=>{
+    const div=document.createElement('div');
+    div.className='tile';
+    div.innerHTML=`<h3>${item.release}</h3><p><strong>${item.releaseDate.toISOString().split('T')[0]}</strong></p><p>${item.category} → ${item.subcategory}</p>${item.descriptionHtml}<br>
+    ${item.SourceTag ? `<span class='e-badge ${item.SourceTag==='Feature'?'e-success':'e-info'}'>${item.SourceTag}</span>`:''}
+    ${item.hosting.saas? "<span class='e-badge e-success'>SAAS</span>":''}
+    ${item.hosting.onpremisesvirtualappliance? "<span class='e-badge e-info'>Virtual Appliance</span>":''}
+    ${item.isTosNote? "<span class='e-badge e-success'>TOS True</span>":"<span class='e-badge e-info'>TOS False</span>"}`;
+    return div;
+  });
+}
 
-    hideLoading();
-    setView('grid');
-  }
+// DETAILS
+function renderDetails(){
+  const container=document.getElementById('detailsView');
+  batchRender(container, releaseData, item=>{
+    const div=document.createElement('div');
+    div.className='detail-card';
+    div.innerHTML=`<h2>${item.release}</h2><p>${item.releaseDate.toISOString().split('T')[0]} — ${item.category} / ${item.subcategory}</p>${item.descriptionHtml}<br>
+    ${item.SourceTag ? `<span class='e-badge ${item.SourceTag==='Feature'?'e-success':'e-info'}'>${item.SourceTag}</span>`:''}
+    ${item.hosting.saas? "<span class='e-badge e-success'>SAAS</span>":''}
+    ${item.hosting.onpremisesvirtualappliance? "<span class='e-badge e-info'>Virtual Appliance</span>":''}
+    ${item.isTosNote? "<span class='e-badge e-success'>TOS True</span>":"<span class='e-badge e-info'>TOS False</span>"}`;
+    return div;
+  });
+}
 
-  // Virtualized batch rendering
-  function batchRender(container, items, renderFn, batchSize=50){
-    let index=0;
-    function renderBatch(){
-      const frag=document.createDocumentFragment();
-      for(let i=0;i<batchSize && index<items.length;i++,index++){
-        frag.appendChild(renderFn(items[index]));
-      }
-      container.appendChild(frag);
-      if(index<items.length) requestIdleCallback(renderBatch);
-    }
-    renderBatch();
-  }
-
-  // GRID
-  function renderGrid(){
-    const grid = new ej.grids.Grid({
-      dataSource: releaseData,
-      allowPaging:true,
-      allowSorting:true,
-      allowFiltering:true,
-      allowGrouping:true,
-      groupSettings:{columns:['releaseDate']},
-      height:400,
-      columns:[
-        { field:"releaseDate", headerText:"Release Date", width:150, type:'date', format:'yyyy-MM-dd' },
-        { field:"release", headerText:"Release", width:150 },
-        //{ field:"descriptionHtml", headerText:"Description", width:400, template:"<div>${descriptionHtml}</div>" 
-        { field:"category", headerText:"Category", width:200 },
-        { field:"subcategory", headerText:"Subcategory", width:200 },
-        }
-      ],
-      enableVirtualization:true,
-      rowHeight:60
-    });
-    grid.appendTo('#gridView');
-  }
-
-  // TILES
-  function renderTiles(){
-    const container=document.getElementById('tilesView');
-    batchRender(container, releaseData, item=>{
-      const div=document.createElement('div');
-      div.className='tile';
-      div.innerHTML=`<h3>${item.release}</h3><p><strong>${item.releaseDate.toISOString().split('T')[0]}</strong></p><p>${item.category} → ${item.subcategory}</p>${item.descriptionHtml}`;
-      return div;
-    });
-  }
-
-  // DETAILS
-  function renderDetails(){
-    const container=document.getElementById('detailsView');
-    batchRender(container, releaseData, item=>{
-      const div=document.createElement('div');
-      div.className='detail-card';
-      div.innerHTML=`<h2>${item.release}</h2><p>${item.releaseDate.toISOString().split('T')[0]} — ${item.category} / ${item.subcategory}</p>${item.descriptionHtml}`;
-      return div;
-    });
-  }
-
-  // INIT
-  loadData();
+// INIT
+loadData();
 </script>
 </body>
 </html>
