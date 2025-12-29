@@ -140,9 +140,10 @@
       columns:[
         { field:"releaseDate", headerText:"Datum", width:150, type:'date', format:'yyyy-MM-dd' },
         { field:"release", headerText:"Release", width:150 },
+        { field:"descriptionHtml", headerText:"Description", width:400, template:"<div>${descriptionHtml}</div>" 
         { field:"category", headerText:"Categorie", width:200 },
         { field:"subcategory", headerText:"Subcategorie", width:200 },
-        { field:"descriptionHtml", headerText:"Description", width:400, template:"<div>${descriptionHtml}</div>" }
+        }
       ],
       enableVirtualization:false,
       rowHeight:60
