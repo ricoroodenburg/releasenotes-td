@@ -646,65 +646,6 @@ a:focus-visible {
   background-color: var(--ds-color-bg-primary-emphasis) !important;
 }
 
-/* Button Primary */
-.button.primary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--ds-color-bg-default);
-  color: var(--ds-color-fg-default);
-  border: var(--ds-spacer-border) solid var(--ds-color-border-default);
-  height: 36px;
-  border-radius: var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x) * 2)));
-  min-width: var(--_ds-button-group-child-min-width);
-  max-height: var(--_ds-button-group-child-min-height);
-}
-
-.button.primary:hover:not(:disabled) {
-  box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
-}
-
-.button.primary:active:not(:disabled) {
-  background-color: var(--ds-color-bg-primary-default);
-  color: var(--ds-color-fg-primary-emphasis);
-  border-color: var(--ds-color-border-primary-emphasis);
-}
-
-.button.primary:disabled {
-  cursor: not-allowed;
-  background-color: rgb(218, 218, 218);
-  filter: grayscale(50%);
-  opacity: 0.5;
-}
-
-/* Button Secundary */
-.button.secondary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--ds-color-bg-primary-mid);
-  border-color: var(--ds-color-border-primary-default);
-  color: var(--ds-color-fg-primary-subtle);
-  height: 36px;
-  border-radius: var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x) * 2)));
-  min-width: var(--_ds-button-group-child-min-width);
-  max-height: var(--_ds-button-group-child-min-height);
-}
-
-.button.secondary:hover:not(:disabled) {
-  box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
-}
-
-.button.secondary:active:not(:disabled) {
-  background-color: var(--ds-color-bg-primary-emphasis);
-}
-
-.button.secondary:disabled {
-  cursor: not-allowed;
-  filter: grayscale(50%);
-  opacity: 0.5;
-}
-
 /* Syncfushion - Datagrid */
 .e-grid .e-gridheader {
   color: var(--ds-color-fg-default) !important;
