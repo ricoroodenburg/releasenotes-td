@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOPdesk Release Notes Viewer</title>
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f2f2f2;
+      --text: #222;
+      --card-bg: #fff;
+      --card-border: #ddd;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1e1e1e;
+      --bg-alt: #2a2a2a;
+      --text: #e7e7e7;
+      --card-bg: #2a2a2a;
+      --card-border: #444;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-left, .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    button {
+      padding: 8px 12px;
+      background: var(--bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    button:hover {
+      background: var(--bg-alt);
+    }
+
+    /* Main container */
+    .container {
+      padding: 16px;
+      display: grid;
+      gap: 16px;
+    }
+
+    /* Card style */
+    .card {
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+    }
+
+    /* Tiles layout */
+    .tiles {
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+
+    /* List layout */
+    .list .card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Details view (full width) */
+    .details {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    /* Calendar placeholder */
+    .calendar {
+      min-height: 400px;
+      border: 2px dashed var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <div class="navbar">
+    <div class="nav-left">
+      <button onclick="setView('details')">Details</button>
+      <button onclick="setView('list')">List</button>
+      <button onclick="setView('tiles')">Tiles</button>
+      <button onclick="setView('calendar')">Calendar</button>
+    </div>
+
+    <div class="nav-right">
+      <button onclick="toggleTheme()">🌓</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content" class="container list">
+    <!-- Hier komt straks de release note data -->
+  </div>
+
+
+  <script>
+    let currentView = "list";
+
+    function setView(view) {
+      currentView = view;
+
+      const content = document.getElementById("content");
+      content.className = "container " + view;
+
+      renderData();
+    }
+
+    // Light/Dark mode
+    function toggleTheme() {
+      const root = document.documentElement;
+      const current = root.getAttribute("data-theme");
+      root.setAttribute("data-theme", current === "light" ? "dark" : "light");
+    }
+
+    // Dummydata om UI te testen (straks vervangen door fetch)
+    const testData = [
+      {
+        release: "15.12.010",
+        releaseDate: "2025-12-14",
+        category: "TOPdesk for application managers",
+        subcategory: "Other",
+        descriptionHtml: "<p>Filter toegevoegd voor actieve/archief operators.</p>"
+      },
+      {
+        release: "15.12.009",
+        releaseDate: "2025-12-07",
+        category: "Self Service Portal",
+        subcategory: "Improvements",
+        descriptionHtml: "<p>Nieuwe interface verbeteringen.</p>"
+      }
+    ];
+
+    function renderData() {
+      const container = document.getElementById("content");
+      container.innerHTML = "";
+
+      if (currentView === "calendar") {
+        container.innerHTML = `<div class="calendar">📅 Calendar view komt hier</div>`;
+        return;
+      }
+
+      testData.forEach(item => {
+        container.innerHTML += `
+          <div class="card">
+            <h2>Release ${item.release}</h2>
+            <small>${item.releaseDate} — ${item.category} / ${item.subcategory}</small>
+            <div style="margin-top: 10px">${item.descriptionHtml}</div>
+          </div>
+        `;
+      });
+    }
+
+    renderData();
+  </script>
+
+</body>
+</html>
