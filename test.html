@@ -1,94 +1,22 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TOPdesk Release Notes Grid</title>
+<div id="grid" style="height:500px;"></div>
 
-<!-- Externe moderne styling -->
-<link rel="stylesheet" href="https://developers.topdesk.com/odata_ui/assets/the-app-BMSxduOa.css">
-<link rel="stylesheet" href="https://developers.topdesk.com/odata_ui/assets/index-ByzTjbNn.css">
+<script src="https://cdn.syncfusion.com/ej2/26.2.5/dist/ej2-base.min.js"></script>
+<script src="https://cdn.syncfusion.com/ej2/26.2.5/dist/ej2-data.min.js"></script>
+<script src="https://cdn.syncfusion.com/ej2/26.2.5/dist/ej2-grids.min.js"></script>
 
-<!-- Syncfusion CSS -->
-<link href="https://cdn.syncfusion.com/ej2/26.2.5/material.css" rel="stylesheet">
-
-<!-- Font -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-  
-<style>
-  body { margin:0; font-family: "Segoe UI", sans-serif; background:#f8f8f8; display:flex; flex-direction:column; height:100vh; }
-  .header, .footer { padding:16px; background:#fff; border-bottom:1px solid #e1dfdd; }
-  .header__main-title { margin:0; font-size:1.8rem; font-weight:600; }
-  .header__description { margin:4px 0 0; color:#555; }
-
-  /* **Fix voor grid zichtbaarheid** */
-  .table-container { flex: 1; min-height: 0; overflow:auto; padding:16px; }
-  #grid { height: 100%; }
-
-  .footer { border-top:1px solid #e1dfdd; margin-top:auto; text-align:center; color:#666; font-size:0.9rem; }
-</style>
-</head>
-<body>
-
-<div data-v-6cef0fad="" data-v-72cbc74f="" class="header__content" data-testid="header-content">
-  <h1 data-v-6cef0fad="" class="header__main-title" data-testid="main-title">Release Notes</h1>
-  <p data-v-6cef0fad="" class="header__description" data-testid="description">Explore every OData field with clear metadata, so you can assemble dashboards and reports in any BI tool with confidence.</p>
-</div>
-
-<div data-v-72cbc74f="" class="table-container">
-  <div id="grid"></div>
-</div>
-
-<div class="footer">
-  &copy; 2025 IT Services / TOPdesk Release Viewer
-</div>
-
-<!-- Syncfusion JS -->
-<script src="https://cdn.syncfusion.com/ej2/26.2.5/dist/ej2.min.js"></script>
 <script>
-  // Syncfusion License
-  ej.base.License.register("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXRSR2lcVkxyWEJWYEs=");
+  const data = [
+    { release: "1.0", releaseDate: new Date(), descriptionHtml:"Test", category:"Cat1", subcategory:"Sub1", SourceTag:"Feature", hosting:{saas:true}, isTosNote:true }
+  ];
 
-  async function loadData() {
-    const res = await fetch("https://topdesk-release-notes.r-roodenburg.workers.dev/");
-    const json = await res.json();
+  const grid = new ej.grids.Grid({
+    dataSource: data,
+    height: "400px",
+    columns: [
+      { field: "release", headerText: "Release" },
+      { field: "releaseDate", headerText: "Release Date", type:'date', format:'yyyy-MM-dd' }
+    ]
+  });
 
-    // releaseDate strings naar Date objects
-    return json.notes.map(n => ({ ...n, releaseDate: new Date(n.releaseDate) }));
-  }
-
-  function renderGrid(data) {
-    const grid = new ej.grids.Grid({
-      dataSource: data,
-      height: "100%",
-      allowPaging: true,
-      pageSettings: { pageSize: 20 },
-      allowSorting: true,
-      allowFiltering: true,
-      allowGrouping: true,
-      toolbar: ['Search'],
-      groupSettings: { columns: ['releaseDate'] },
-      columns: [
-        { field: "release", headerText: "Release", width: 100 },
-        { field: "releaseDate", headerText: "Release Date", width: 140, type:'date', format:'yyyy-MM-dd' },
-        { field: "descriptionHtml", headerText: "Description", width: 350, template:"<div style='white-space:normal'>${descriptionHtml}</div>", allowGrouping:false },
-        { field: "category", headerText: "Category", width:150 },
-        { field: "subcategory", headerText: "Subcategory", width:150 },
-        { field: "SourceTag", headerText: "Source", width:100 },
-        { field: "hosting", headerText: "Hosting", width:150 },
-        { field: "isTosNote", headerText: "TOS", width:80 }
-      ]
-    });
-    grid.appendTo('#grid');
-  }
-
-  (async function init() {
-    const data = await loadData();
-    renderGrid(data);
-  })();
+  grid.appendTo('#grid');
 </script>
-
-</body>
-</html>
