@@ -967,20 +967,22 @@
 
 /* Button Primary */
 .button.primary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--ds-color-bg-default);
-  color: var(--ds-color-fg-default);
-  border: var(--ds-spacer-border) solid var(--ds-color-border-default);
-  height: 36px;
-  border-radius: var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x) * 2));
-  min-width: var(--_ds-button-group-child-min-width);
-  max-height: var(--_ds-button-group-child-min-height);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--ds-color-bg-default);
+	color: var(--ds-color-fg-default);
+	border: var(--ds-spacer-border) solid var(--ds-color-border-default);
+	height: 36px;
+	border-radius: var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x) * 2));
+	min-width: var(--_ds-button-group-child-min-width);
+	max-height: var(--_ds-button-group-child-min-height);
+	padding: var(--_ds-button-group-child-padding-block, calc(var(--ds-spacer-1x) - var(--ds-spacer-border))) var(--_ds-button-group-child-padding-right, calc(var(--ds-spacer-1x) * 6 - var(--ds-spacer-border))) var(--_ds-button-group-child-padding-block, calc(var(--ds-spacer-1x) - var(--ds-spacer-border))) var(--_ds-button-group-child-padding-left, calc(var(--ds-spacer-1x) * 6 - var(--ds-spacer-border)));
 }
 
 .button.primary:hover:not(:disabled) {
-  box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
+  	box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
 }
 
 .button.primary:active:not(:disabled) {
@@ -994,7 +996,6 @@
   	background-color: rgb(218, 218, 218);
   	filter: grayscale(50%);
   	opacity: 0.5;
-	padding: var(--_ds-button-group-child-padding-block, calc(var(--ds-spacer-1x, 4px) - var(--ds-spacer-border, 1px))) var(--_ds-button-group-child-padding-right, calc(var(--ds-spacer-1x, 4px) * 6 - var(--ds-spacer-border, 1px))) var(--_ds-button-group-child-padding-block, calc(var(--ds-spacer-1x, 4px) - var(--ds-spacer-border, 1px))) var(--_ds-button-group-child-padding-left, calc(var(--ds-spacer-1x, 4px) * 6 - var(--ds-spacer-border, 1px)));
 }
 
 .highlight-row {
