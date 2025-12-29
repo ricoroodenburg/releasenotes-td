@@ -9,6 +9,11 @@
   <link href="https://cdn.syncfusion.com/ej2/26.2.5/material.css" rel="stylesheet">
   <script src="https://cdn.syncfusion.com/ej2/26.2.5/dist/ej2.min.js"></script>
 
+  <!-- Syncfusion License -->
+  <script>
+    ej.base.License.register("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXRSR2lcVkxyWEJWYEs=");
+  </script>
+
   <style>
     :root {
       --bg: #ffffff;
@@ -58,16 +63,31 @@
       background: var(--bg-alt);
     }
 
+    /* Loading overlay */
+    #loading {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(3px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
     /* Views */
     #gridView,
-    #detailsView,
     #tilesView,
+    #detailsView,
     #calendarView {
       display: none;
       padding: 16px;
     }
 
-    /* Simple tiles layout (placeholder) */
+    /* Tiles layout */
     #tilesView {
       display: grid;
       gap: 16px;
@@ -95,6 +115,9 @@
 
 <body>
 
+  <!-- LOADING -->
+  <div id="loading">⏳ Loading...</div>
+
   <!-- NAVIGATION -->
   <div class="navbar">
     <div>
@@ -118,30 +141,46 @@
   <script>
     let releaseData = [];
 
-    // ---------------------------------------------
-    // THEME SWITCHER
-    // ---------------------------------------------
+    /* -------------------------
+         THEME SWITCHER
+    --------------------------*/
     function toggleTheme() {
       const root = document.documentElement;
       const theme = root.getAttribute("data-theme");
       root.setAttribute("data-theme", theme === "light" ? "dark" : "light");
     }
 
-    // ---------------------------------------------
-    // FETCH DATA FROM CLOUDFLARE WORKER
-    // ---------------------------------------------
+    /* -------------------------
+         LOADING OVERLAY
+    --------------------------*/
+    function showLoading() { 
+      document.getElementById("loading").style.display = "flex"; 
+    }
+    function hideLoading() { 
+      document.getElementById("loading").style.display = "none"; 
+    }
+
+    /* -------------------------
+         FETCH DATA FROM WORKER
+    --------------------------*/
     async function loadData() {
+      showLoading();
+      
       const res = await fetch("https://topdesk-release-notes.r-roodenburg.workers.dev/");
       const json = await res.json();
+
       releaseData = json.notes;
+
+      hideLoading();
+
       renderGrid();
       renderTiles();
       renderDetails();
     }
 
-    // ---------------------------------------------
-    // VIEW SWITCHER
-    // ---------------------------------------------
+    /* -------------------------
+         VIEW SWITCHER
+    --------------------------*/
     function setView(view) {
       document.getElementById("gridView").style.display = "none";
       document.getElementById("tilesView").style.display = "none";
@@ -154,9 +193,9 @@
       if (view === "calendar") document.getElementById("calendarView").style.display = "flex";
     }
 
-    // ---------------------------------------------
-    // SYNCFUSION DATA GRID
-    // ---------------------------------------------
+    /* -------------------------
+         SYNCFUSION GRID
+    --------------------------*/
     function renderGrid() {
       document.getElementById("gridView").innerHTML = "";
 
@@ -165,10 +204,12 @@
         allowPaging: true,
         allowSorting: true,
         allowFiltering: true,
-        height: "600",
+        allowGrouping: true,
+        groupSettings: { columns: ['releaseDate'] },
+        height: "650",
         columns: [
-          { field: "release", headerText: "Release", width: 150 },
           { field: "releaseDate", headerText: "Datum", width: 150 },
+          { field: "release", headerText: "Release", width: 150 },
           { field: "category", headerText: "Categorie", width: 200 },
           { field: "subcategory", headerText: "Subcategorie", width: 200 }
         ]
@@ -177,9 +218,9 @@
       grid.appendTo("#gridView");
     }
 
-    // ---------------------------------------------
-    // TILES VIEW
-    // ---------------------------------------------
+    /* -------------------------
+         TILES VIEW
+    --------------------------*/
     function renderTiles() {
       const el = document.getElementById("tilesView");
       el.innerHTML = "";
@@ -196,9 +237,9 @@
       });
     }
 
-    // ---------------------------------------------
-    // DETAILS VIEW
-    // ---------------------------------------------
+    /* -------------------------
+         DETAILS VIEW
+    --------------------------*/
     function renderDetails() {
       const el = document.getElementById("detailsView");
       el.innerHTML = "";
@@ -214,7 +255,7 @@
       });
     }
 
-    // Load data + default view
+    /* Start */
     loadData().then(() => setView("grid"));
   </script>
 </body>
