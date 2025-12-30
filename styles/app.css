@@ -865,49 +865,48 @@ line-height: var(--ds-text-tag-line-height);
 }
 
 .e-pager .e-numericitem {
-  align-items: center;
-  justify-content: center;
-  background-color: var(--ds-color-bg-default) !important;
-  color: var(--ds-color-fg-default) !important;
-  height: 36px !important;
-  border-radius: var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x) * 2))) !important;
-  min-width: var(--_ds-button-group-child-min-width) !important;
-  max-height: var(--_ds-button-group-child-min-height) !important;
-  min-width: var(--_ds-button-group-child-min-width);
-  min-height: var(--_ds-button-group-child-min-height);
-  margin-left: 5px !important;
-  margin-right: 5px !important;
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--ds-color-bg-default) !important;
+	color: var(--ds-color-fg-default) !important;
+	height: 36px !important;
+	border-radius: var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x, 4px) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x, 4px) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x, 4px) * 2)) var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x, 4px) * 2));  min-width: var(--_ds-button-group-child-min-width) !important;
+	min-width: var(--_ds-button-group-child-min-width) !important;
+	max-height: var(--_ds-button-group-child-min-height) !important;
+	min-width: var(--_ds-button-group-child-min-width);
+	min-height: var(--_ds-button-group-child-min-height);
+	margin-left: 5px !important;
+	margin-right: 5px !important;
+	margin-top: 5px !important;
+	margin-bottom: 5px !important;
 }
 
 .e-pager .e-numericitem.e-focused,
 .e-pager .e-numericitem:hover {
-  box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
-  border: var(--ds-spacer-border) solid var(--ds-color-border-default) !important;
+	box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
+	border: var(--ds-spacer-border) solid var(--ds-color-border-default) !important;
 }
 
 .e-pager .e-currentitem {
-  background: var(--ds-color-bg-primary-mid) !important;
-  color: var(--color-sf-primary-text-color) !important;
+	background: var(--ds-color-bg-primary-mid) !important;
+	color: var(--color-sf-primary-text-color) !important;
 }
 
 .e-grid .e-pager {
-  display: flex !important;
-  justify-content: center !important;
-  /* ⬅️ dit centreert de inhoud horizontaal */
+	display: flex !important;
+	justify-content: center !important;
+	/* ⬅️ dit centreert de inhoud horizontaal */
 }
 
 .e-toolbar .e-toolbar-item .e-tbar-btn {
-  align-items: center;
-  justify-content: center;
-  background-color: var(--ds-color-bg-default) !important;
-  color: var(--ds-color-fg-default) !important;
-  border: var(--ds-spacer-border) solid var(--ds-color-border-default) !important;
-  height: 36px !important;
-  border-radius: var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x) * 2)) var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x) * 2))) !important;
-  min-width: var(--_ds-button-group-child-min-width) !important;
-  max-height: var(--_ds-button-group-child-min-height) !important;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--ds-color-bg-default) !important;
+	color: var(--ds-color-fg-default) !important;
+	border: var(--ds-spacer-border) solid var(--ds-color-border-default) !important;
+	height: 36px !important;
+	border-radius: var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x, 4px) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x, 4px) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x, 4px) * 2)) var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x, 4px) * 2));  min-width: var(--_ds-button-group-child-min-width) !important;
+	max-height: var(--_ds-button-group-child-min-height) !important;
 }
 
 .e-toolbar .e-toolbar-item .e-tbar-btn:active {
@@ -917,8 +916,9 @@ line-height: var(--ds-text-tag-line-height);
 }
 
 .e-toolbar .e-toolbar-item .e-tbar-btn:hover {
-  box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
-  color: var(--ds-color-fg-default) !important;
+	box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
+	color: var(--ds-color-fg-default) !important;
+	border-radius: var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x, 4px) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x, 4px) * 2)) var(--_ds-button-group-child-border-right-radius, calc(var(--ds-spacer-1x, 4px) * 2)) var(--_ds-button-group-child-border-left-radius, calc(var(--ds-spacer-1x, 4px) * 2));  min-width: var(--_ds-button-group-child-min-width) !important;
 }
 
 .e-dlg-content,
