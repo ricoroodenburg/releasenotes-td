@@ -25,7 +25,7 @@
               <slot name="header">
                 <h1 class="header__text-title">
                   <span>TOPdesk Release Notes</span>
-				  <span class="status-badge primary-mild">2512.01</span>
+				  <span class="status-badge primary-mild">2512.30.01</span>
                 </h1>
               </slot>
               <p class="header__text-body">Description goes here</p>
@@ -48,15 +48,18 @@
 	<div id="grid"></div>
 </div>
 
-
+<!--
 <div class="footer">
   &copy; 2025 IT Services / TOPdesk Release Viewer
 </div>
+-->
 
 <!-- Syncfusion UMD bundle -->
 <script src="https://cdn.syncfusion.com/ej2/32.1.19/dist/ej2.min.js"></script>
 <script>
 	ej.base.registerLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXVVRmBeWUB0VkFWYEs=");
+	
+	
 	function template(args) { 
 		const date = args.key; // dit is een Date-object
 		if (!(date instanceof Date)) return `${args.headerText}: ${args.key}`;
@@ -93,13 +96,13 @@
 				break;
 				
 			default:
-				console.warning(`No action found for ${args.item.id}`);
+				console.info(`No action found for ${args.item.id}`);
 				
 		};
 		
 	}
 
-	let grid;
+
   	async function init() {
     	const data = await loadData();
 		const toolbarOptions = [
@@ -132,6 +135,16 @@
 			enableAdaptiveUI: true,
 			adaptiveUIMode: 'Mobile',
 			height: '100%',
+			created: () => {
+				setTimeout(() => {
+					const searchBar = document.getElementById(grid.element.id + "_searchbar");
+					if (searchBar) {
+						searchBar.addEventListener('keyup', (event) => {
+							grid.search(event.target.value);
+						});
+					}
+				}, 0);
+			},
 			allowPaging: true,
 			pageSettings: { pageSize: 20 },
 			allowSorting: true,
@@ -154,6 +167,7 @@
 			},
 			allowResizing: true,
 			allowReordering: true,
+			emptyRecordTemplate: '#emptytemplate',
 	      	columns: [
 				{ 
 					field: "release", 
@@ -232,5 +246,14 @@
 </script>
 <!-- Daarna je eigen scripts -->
 <script src="./scripts/buttons.js"></script>
+<script id="emptytemplate" type="text/x-template">
+	<div class='emptyRecordTemplate' style="text-align: center;">
+		<img src="emptyRecordTemplate.svg" class="e-emptyRecord" alt="No record" style="height: 88.2352941176%; max-height: 360px">
+		<br>
+		<h2>Er zijn geen resultaten gevonden</h2>
+		<p>Probeer een andere zoekopdracht</p>
+
+	</div>
+</script>
 </body>
 </html>
