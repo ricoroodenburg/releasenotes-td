@@ -1,259 +1,68 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>TOPdesk Release Notes</title>
-	
-	<!-- Syncfusion CSS -->
-	<link href="https://cdn.syncfusion.com/ej2/32.1.19/fluent2.css" rel="stylesheet">
-	
-	<!-- Font -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>TOPdesk Release Notes</title>
+		
+		<!-- Syncfusion CSS -->
+		<link href="https://cdn.syncfusion.com/ej2/32.1.19/fluent2.css" rel="stylesheet">
+		
+		<!-- Font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
 
-	<!-- Stylesheet -->
-	<link href="./styles/app.css" rel="stylesheet">
-</head>
-<body>
-	<div class="header">
-        <div class="header__container">
-          <div class="header__navigation">
-            <slot name="navigation"></slot>
-            <div class="header__text">
-              <slot name="header">
-                <h1 class="header__text-title">
-                  <span>TOPdesk Release Notes</span>
-				  <span class="status-badge primary-mild">2512.30.01</span>
-                </h1>
-              </slot>
-              <p class="header__text-body">Description goes here</p>
-            </div>
-          </div>
-          <div class="header__actions">
-			<!-- <button id='drpDownBtn' class="button primary">More</button> -->
-			<div id="buttonToolbar">
-				<button class="button primary" id="btn1"><span class="e-icons e-table"></span></button>
-				<button class="button primary" id="btn2"><span class="e-icons e-month"></span></button>
-				<button class="button primary" id="moreBtn"></button>
+		<!-- Stylesheet -->
+		<link href="./styles/app.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="header">
+			<div class="header__container">
+				<div class="header__navigation">
+					<slot name="navigation"></slot>
+					<div class="header__text">
+						<slot name="header">
+							<h1 class="header__text-title">
+								<span>TOPdesk Release Notes</span>
+								<span class="status-badge primary">2512.30.02</span>
+							</h1>
+						</slot>
+						<p class="header__text-body">Discover the latest updates and improvements in TOPdesk</p>
+					</div>
+				</div>
+				<div class="header__actions">
+					<div id="buttonToolbar">
+						<button class="button primary" id="btn1"><span class="svg-button-grid"></span></button>
+						<button class="button primary" id="btn2"><span class="svg-button-calender"></span></button>
+						<button class="button primary" id="moreBtn"></button>
+					</div>
+				</div>
 			</div>
-          </div>
-        </div>
-      </div>
-<div data-v-72cbc74f="" class="content">
-	<script id="captiontemplate" type="text/x-template">
-		${template(data)}
-	</script>
-	<div id="grid"></div>
-</div>
+		</div>
+		<div data-v-72cbc74f="" class="content">
+			<script id="captiontemplate" type="text/x-template">
+				${template(data)}
+			</script>
+			<div id="dialog"></div>
+			<div id="grid"></div>
+		</div>
 
-<!--
-<div class="footer">
-  &copy; 2025 IT Services / TOPdesk Release Viewer
-</div>
--->
-
-<!-- Syncfusion UMD bundle -->
-<script src="https://cdn.syncfusion.com/ej2/32.1.19/dist/ej2.min.js"></script>
-<script>
-	ej.base.registerLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXVVRmBeWUB0VkFWYEs=");
-	
-	
-	function template(args) { 
-		const date = args.key; // dit is een Date-object
-		if (!(date instanceof Date)) return `${args.headerText}: ${args.key}`;
-
-		const day   = String(date.getDate()).padStart(2, '0');
-		const month = String(date.getMonth() + 1).padStart(2, '0');
-		const year  = date.getFullYear();
-
-		return `${args.headerText}: ${day}-${month}-${year}`;
-	}
-
-  	async function loadData() {
-		try {
-	  		const res = await fetch("https://topdesk-release-notes.r-roodenburg.workers.dev/");
-	      	const json = await res.json();
-	      	return json.notes.map(n => ({ ...n, releaseDate: new Date(n.releaseDate) }));
-		} catch(e) {
-	  		console.error("Failed to load data", e);
-	      	return [];
-	    }
-	}
-
-	function clickHandler(args) {
-		switch (args.item.id){
-		
-			case 'expandall':
-				console.debug(`${args.item.id} invoked`);
-				grid.groupModule.expandAll();
-				break;
-
-			case 'collapseall':
-				console.debug(`${args.item.id} invoked`);
-				grid.groupModule.collapseAll();
-				break;
-				
-			default:
-				console.info(`No action found for ${args.item.id}`);
-				
-		};
-		
-	}
-
-
-  	async function init() {
-    	const data = await loadData();
-		const toolbarOptions = [
-	  		{ 
-				text: 'Search', 
-				align: 'Left' 
-			},
-			{ 
-				text: 'Expand All', 
-				align: 'Right', 
-				tooltipText: 'Expand All', 
-				prefixIcon: 'e-chevron-down', 
-				id: 'expandall' 
-			},
-			{ 
-				text: 'Collapse All', 
-				align: 'Right', 
-				tooltipText: 'Collapse All', 
-				prefixIcon: 'e-chevron-up', 
-				id: 'collapseall' 
-			}
-		];
-		const filterSettings = {
-			type: 'Excel'
-		};
-
-    	grid = new ej.grids.Grid({
-			dataSource: data,
-			enablePersistence: true,
-			enableAdaptiveUI: true,
-			adaptiveUIMode: 'Mobile',
-			height: '100%',
-			created: () => {
-				setTimeout(() => {
-					const searchBar = document.getElementById(grid.element.id + "_searchbar");
-					if (searchBar) {
-						searchBar.addEventListener('keyup', (event) => {
-							grid.search(event.target.value);
-						});
-					}
-				}, 0);
-			},
-			allowPaging: true,
-			pageSettings: { pageSize: 20 },
-			allowSorting: true,
-			sortSettings: {
-				columns: [
-					{ field: 'releaseDate', direction: 'Descending' }
-				]
-			},
-			allowMultiSorting: true,
-			showColumnMenu: true,
-			allowFiltering: true,
-			filterSettings: filterSettings,
-			allowGrouping: true,
-			toolbar: toolbarOptions,
-			toolbarClick: clickHandler,
-			groupSettings: { 
-				columns: ['releaseDate'], 
-				showDropArea: false, 
-				captionTemplate: '#captiontemplate' 
-			},
-			allowResizing: true,
-			allowReordering: true,
-			emptyRecordTemplate: '#emptytemplate',
-	      	columns: [
-				{ 
-					field: "release", 
-					headerText: "Release", 
-					width: 100 
-				},
-        		{ 
-					field: "releaseDate", 
-					headerText: "Release Date", 
-					width: 140, 
-					type:'date', 
-					format:'yyyy-MM-dd' 
-				},
-        		{
-					field: "descriptionHtml", 
-					headerText: "Description", 
-					width: 350,
-					template: data => `<div style="white-space:normal;">${data.descriptionHtml}</div>`,
-					allowGrouping: false
-				},
-        		{ 
-					field: "category", 
-					headerText: "Category", 
-					width:150 
-				},
-				{ 
-					field: "subcategory", 
-					headerText: "Subcategory", 
-					width:150 
-				},
-				{ 
-					headerText:"Source", 
-					width:100, 
-					template: data => {
-						if(data.source==="production") 
-							return `<span class="status-badge success">Feature</span>`;
-						if(data.source==="api") 
-							return `<span class="status-badge primary">API</span>`;
-						return "";
-					}
-				},
-				{ 
-					headerText:"Hosting", 
-					width:150, 
-					template: data => {
-						let html="";
-						if(data.hosting?.saas) html+= `<span class="status-badge success" style="margin-right:5px">SAAS</span>`;
-						if(data.hosting?.onpremisesvirtualappliance) html+= `<span class="status-badge danger">Virtual Appliance</span>`;
-						return html;
-					}
-				},
-				{ 
-					field:"isTosNote", 
-					headerText:"TOS", 
-					width:80, 
-					template: data => {
-						return data.isTosNote ? `<span class="status-badge success">True</span>` : `<span class="status-badge danger">False</span>`;
-					}, 
-					visible:false
-				}
-			],
-			rowDataBound: function(args) {
-        		if(args.data.attentions?.highlight) {
-		            args.row.classList.add('highlight-row');
-		        }
-			}
-		});
-		grid.appendTo('#grid');
-		
-	}
-
-	
-	
-
-	init();
-</script>
-<!-- Daarna je eigen scripts -->
-<script src="./scripts/buttons.js"></script>
-<script id="emptytemplate" type="text/x-template">
-	<div class='emptyRecordTemplate' style="text-align: center;">
-		<img src="emptyRecordTemplate.svg" class="e-emptyRecord" alt="No record" style="height: 88.2352941176%; max-height: 360px">
-		<br>
-		<h2>Er zijn geen resultaten gevonden</h2>
-		<p>Probeer een andere zoekopdracht</p>
-
+	<!--
+	<div class="footer">
+	  &copy; 2025 IT Services / TOPdesk Release Viewer
 	</div>
-</script>
-</body>
+	-->
+
+	<!-- Syncfusion UMD bundle -->
+	<script src="https://cdn.syncfusion.com/ej2/32.1.19/dist/ej2.min.js"></script>
+	<script>ej.base.registerLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXVVRmBeWUB0VkFWYEs=");</script>
+
+	<!-- Load custom scripts -->
+	<script src="./scripts/dialog.js"></script>
+	<script src="./scripts/buttons.js"></script>
+	<script src="./scripts/topdesk-release-notes.js"></script>
+	<script src="./scripts/grid.js"></script>
+
+	</body>
 </html>
