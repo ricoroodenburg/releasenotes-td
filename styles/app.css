@@ -1261,6 +1261,13 @@ line-height: var(--ds-text-tag-line-height);
     border: none !important;
 }
 
+.content-desktop {
+    height: calc(100vh - 135px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
 @media screen and (max-width: 767px) {
   .content-desktop {
     display: none;
