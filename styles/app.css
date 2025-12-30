@@ -1052,6 +1052,7 @@ line-height: var(--ds-text-tag-line-height);
     border-color: var(--ds-color-border-muted) !important;
 }
 
+.e-dropdown-popup,
 .e-input-group:not(.e-float-icon-left):not(.e-float-input)::before,
 .e-input-group:not(.e-float-icon-left):not(.e-float-input)::after {
 	background: unset !important;
@@ -1066,13 +1067,44 @@ line-height: var(--ds-text-tag-line-height);
     padding-left: 10px; /* jouw minimale linker-padding */
 }
 
-    #buttonToolbar {
-        display: flex;
-        gap: 8px;
-        margin: 20px;
-    }
-    @media (max-width: 600px) {
-        #btn1, #btn2 {
-            display: none; /* verberg desktop buttons op mobiel */
-        }
-    }
+.e-dropdown-popup ul {
+	background: var(--ds-color-bg-default) !important;	
+}
+
+#buttonToolbar {
+	display: flex;
+	gap: 0px;
+	margin: 20px;
+}
+@media (max-width: 600px) {
+	#btn1, #btn2 {
+		display: none; /* verberg desktop buttons op mobiel */
+	}
+}
+	
+#buttonToolbar .button {
+    margin: 0;              /* Geen gap tussen buttons */
+    border-radius: 0;       /* Geen afgeronde hoeken standaard */
+    padding: 8px 12px;
+	position: relative;
+}
+
+#buttonToolbar .button + .button {
+    border-left: none;
+}
+
+#buttonToolbar .button:hover {
+    z-index: 2;
+    box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);
+	border-left: var(--ds-spacer-border) solid var(--ds-color-border-default);
+}
+
+#buttonToolbar .button:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+#buttonToolbar .button:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
