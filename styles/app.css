@@ -988,7 +988,6 @@ line-height: var(--ds-text-tag-line-height);
 .button.primary:hover:not(:disabled) {
   	box-shadow: 0 0 0 var(--ds-interactive-focus-ring-width) var(--ds-color-bg-primary-soft);	
 	border-color: var(--ds-color-border-primary-emphasis);
-	background-color: var(--ds-color-bg-default);
 	color: var(--ds-color-fg-primary-emphasis);
 }
 
@@ -1154,4 +1153,110 @@ line-height: var(--ds-text-tag-line-height);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+}
+
+#grid,
+#calender {
+    display: none;
+}
+
+.view-active {
+    display: block !important;
+}
+
+.button.selected {
+    color: var(--ds-color-fg-primary-emphasis);
+    background-color: var(--ds-color-bg-primary-default);
+    border-color: var(--ds-color-border-primary-emphasis);
+}
+
+.button-content {
+    border-bottom: var(--_ds-toggle-button-content-spacing-block, calc(var(--ds-spacer-1x) - var(--ds-spacer-border))) solid transparent;
+    padding-top: var(--_ds-toggle-button-content-spacing-block, calc(var(--ds-spacer-1x) - var(--ds-spacer-border)));
+    height: 100%;
+    line-height: var(--_ds-toggle-button-content-line-height, inherit);
+}
+
+.button.selected .button-content {
+    border-bottom-color: var(--ds-color-border-primary-emphasis);
+    border-bottom-width: 3px; /* of 2px, wat jij wilt */
+}
+
+/* Syncfusion Calendar */
+.e-schedule .e-month-view .e-work-cells{
+	background: var(--ds-color-bg-subtle) !important;	
+}
+
+.e-schedule .e-month-view .e-work-cells {
+	color: var(--ds-color-fg-default) !important;
+}
+
+.e-schedule .e-month-view .e-date-header-wrap table td {
+	background: var(--ds-color-bg-default) !important;	
+	color: var(--ds-color-fg-default) !important;
+}
+
+.e-schedule .e-month-view .e-work-days {
+	background-color: var(--ds-color-bg-default) !important;
+}
+
+.e-schedule {
+	border: 0px solid var(--ds-color-border-default) !important;
+}
+
+.e-schedule .e-month-view .e-date-header-wrap table td {
+	border-color: var(--ds-color-border-default) !important;
+}
+
+.e-schedule .e-schedule-toolbar {
+	border-bottom: unset !important;
+	padding-bottom: 10px;
+}
+
+.e-schedule .e-month-view .e-work-cells {
+	border-color: var(--ds-color-border-default) !important;
+}
+
+
+.e-quick-popup-wrapper .e-event-popup .e-popup-header {
+	background: var(--ds-color-bg-subtle) !important;	
+}
+
+.e-quick-popup-wrapper {
+	background: var(--ds-color-bg-default) !important;	
+	color: var(--ds-color-fg-default) !important;
+}
+
+.e-quick-popup-wrapper .e-event-popup .e-description,
+.e-quick-popup-wrapper .e-event-popup .e-date-time {
+	color: var(--ds-color-fg-default) !important;
+}
+
+.calendar-event {
+	background: var(--ds-color-bg-primary-default) !important;
+	border-color: var(--ds-color-border-primary-default) !important;
+	color: var(--ds-color-fg-primary-emphasis) !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 4px 6px !important;
+}
+
+.e-schedule .e-month-view .e-current-date .e-date-header {
+	background: var(--ds-color-bg-primary-default) !important;
+	color: var(--ds-color-fg-primary-emphasis) !important;
+}
+
+/* Hover (optioneel) */
+.calendar-event:hover {
+    filter: brightness(1.1);
+}
+
+
+/* ───────────────
+   Highlighted event
+   ─────────────── */
+.calendar-event-highlight {
+    background-color: var(--ds-color-fg-attention-subtle) !important;
+    color: var(--ds-color-fg-primary-emphasis) !important;
+    border: none !important;
 }

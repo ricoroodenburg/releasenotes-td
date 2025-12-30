@@ -25,7 +25,7 @@
 						<slot name="header">
 							<h1 class="header__text-title">
 								<span>TOPdesk Release Notes</span>
-								<span class="status-badge primary">2512.30.02</span>
+								<span class="status-badge primary">2512.30.03</span>
 							</h1>
 						</slot>
 						<p class="header__text-body">Discover the latest updates and improvements in TOPdesk</p>
@@ -33,8 +33,16 @@
 				</div>
 				<div class="header__actions">
 					<div id="buttonToolbar">
-						<button class="button primary" id="btn1"><span class="svg-button-grid"></span></button>
-						<button class="button primary" id="btn2"><span class="svg-button-calender"></span></button>
+						<button class="button primary" id="btn1">
+							<span class="button-content">
+								<span class="svg-button-grid"></span>
+							</span>
+						</button>
+						<button class="button primary" id="btn2">
+							<span class="button-content">
+								<span class="svg-button-calender"></span>
+							</span>
+						</button>
 						<button class="button primary" id="moreBtn"></button>
 					</div>
 				</div>
@@ -46,6 +54,7 @@
 			</script>
 			<div id="dialog"></div>
 			<div id="grid"></div>
+			<div id="calendar"></div>
 		</div>
 
 	<!--
@@ -63,6 +72,42 @@
 	<script src="./scripts/buttons.js"></script>
 	<script src="./scripts/topdesk-release-notes.js"></script>
 	<script src="./scripts/grid.js"></script>
+	<script src="./scripts/calendar.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const btnGrid = document.getElementById("btn1");
+    const btnCal = document.getElementById("btn2");
+
+    const divGrid = document.getElementById("grid");
+    const divCal = document.getElementById("calendar");
+
+    // Default state
+    divGrid.classList.add("view-active");
+    btnGrid.classList.add("selected");
+
+    btnGrid.addEventListener("click", function () {
+        divGrid.classList.add("view-active");
+        divCal.classList.remove("view-active");
+
+        btnGrid.classList.add("selected");
+        btnCal.classList.remove("selected");
+    });
+
+    btnCal.addEventListener("click", function () {
+        divCal.classList.add("view-active");
+        divGrid.classList.remove("view-active");
+
+        btnCal.classList.add("selected");
+        btnGrid.classList.remove("selected");
+    });
+
+});
+
+
+</script>
 
 	</body>
 </html>
