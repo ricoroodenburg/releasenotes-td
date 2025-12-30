@@ -1156,7 +1156,7 @@ line-height: var(--ds-text-tag-line-height);
 }
 
 #grid,
-#calender {
+#calendar {
     display: none;
 }
 
@@ -1259,4 +1259,16 @@ line-height: var(--ds-text-tag-line-height);
     background-color: var(--ds-color-fg-attention-subtle) !important;
     color: var(--ds-color-fg-primary-emphasis) !important;
     border: none !important;
+}
+
+@media screen and (max-width: 767px) {
+  .content-desktop {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .content-mobile {
+    display: none;
+  }
 }
