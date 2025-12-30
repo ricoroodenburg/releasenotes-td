@@ -436,6 +436,7 @@ a:focus-visible {
   line-height: var(--ds-text-title-1-font-line-height);
   font-family: var(--ds-text-family-primary), Roboto, Helvetica, sans-serif;
   margin-block-start: 0px !important;
+  margin-block-end: 0px !important;
 }
 
 .header__text-body {
@@ -505,15 +506,22 @@ a:focus-visible {
   flex-basis: calc(var(--ds-spacer-1x-em) * 11);
   border-radius: var(--ds-spacer-radius-rounded);
   padding: 0.10em 0.75em;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: var(--ds-text-tag-font-size);
+  font-weight: 600;
   text-transform: capitalize;
-  border: 1px solid transparent;
+  border: 0px solid transparent;
+line-height: var(--ds-text-tag-line-height);
 }
 
 /* Variant kleuren */
 .status-badge.primary {
   background-color: var(--ds-color-bg-primary-default);
+  border-color: var(--ds-color-border-primary-default);
+  color: var(--ds-color-fg-primary-emphasis);
+}
+
+.status-badge.primary-mild {
+  background-color: var(--ds-color-bg-primary-mild);
   border-color: var(--ds-color-border-primary-default);
   color: var(--ds-color-fg-primary-emphasis);
 }
@@ -554,6 +562,7 @@ a:focus-visible {
   font-size: 16px !important;
 }
 
+.e-dropdown-popup ul,
 .e-input-group.e-control-wrapper,
 .e-input-group,
 .e-input-group:not(.e-float-icon-left),
@@ -571,6 +580,7 @@ a:focus-visible {
   color: var(--ds-color-fg-default) !important;
 }
 
+.e-dropdown-popup ul .e-item:hover,
 .e-dropdownbase .e-list-item:hover {
   background-color: var(--ds-color-bg-primary-default) !important;
   color: var(--ds-color-fg-primary-emphasis) !important;
@@ -584,6 +594,7 @@ a:focus-visible {
   border-left: var(--ds-spacer-1x) solid var(--ds-color-border-primary-emphasis) !important;
 }
 
+.e-dropdown-popup ul .e-item,
 .e-dropdownbase .e-list-item {
   border-left: var(--ds-spacer-1x) solid transparent !important;
   border-radius: var(--ds-spacer-1x) !important;
@@ -601,7 +612,15 @@ a:focus-visible {
   background: var(--ds-color-bg-default) !important;
 }
 
+.e-dropdown-popup ul {
+	font-size: unset !important;
+}
+
 /* Syncfushion Buttons */
+.e-btn {
+	font-weight: unset !important;
+}
+
 .e-btn.e-primary.e-flat:not([DISABLED]):not(.e-success):not(.e-danger):not(.e-warning):not(.e-info) {
   align-items: center !important;
   justify-content: center !important;
@@ -1032,3 +1051,28 @@ a:focus-visible {
 .e-grid .e-groupcaption {
     border-color: var(--ds-color-border-muted) !important;
 }
+
+.e-input-group:not(.e-float-icon-left):not(.e-float-input)::before,
+.e-input-group:not(.e-float-icon-left):not(.e-float-input)::after {
+	background: unset !important;
+}
+
+.e-dropdown-menu {
+    width: auto;          /* automatisch breedte */
+    min-width: 150px;     /* minimaal 150px */
+    white-space: nowrap;  /* geen afbreking */
+}
+.e-dropdown-menu .e-item .e-menu-text {
+    padding-left: 10px; /* jouw minimale linker-padding */
+}
+
+    #buttonToolbar {
+        display: flex;
+        gap: 8px;
+        margin: 20px;
+    }
+    @media (max-width: 600px) {
+        #btn1, #btn2 {
+            display: none; /* verberg desktop buttons op mobiel */
+        }
+    }
