@@ -6,7 +6,7 @@
 	<title>TOPdesk Release Notes</title>
 	
 	<!-- Syncfusion CSS -->
-	<link href="https://cdn.syncfusion.com/ej2/26.2.5/fluent2.css" rel="stylesheet">
+	<link href="https://cdn.syncfusion.com/ej2/32.1.19/fluent2.css" rel="stylesheet">
 	
 	<!-- Font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,39 +25,37 @@
               <slot name="header">
                 <h1 class="header__text-title">
                   <span>TOPdesk Release Notes</span>
+				  <span class="status-badge primary-mild">2512.01</span>
                 </h1>
               </slot>
-              <p class="header__text-body">Version 2512.01-beta</p>
+              <p class="header__text-body">Description goes here</p>
             </div>
           </div>
           <div class="header__actions">
-            <button onClick={openAboutModal} class="button primary">
-              1
-            </button>
-            <button onClick={openAboutModal} class="button primary">
-              2
-            </button>
+			<!-- <button id='drpDownBtn' class="button primary">More</button> -->
+			<div id="buttonToolbar">
+				<button class="button primary" id="btn1"><span class="e-icons e-table"></span></button>
+				<button class="button primary" id="btn2"><span class="e-icons e-month"></span></button>
+				<button class="button primary" id="moreBtn"></button>
+			</div>
           </div>
         </div>
       </div>
 <div data-v-72cbc74f="" class="content">
 	<script id="captiontemplate" type="text/x-template">
-		<div>${template(data)}</div>
+		${template(data)}
 	</script>
 	<div id="grid"></div>
 </div>
 
-<!--
+
 <div class="footer">
   &copy; 2025 IT Services / TOPdesk Release Viewer
 </div>
--->
 
 <!-- Syncfusion UMD bundle -->
 <script src="https://cdn.syncfusion.com/ej2/32.1.19/dist/ej2.min.js"></script>
 <script>
-	
-	let grid;
 	ej.base.registerLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXVVRmBeWUB0VkFWYEs=");
 	function template(args) { 
 		const date = args.key; // dit is een Date-object
@@ -101,6 +99,7 @@
 		
 	}
 
+	let grid;
   	async function init() {
     	const data = await loadData();
 		const toolbarOptions = [
@@ -223,10 +222,15 @@
 			}
 		});
 		grid.appendTo('#grid');
+		
 	}
+
+	
 	
 
 	init();
 </script>
+<!-- Daarna je eigen scripts -->
+<script src="./scripts/buttons.js"></script>
 </body>
 </html>
