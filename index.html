@@ -53,8 +53,13 @@
 				${template(data)}
 			</script>
 			<div id="dialog"></div>
-			<div id="grid"></div>
-			<div id="calendar"></div>
+			<div class="content-desktop">
+				<div id="grid"></div>
+				<div id="calendar"></div>
+			</div>
+			<div class="content-mobile">
+				<p>Welcome on your smartphone! Mobile expierence will come later..</p>
+			</div>
 		</div>
 
 	<!--
@@ -87,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Default state
     divGrid.classList.add("view-active");
     btnGrid.classList.add("selected");
-
+	
     btnGrid.addEventListener("click", function () {
         divGrid.classList.add("view-active");
         divCal.classList.remove("view-active");
