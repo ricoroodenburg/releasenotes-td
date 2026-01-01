@@ -32,6 +32,7 @@ const moreBtn = new ej.splitbuttons.DropDownButton({
 });
 moreBtn.appendTo("#moreBtn");
 
+/*
 function updateToolbar() {
 	if (window.innerWidth <= 600) {
 		// Mobile: buttons 1 & 2 verbergen
@@ -40,9 +41,11 @@ function updateToolbar() {
 		
 		// Hide carret
 		moreBtn.element.classList.add('e-caret-hide');
+		moreBtn.element.classList.add('invoker__icon');
 		moreBtn.element.style.borderLeft = `var(--ds-spacer-border) solid var(--ds-color-border-default)`;
 		moreBtn.element.style.borderTopLeftRadius = "6px";
 		moreBtn.element.style.borderBottomLeftRadius = "6px";
+		moreBtn.content = null;
 		
 		// Voeg Button 1 & 2 toe aan dropdown
 		moreBtn.items = [
@@ -50,7 +53,7 @@ function updateToolbar() {
 			{ text: "Button 2", id: "btn4", onClick: () => alert("Button 2 clicked") },
 			...defaultMoreItems
 		];
-		moreBtn.content = "…"; // verander content naar drie puntjes
+		//moreBtn.content = "…"; // verander content naar drie puntjes
 		moreBtn.dataBind();
 	} else {
 		// Desktop: buttons zichtbaar
@@ -59,6 +62,7 @@ function updateToolbar() {
 
 		// Show carret
 		moreBtn.element.classList.remove('e-caret-hide');
+		moreBtn.element.classList.remove('invoker__icon');
 		moreBtn.element.style.borderLeft = 'none';
 		moreBtn.element.style.borderTopLeftRadius = "0px";
 		moreBtn.element.style.borderBottomLeftRadius = "0px";
@@ -70,6 +74,22 @@ function updateToolbar() {
 	}
 }
 
+*/
+
+function updateToolbar() {
+	if (window.innerWidth <= 600) {
+		moreBtn.items = [
+			{ text: "Button 1", id: "btn3", onClick: () => alert("Button 1 clicked") },
+			{ text: "Button 2", id: "btn4", onClick: () => alert("Button 2 clicked") },
+			...defaultMoreItems
+		];
+		moreBtn.content = null;
+	} else {
+		moreBtn.items = defaultMoreItems;
+		moreBtn.content = "More";
+	}
+	moreBtn.dataBind();
+}
 
 // Init en bind resize
 window.addEventListener("resize", updateToolbar);
