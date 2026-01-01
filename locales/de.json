@@ -23,7 +23,8 @@
     "oK": "OK",
     "yes": "Ja",
     "no": "Nein",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "statusPage": "Statusseite"
   },
   "tooltips": {
     "more": "Mehr",

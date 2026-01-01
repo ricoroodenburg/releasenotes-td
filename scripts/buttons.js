@@ -6,7 +6,7 @@ window.i18nReady.then(() => {
 		{ text: 'Documentation portal', url: 'https://docs.topdesk.com', iconCss: 'e-icons e-open-link' },
 		{ text: 'API Documentation', url: 'https://developers.topdesk.com', iconCss: 'e-icons e-open-link' },
 		{ separator: true },
-		{ text: 'Status Page', url: 'https://status.topdesk.com', iconCss: 'e-icons e-open-link' },
+		{ text: t('terms.statusPage'), url: 'https://status.topdesk.com', iconCss: 'e-icons e-open-link' },
 		{ text: 'Roadmap', url: 'https://tip.topdesk.com', iconCss: 'e-icons e-open-link' },
 		{ separator: true },
 		{ text: t('terms.about'), id: "openDialogBtn", iconCss: 'e-icons e-circle-info' }
