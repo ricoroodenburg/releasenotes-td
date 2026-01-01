@@ -25,7 +25,7 @@ function setLanguage(lang) {
 function detectBrowserLanguage() {
   const lang = navigator.language || navigator.userLanguage;
   const shortLang = lang.split('-')[0];
-  return ['en','nl'].includes(shortLang) ? shortLang : 'en';
+  return ['en','nl','de','it','fr','es'].includes(shortLang) ? shortLang : 'en';
 }
 
 // Laad JSON via fetch
