@@ -46,8 +46,8 @@ function updateToolbar() {
 		
 		// Voeg Button 1 & 2 toe aan dropdown
 		moreBtn.items = [
-			{ text: "Button 1", onClick: () => alert("Button 1 clicked") },
-			{ text: "Button 2", onClick: () => alert("Button 2 clicked") },
+			{ text: "Button 1", id: "btn3", onClick: () => alert("Button 1 clicked") },
+			{ text: "Button 2", id: "btn4", onClick: () => alert("Button 2 clicked") },
 			...defaultMoreItems
 		];
 		moreBtn.content = "…"; // verander content naar drie puntjes
