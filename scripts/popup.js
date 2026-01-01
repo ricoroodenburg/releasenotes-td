@@ -20,7 +20,7 @@ function showPopup(title = "", content = "") {
                 </div>
                 <div class="popup-content"></div>
                 <div class="popup-footer">
-                    <button class="button primary">Close</button>
+                    <button class="button primary">${t('terms.close')}</button>
                 </div>
             </div>
         `;

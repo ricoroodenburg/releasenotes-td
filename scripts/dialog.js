@@ -1,15 +1,16 @@
+window.i18nReady.then(() => {
 // dialog.js
 window.dialog = new ej.popups.Dialog({
-    header: 'About',
+    header: `${t('terms.about')} ${t('header.title')}`,
     content: `
-        This product is not developed, supported, or affiliated with TOPdesk. Best effort only.
+        ${t('messages.notDevelopmentBy')}
     `,
     buttons: [
         {
             click: function() {
-                window.open('https://github.com/ricoroodenburg/releasenotes-td', '_blank'); // Link naar GitHub
+                window.open('https://github.com/ricoroodenburg/releasenotes-td', '_blank');
             },
-            buttonModel: { content: 'Show on GitHub', isPrimary: true }
+            buttonModel: { content: `${t('messages.showOn')} GitHub`, isPrimary: true }
         }
     ],
     width: '400px',
@@ -29,3 +30,5 @@ function onOverlayClick() {
 }
 
 dialog.appendTo('#dialog');
+
+});

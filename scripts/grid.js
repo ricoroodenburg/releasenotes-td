@@ -1,6 +1,6 @@
 async function initGrid() {
     try {
-        const data = await loadData(); // globaal gedefinieerde loadData() in index.html
+        const data = await loadData();
 
         const toolbarOptions = [
             { text: "Search", align: 'Left' },
@@ -8,7 +8,9 @@ async function initGrid() {
             { text: t('terms.collapseAll'), align: 'Right', tooltipText: t('tooltips.collapseAll'), prefixIcon: 'e-chevron-up', id: 'collapseall' }
         ];
 
-        const filterSettings = { type: 'Excel' };
+        const filterSettings = { 
+            type: 'Excel' 
+        };
 
         // Grid aanmaken en globaal beschikbaar maken
         window.grid = new ej.grids.Grid({
@@ -45,19 +47,19 @@ async function initGrid() {
                 <div class='no-results' style="text-align: center;">
                     <img src="emptyRecordTemplate.svg" class="e-emptyRecord" alt="No record" style="height: 88.2%; max-height: 360px">
                     <br>
-                    <h2>Er zijn geen resultaten gevonden</h2>
-                    <p>Probeer een andere zoekopdracht</p>
+                    <h2>${t('messages.noSearchResult')}</h2>
+                    <p>${t('messages.searchTryAgain')}</p>
                 </div>
             `,
             columns: [
-                { field: "release", headerText: "Release", width: 100 },
-                { field: "releaseDate", headerText: "Release Date", width: 140, type:'date', format:'yyyy-MM-dd' },
-                { field: "descriptionHtml", headerText: "Description", width: 350, template: d => `<div style="white-space:normal;">${d.descriptionHtml}</div>`, allowGrouping: false },
-                { field: "category", headerText: "Category", width:150 },
-                { field: "subcategory", headerText: "Subcategory", width:150 },
-                { headerText:"Source", width:100, template: d => {
-                    if(d.source==="production") return `<span class="status-badge success">Feature</span>`;
-                    if(d.source==="api") return `<span class="status-badge primary">API</span>`;
+                { field: "release", headerText: t('terms.release'), width: 100 },
+                { field: "releaseDate", headerText: t('terms.releaseDate'), width: 140, type:'date', format:'yyyy-MM-dd' },
+                { field: "descriptionHtml", headerText: t('terms.description'), width: 350, template: d => `<div style="white-space:normal;">${d.descriptionHtml}</div>`, allowGrouping: false },
+                { field: "category", headerText: t('terms.category'), width:150 },
+                { field: "subcategory", headerText: t('terms.subcategory'), width:150 },
+                { headerText: t('terms.source'), width:100, template: d => {
+                    if(d.source==="production") return `<span class="status-badge success">${t('terms.feature')}</span>`;
+                    if(d.source==="api") return `<span class="status-badge primary">${t('terms.api')}</span>`;
                     return "";
                 }},
                 { headerText:"Hosting", width:150, template: d => {
@@ -66,7 +68,7 @@ async function initGrid() {
                     if(d.hosting?.onpremisesvirtualappliance) html+= `<span class="status-badge danger">Virtual Appliance</span>`;
                     return html;
                 }},
-                { field:"isTosNote", headerText:"TOS", width:80, template: d => d.isTosNote ? `<span class="status-badge success">True</span>` : `<span class="status-badge danger">False</span>`, visible:false }
+                { field:"isTosNote", headerText:"TOS", width:80, template: d => d.isTosNote ? `<span class="status-badge success">${t('terms.true')}</span>` : `<span class="status-badge danger">${t('terms.false')}</span>`, visible:false }
             ],
             rowDataBound: function(args) {
                 if(args.data.attentions?.highlight) args.row.classList.add('highlight-row');
@@ -101,7 +103,7 @@ function clickHandler(args) {
 }
 
 function template(args) { 
-	const date = args.key; // dit is een Date-object
+	const date = args.key;
 	if (!(date instanceof Date)) return `${args.headerText}: ${args.key}`;
 
 	const day   = String(date.getDate()).padStart(2, '0');

@@ -8,7 +8,6 @@ const LISTVIEW_PAGE_SIZE = 20;
 // ========================================================
 window.addEventListener("load", async () => {
     const root = document.querySelector("#listview");
-
     const raw = await loadData();
     const processed = prepareData(raw);
     renderListView(root, processed);
@@ -50,7 +49,7 @@ function renderListView(root, data) {
     root.innerHTML = `
         
 			<div class "task-list-option">
-				<input id="lv-search" class="textbox" placeholder="Search…" />
+				<input id="lv-search" class="textbox" placeholder="${t('terms.search')}..." />
 				<div id="lv-list" class="task-list-option" style="overflow-y:auto; max-height:600px;"></div>
 			</div>
     `;
@@ -74,8 +73,8 @@ const html = items.map((item, i) => renderListItem(item, start + i)).join("");
                 <img src="emptyRecordTemplate.svg" class="e-emptyRecord" alt="No record" style="height: 88.2%; max-height: 360px">
                 <br>
                 <div class="no-results" style="padding:16px">
-                    No results found for "${searchEl.value}"
-                    <p>Probeer een andere zoekopdracht</p>
+                    ${t('messages.noSearchResultFor')} "${searchEl.value}"
+                    <p>${t('messages.searchTryAgain')}</p>
                 </div>
             </div>
         `;
@@ -155,7 +154,7 @@ function renderListItem(item, globalIndex) {
                         ${desc}${desc.length >= 200 ? "..." : ""}
 					</div>
 					<div class="release-info" style="margin-top: 4px;">
-						<i>Released on ${formatDate(item.releaseDate)} in version ${item.release}</i>
+						<i>${t('messages.releasedOn')} ${formatDate(item.releaseDate)} ${t('messages.inVersion')} ${item.release}</i>
 					</div>
                 </div>
             </div>
