@@ -23,6 +23,7 @@ function prepareData(data) {
         .map(item => ({
             title: item.title ?? "",
             description: item.description ?? "",
+			descriptionHtml: item.descriptionHtml ?? "",
             release: item.release ?? "",
             releaseDate: new Date(item.releaseDate ?? 0),
             category: item.category ?? "",
@@ -62,10 +63,10 @@ function renderListView(root, data) {
 
     // REFRESH LIST
 function refreshList(append = false) {
-    const start = (page - 1) * LISTVIEW_PAGE_SIZE;
-    const end = page * LISTVIEW_PAGE_SIZE;
-    const items = filtered.slice(start, end);
-    const html = items.map(renderListItem).join("");
+const start = (page - 1) * LISTVIEW_PAGE_SIZE;
+const end = page * LISTVIEW_PAGE_SIZE;
+const items = filtered.slice(start, end);
+const html = items.map((item, i) => renderListItem(item, start + i)).join("");
 
     if (filtered.length === 0) {
         listEl.innerHTML = `
@@ -89,13 +90,17 @@ function refreshList(append = false) {
     // CLICK HANDLER VOOR POPUP
     // ============================
     // selecteer alle items die net gerenderd zijn
-    const itemDivs = listEl.querySelectorAll(".todo-item");
-    itemDivs.forEach((div, index) => {
-        div.onclick = () => {
-            const item = items[index]; // pak het item dat hoort bij deze div
-            showPopup(item.category, item.description);
-        };
-    });
+	// alleen nieuw toegevoegde items
+	const newItems = listEl.querySelectorAll(".todo-item:not([data-popup-bound])");
+	newItems.forEach(div => {
+		div.dataset.popupBound = "true";
+		div.onclick = () => {
+			const idx = parseInt(div.dataset.index, 10);
+			const item = filtered[idx];
+			showPopup(item?.category ?? "", item?.descriptionHtml ?? "");
+		};
+	});
+
 }
 
 
@@ -133,24 +138,25 @@ function refreshList(append = false) {
 // ========================================================
 // ITEM RENDERING (jouw HTML-opmaak 1:1)
 // ========================================================
-function renderListItem(item) {
+function renderListItem(item, globalIndex) {
     const desc = item.description ?? "";
 
     return `
         <div class="task-list-option">
-            <div class="todo-item ${item.highlight ? 'highlight' : ''}">
+            <div class="todo-item ${item.highlight ? 'highlight' : ''}" data-index="${globalIndex}">
                 <div class="left-column">
                     <div class="brief-description">
 						<h4> 
 							${item.category} ${item.subcategory ? `<span class="status-badge secondary" style="margin-right:5px">${item.subcategory}</span>` : ''} 
-							<span class="status-badge secondary" style="margin-right:5px">${item.release}</span> 
-							<span class="status-badge secondary" style="margin-right:5px">${formatDate(item.releaseDate)}</span> 
 							${item.source === "production" ? `<span class="status-badge secondary" style="margin-right:5px">Feature</span>` : item.source === "api" ? `<span class="status-badge secondary" style="margin-right:5px">API</span>` : '' }
 						</h4>
                     </div>
                     <div class="task-tag">
                         ${desc}${desc.length >= 200 ? "..." : ""}
-                    </div>
+					</div>
+					<div class="release-info" style="margin-top: 4px;">
+						<i>Released on ${formatDate(item.releaseDate)} in version ${item.release}</i>
+					</div>
                 </div>
             </div>
         </div>
