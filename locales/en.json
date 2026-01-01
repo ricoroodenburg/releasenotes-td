@@ -1,0 +1,21 @@
+{
+  "header": {
+    "title": "TOPdesk Release Notes",
+    "description": "Discover the latest updates and improvements in TOPdesk."
+  },
+  "terms":{
+    "more": "More",
+    "search": "Search",
+    "about": "About",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All" 
+  },
+  "tooltips": {
+    "more": "More",
+    "search": "Search",
+    "about": "About",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All" 
+  }
+  
+}

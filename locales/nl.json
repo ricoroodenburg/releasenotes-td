@@ -1,0 +1,21 @@
+{
+  "header": {
+    "title": "TOPdesk Release Notes",
+    "description": "Discover the latest updates and improvements in TOPdesk."
+  },
+  "terms":{
+    "more": "Meer",
+    "search": "Zoeken",
+    "about": "Over",
+    "expandAll": "Uitklappen",
+    "collapseAll": "Inklappen" 
+  },
+  "tooltips": {
+    "more": "Meer",
+    "search": "Zoeken",
+    "about": "Over",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All" 
+  }
+  
+}

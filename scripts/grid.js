@@ -3,9 +3,9 @@ async function initGrid() {
         const data = await loadData(); // globaal gedefinieerde loadData() in index.html
 
         const toolbarOptions = [
-            { text: 'Search', align: 'Left' },
-            { text: 'Expand All', align: 'Right', tooltipText: 'Expand All', prefixIcon: 'e-chevron-down', id: 'expandall' },
-            { text: 'Collapse All', align: 'Right', tooltipText: 'Collapse All', prefixIcon: 'e-chevron-up', id: 'collapseall' }
+            { text: "Search", align: 'Left' },
+            { text: t('terms.expandAll'), align: 'Right', tooltipText: t('tooltips.expandAll'), prefixIcon: 'e-chevron-down', id: 'expandall' },
+            { text: t('terms.collapseAll'), align: 'Right', tooltipText: t('tooltips.collapseAll'), prefixIcon: 'e-chevron-up', id: 'collapseall' }
         ];
 
         const filterSettings = { type: 'Excel' };
