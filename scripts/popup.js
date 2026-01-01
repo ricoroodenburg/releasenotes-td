@@ -1,4 +1,4 @@
-d// ========================================================
+// ========================================================
 // POPUP FUNCTION
 // ========================================================
 function showPopup(title = "", content = "") {
@@ -50,8 +50,8 @@ function showPopup(title = "", content = "") {
 	popup.querySelector(".popup-title").textContent = title;
 
 	// optie: content
-	popup.querySelector(".popup-content").textContent = content;
-
+	popup.querySelector(".popup-content").innerHTML = content;
+	
     // toon popup
     popup.style.display = "flex";
 }
