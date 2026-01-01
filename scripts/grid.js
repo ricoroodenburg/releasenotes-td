@@ -42,7 +42,7 @@ async function initGrid() {
             allowResizing: true,
             allowReordering: true,
 			emptyRecordTemplate: `
-                <div class='emptyRecordTemplate' style="text-align: center;">
+                <div class='no-results' style="text-align: center;">
                     <img src="emptyRecordTemplate.svg" class="e-emptyRecord" alt="No record" style="height: 88.2%; max-height: 360px">
                     <br>
                     <h2>Er zijn geen resultaten gevonden</h2>
