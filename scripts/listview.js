@@ -19,21 +19,6 @@ window.addEventListener("load", async () => {
 // ========================================================
 function prepareData(data) {
     if (!Array.isArray(data)) return [];
-	const datatest = data
-        .map(item => ({
-            title: item.title ?? "",
-            description: item.description ?? "",
-            release: item.release ?? "",
-            releaseDate: new Date(item.releaseDate ?? 0),
-            category: item.category ?? "",
-            subcategory: item.subcategory ?? "",
-			source: item.source ?? "",
-			highlight: item.attentions?.highlight ?? false
-        }))
-        .sort((a, b) => b.releaseDate - a.releaseDate); // newest first
-		
-	console.log(datatest);
-	
     return data
         .map(item => ({
             title: item.title ?? "",
@@ -76,26 +61,49 @@ function renderListView(root, data) {
     let page = 1;
 
     // REFRESH LIST
-    function refreshList(append = false) {
-        const start = (page - 1) * LISTVIEW_PAGE_SIZE;
-        const end = page * LISTVIEW_PAGE_SIZE;
-        const items = filtered.slice(start, end);
-        const html = items.map(renderListItem).join("");
+function refreshList(append = false) {
+    const start = (page - 1) * LISTVIEW_PAGE_SIZE;
+    const end = page * LISTVIEW_PAGE_SIZE;
+    const items = filtered.slice(start, end);
+    const html = items.map(renderListItem).join("");
 
-        if (append) {
-            listEl.insertAdjacentHTML("beforeend", html);
-        } else {
-            listEl.innerHTML = html;
-            listEl.scrollTop = 0; // reset bij search
-        }
+    if (filtered.length === 0) {
+        listEl.innerHTML = `
+            <div class='emptyRecordTemplate' style="text-align: center;">
+                <img src="emptyRecordTemplate.svg" class="e-emptyRecord" alt="No record" style="height: 88.2%; max-height: 360px">
+                <br>
+                <div class="no-results" style="padding:16px">
+                    No results found for "${searchEl.value}"
+                    <p>Probeer een andere zoekopdracht</p>
+                </div>
+            </div>
+        `;
+    } else if (append) {
+        listEl.insertAdjacentHTML("beforeend", html);
+    } else {
+        listEl.innerHTML = html;
+        listEl.scrollTop = 0; // reset bij search
     }
+
+    // ============================
+    // CLICK HANDLER VOOR POPUP
+    // ============================
+    // selecteer alle items die net gerenderd zijn
+    const itemDivs = listEl.querySelectorAll(".todo-item");
+    itemDivs.forEach((div, index) => {
+        div.onclick = () => {
+            const item = items[index]; // pak het item dat hoort bij deze div
+            showPopup(item.category, item.description);
+        };
+    });
+}
+
 
     // SEARCH
     searchEl.addEventListener("input", () => {
         const q = searchEl.value.toLowerCase().trim();
 
         filtered = data.filter(x =>
-            (x.title ?? "").toLowerCase().includes(q) ||
             (x.description ?? "").toLowerCase().includes(q) ||
             (x.category ?? "").toLowerCase().includes(q) ||
             (x.subcategory ?? "").toLowerCase().includes(q)
@@ -146,35 +154,5 @@ function renderListItem(item) {
                 </div>
             </div>
         </div>
-    `;
-}
-
-// ========================================================
-// LABEL + BADGE HELPERS
-// ========================================================
-function renderLabel(value) {
-    return `
-        <span style="
-            background:#f2f2f2;
-            padding:4px 8px;
-            border-radius:6px;
-            font-size:12px;
-        ">
-            ${value}
-        </span>
-    `;
-}
-
-function renderBadge(text, color = "#444") {
-    if (!text) return "";
-    return `
-        <span style="
-            background:${color}15;
-            color:${color};
-            padding:4px 10px;
-            border-radius:6px;
-            font-size:12px;
-            font-weight:600;
-        ">${text}</span>
     `;
 }
