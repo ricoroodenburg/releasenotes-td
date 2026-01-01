@@ -12,13 +12,11 @@ async function initCalendar() {
         Description: item.descriptionHtml,
 		ProjectId: item.attentions?.highlight ? 1 : 0,
     }));
-	
-	console.log(calendarData);
 
     // --- 2. Scheduler aanmaken ---
     const schedule = new ej.schedule.Schedule({
-        height: "100%",
-        width: "100%",
+        //height: "100%",
+        //width: "100%",
         selectedDate: new Date(),       // focus op vandaag
         currentView: "Month",
 		views: ['Month'],
@@ -68,7 +66,6 @@ async function initCalendar() {
 
     schedule.appendTo("#calendar");
 }
-
 
 // Globaal init trigger
 initCalendar();

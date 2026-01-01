@@ -1,0 +1,180 @@
+// ========================================================
+// CONFIG
+// ========================================================
+const LISTVIEW_PAGE_SIZE = 20;
+
+// ========================================================
+// INIT (async)
+// ========================================================
+window.addEventListener("load", async () => {
+    const root = document.querySelector("#listview");
+
+    const raw = await loadData();
+    const processed = prepareData(raw);
+    renderListView(root, processed);
+});
+
+// ========================================================
+// DATA PREPARATION
+// ========================================================
+function prepareData(data) {
+    if (!Array.isArray(data)) return [];
+	const datatest = data
+        .map(item => ({
+            title: item.title ?? "",
+            description: item.description ?? "",
+            release: item.release ?? "",
+            releaseDate: new Date(item.releaseDate ?? 0),
+            category: item.category ?? "",
+            subcategory: item.subcategory ?? "",
+			source: item.source ?? "",
+			highlight: item.attentions?.highlight ?? false
+        }))
+        .sort((a, b) => b.releaseDate - a.releaseDate); // newest first
+		
+	console.log(datatest);
+	
+    return data
+        .map(item => ({
+            title: item.title ?? "",
+            description: item.description ?? "",
+            release: item.release ?? "",
+            releaseDate: new Date(item.releaseDate ?? 0),
+            category: item.category ?? "",
+            subcategory: item.subcategory ?? "",
+			source: item.source ?? "",
+			highlight: item.attentions?.highlight ?? false
+        }))
+        .sort((a, b) => b.releaseDate - a.releaseDate); // newest first
+}
+
+function trimText(text, max) {
+    return text.length > max ? text.substring(0, max) : text;
+}
+
+function formatDate(date) {
+    if (!(date instanceof Date) || isNaN(date)) return "-";
+    return date.toLocaleDateString();
+}
+
+// ========================================================
+// RENDER ROOT + CONTROLS
+// ========================================================
+function renderListView(root, data) {
+    root.innerHTML = `
+        
+			<div class "task-list-option">
+				<input id="lv-search" class="textbox" placeholder="Search…" />
+				<div id="lv-list" class="task-list-option" style="overflow-y:auto; max-height:600px;"></div>
+			</div>
+    `;
+
+    const listEl = root.querySelector("#lv-list");
+    const searchEl = root.querySelector("#lv-search");
+
+    let filtered = data;
+    let page = 1;
+
+    // REFRESH LIST
+    function refreshList(append = false) {
+        const start = (page - 1) * LISTVIEW_PAGE_SIZE;
+        const end = page * LISTVIEW_PAGE_SIZE;
+        const items = filtered.slice(start, end);
+        const html = items.map(renderListItem).join("");
+
+        if (append) {
+            listEl.insertAdjacentHTML("beforeend", html);
+        } else {
+            listEl.innerHTML = html;
+            listEl.scrollTop = 0; // reset bij search
+        }
+    }
+
+    // SEARCH
+    searchEl.addEventListener("input", () => {
+        const q = searchEl.value.toLowerCase().trim();
+
+        filtered = data.filter(x =>
+            (x.title ?? "").toLowerCase().includes(q) ||
+            (x.description ?? "").toLowerCase().includes(q) ||
+            (x.category ?? "").toLowerCase().includes(q) ||
+            (x.subcategory ?? "").toLowerCase().includes(q)
+        );
+
+        page = 1;
+        refreshList(false);
+    });
+
+    // VIRTUAL SCROLL
+    listEl.addEventListener("scroll", () => {
+        const atBottom =
+            listEl.scrollTop + listEl.clientHeight >= listEl.scrollHeight - 20;
+
+        if (atBottom) {
+            if (page * LISTVIEW_PAGE_SIZE < filtered.length) {
+                page++;
+                refreshList(true); // append next page
+            }
+        }
+    });
+
+    // INITIAL RENDER
+    refreshList(false);
+}
+
+// ========================================================
+// ITEM RENDERING (jouw HTML-opmaak 1:1)
+// ========================================================
+function renderListItem(item) {
+    const desc = item.description ?? "";
+
+    return `
+        <div class="task-list-option">
+            <div class="todo-item ${item.highlight ? 'highlight' : ''}">
+                <div class="left-column">
+                    <div class="brief-description">
+						<h4> 
+							${item.category} ${item.subcategory ? `<span class="status-badge secondary" style="margin-right:5px">${item.subcategory}</span>` : ''} 
+							<span class="status-badge secondary" style="margin-right:5px">${item.release}</span> 
+							<span class="status-badge secondary" style="margin-right:5px">${formatDate(item.releaseDate)}</span> 
+							${item.source === "production" ? `<span class="status-badge secondary" style="margin-right:5px">Feature</span>` : item.source === "api" ? `<span class="status-badge secondary" style="margin-right:5px">API</span>` : '' }
+						</h4>
+                    </div>
+                    <div class="task-tag">
+                        ${desc}${desc.length >= 200 ? "..." : ""}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// ========================================================
+// LABEL + BADGE HELPERS
+// ========================================================
+function renderLabel(value) {
+    return `
+        <span style="
+            background:#f2f2f2;
+            padding:4px 8px;
+            border-radius:6px;
+            font-size:12px;
+        ">
+            ${value}
+        </span>
+    `;
+}
+
+function renderBadge(text, color = "#444") {
+    if (!text) return "";
+    return `
+        <span style="
+            background:${color}15;
+            color:${color};
+            padding:4px 10px;
+            border-radius:6px;
+            font-size:12px;
+            font-weight:600;
+        ">${text}</span>
+    `;
+}
