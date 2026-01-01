@@ -1401,7 +1401,7 @@ line-height: var(--ds-text-tag-line-height);
 
 /* Listview */
 .task-list-option {
-    padding: 0;
+	padding: 0px;
     border-bottom: 1px solid var(--ds-color-border-muted);
     border-bottom-right-radius: 0;
 }
@@ -1437,6 +1437,8 @@ line-height: var(--ds-text-tag-line-height);
     gap: var(--ds-spacer-2x);
     align-items: stretch;
     min-height: 70px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 /* Linker kolom */
@@ -1482,7 +1484,7 @@ line-height: var(--ds-text-tag-line-height);
     .todo-item {
         grid-template-columns: 1fr; /* alles 1 kolom */
         grid-template-rows: auto auto; /* linker boven, rechter onder (of andersom) */
-		min-height: 100px;
+		min-height: 150px;
     }
 
     .left-column {
@@ -1499,7 +1501,7 @@ line-height: var(--ds-text-tag-line-height);
     }
 
     .task-tag {
-        -webkit-line-clamp: 2; /* description mag meerdere regels nemen */
+        -webkit-line-clamp: 4; /* description mag meerdere regels nemen */
     }
 }
 
@@ -1611,7 +1613,7 @@ line-height: var(--ds-text-tag-line-height);
 
 	/* voeg icon toe */
 	.more-btn.invoker__icon {
-		color: var(--ds-color-field-icon-fg, var(--ds-color-fg-muted, rgb(87, 87, 87))) !important;
+		color: var(--ds-color-field-icon-fg, var(--ds-color-fg-muted)) !important;
 		display: inline-block;
 		flex-shrink: 0;
 		width: calc(var(--ds-spacer-1x-em, 0.25em) * 3);
