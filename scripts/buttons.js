@@ -78,11 +78,13 @@ function updateToolbar() {
 
 function updateToolbar() {
 	if (window.innerWidth <= 600) {
+		/*
 		moreBtn.items = [
 			{ text: "Button 1", id: "btn3", onClick: () => alert("Button 1 clicked") },
 			{ text: "Button 2", id: "btn4", onClick: () => alert("Button 2 clicked") },
 			...defaultMoreItems
 		];
+		*/
 		moreBtn.content = null;
 	} else {
 		moreBtn.items = defaultMoreItems;
