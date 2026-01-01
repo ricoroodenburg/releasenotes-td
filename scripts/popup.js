@@ -2,7 +2,7 @@
 // POPUP FUNCTION
 // ========================================================
 function showPopup(title = "", content = "") {
-    // check of popup al bestaat
+    // Check if popup already exists
     let popup = document.querySelector("#popup");
     if (!popup) {
         popup = document.createElement("div");
@@ -25,35 +25,45 @@ function showPopup(title = "", content = "") {
             </div>
         `;
         document.body.appendChild(popup);
-
-        // Event listeners
-		// zorg dat de close “×” altijd event listener heeft
-		const closeX = popup.querySelector(".popup-close");
-		if (closeX && !closeX.dataset.bound) {
-			closeX.addEventListener("click", hidePopup);
-			closeX.dataset.bound = "true"; // markeer dat listener is toegevoegd
-		}
-
-		// footer button
-		// sluitknop in footer
-		const closeBtn = popup.querySelector("button.button.primary");
-		if (closeBtn && !closeBtn.dataset.bound) {
-			closeBtn.addEventListener("click", hidePopup);
-			closeBtn.dataset.bound = "true"; // markeer dat listener is toegevoegd
-		}
-
         injectPopupStyles();
     }
 
-    // zet content
-	// zet title
-	popup.querySelector(".popup-title").textContent = title;
-
-	// optie: content
-	popup.querySelector(".popup-content").innerHTML = content;
+    // Fill Content
+    popup.querySelector(".popup-title").textContent = title;
+    popup.querySelector(".popup-content").innerHTML = content;
 	
-    // toon popup
+    // X button
+    const closeX = popup.querySelector(".popup-close");
+    if (closeX && !closeX.dataset.bound) {
+        closeX.addEventListener("click", hidePopup);
+        closeX.dataset.bound = "true";
+    }
+
+    // Footer button
+    const closeBtn = popup.querySelector("button.button.primary");
+    if (closeBtn && !closeBtn.dataset.bound) {
+        closeBtn.addEventListener("click", hidePopup);
+        closeBtn.dataset.bound = "true";
+    }
+
+    // Overlay click
+    const overlay = popup.querySelector(".popup-overlay");
+    if (overlay && !overlay.dataset.bound) {
+        overlay.addEventListener("click", hidePopup);
+        overlay.dataset.bound = "true";
+    }
+
+    // ESC key
+    if (!popup.dataset.escBound) {
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") hidePopup();
+        });
+        popup.dataset.escBound = "true";
+    }
+
+    // Show popup
     popup.style.display = "flex";
+
 }
 
 // ========================================================
