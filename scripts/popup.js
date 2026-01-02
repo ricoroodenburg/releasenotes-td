@@ -1,8 +1,4 @@
-// ========================================================
-// POPUP FUNCTION
-// ========================================================
 function showPopup(title = "", content = "") {
-    // Check if popup already exists
     let popup = document.querySelector("#popup");
     if (!popup) {
         popup = document.createElement("div");
@@ -31,7 +27,7 @@ function showPopup(title = "", content = "") {
     // Fill Content
     popup.querySelector(".popup-title").textContent = title;
     popup.querySelector(".popup-content").innerHTML = content;
-	
+
     // X button
     const closeX = popup.querySelector(".popup-close");
     if (closeX && !closeX.dataset.bound) {
@@ -66,9 +62,6 @@ function showPopup(title = "", content = "") {
 
 }
 
-// ========================================================
-// HIDE POPUP
-// ========================================================
 function hidePopup() {
     const popup = document.querySelector("#popup");
     if (popup) {
@@ -76,9 +69,6 @@ function hidePopup() {
     }
 }
 
-// ========================================================
-// CSS INJECTION
-// ========================================================
 function injectPopupStyles() {
     if (document.querySelector("#popup-styles")) return;
 

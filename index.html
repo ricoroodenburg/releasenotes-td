@@ -4,16 +4,10 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>TOPdesk Release Notes</title>
-		
-		<!-- Syncfusion CSS -->
 		<link href="https://cdn.syncfusion.com/ej2/32.1.19/fluent2.css" rel="stylesheet">
-		
-		<!-- Font -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-
-		<!-- Stylesheet -->
 		<link href="./styles/app.css" rel="stylesheet">
 	</head>
 	<body>
@@ -50,73 +44,66 @@
 		</div>
 		<div data-v-72cbc74f="" class="content">
 			<script id="captiontemplate" type="text/x-template">
-				${template(data)}
-			</script>
+					${template(data)}
+				</script>
 			<div id="dialog"></div>
 			<!-- <div id="kanban" style="height:600px;"></div> -->
 			<div class="content-desktop">
-				<div id="grid"></div> 
-				<div id="calendar"></div> 
+				<div id="grid"></div>
+				<div id="calendar"></div>
 			</div>
 			<div class="content-mobile">
 				<div id="listview"></div>
 			</div>
 		</div>
 
-	<!--
-	<div class="footer">
-	  &copy; 2025 IT Services / TOPdesk Release Viewer
-	</div>
-	-->
+		<!--
+		<div class="footer">
+		&copy; 2025 IT Services / TOPdesk Release Viewer
+		</div>
+		-->
 
-	<!-- Syncfusion UMD bundle -->
-	<script src="https://cdn.syncfusion.com/ej2/32.1.19/dist/ej2.min.js"></script>
-	<script>ej.base.registerLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXVVRmBeWUB0VkFWYEs=");</script>
+		<script src="https://cdn.syncfusion.com/ej2/32.1.19/dist/ej2.min.js"></script>
+		<script>ej.base.registerLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXVVRmBeWUB0VkFWYEs=");</script>
+		<script src="./scripts/i18n.js"></script>
+		<script src="./scripts/dialog.js"></script>
+		<script src="./scripts/buttons.js"></script>
+		<script src="./scripts/topdesk-release-notes.js"></script>
+		<script src="./scripts/grid.js"></script>
+		<script src="./scripts/calendar.js"></script>
+		<script src="./scripts/listview.js"></script>
+		<script src="./scripts/popup.js"></script>
+		<!-- <script src="./scripts/kanban.js"></script> -->
+		<script>
 
-	<!-- Load custom scripts -->
-	<script src="./scripts/i18n.js"></script>
-	<script src="./scripts/dialog.js"></script>
-	<script src="./scripts/buttons.js"></script>
-	<script src="./scripts/topdesk-release-notes.js"></script>
-	<script src="./scripts/grid.js"></script>
-	<script src="./scripts/calendar.js"></script>
-	<script src="./scripts/listview.js"></script>
-	<script src="./scripts/popup.js"></script>
-	<!-- <script src="./scripts/kanban.js"></script> -->
-<script>
+			document.addEventListener("DOMContentLoaded", function () {
 
-document.addEventListener("DOMContentLoaded", function () {
+				const btnGrid = document.getElementById("btn1");
+				const btnCal = document.getElementById("btn2");
 
-    const btnGrid = document.getElementById("btn1");
-    const btnCal = document.getElementById("btn2");
+				const divGrid = document.getElementById("grid");
+				const divCal = document.getElementById("calendar");
 
-    const divGrid = document.getElementById("grid");
-    const divCal = document.getElementById("calendar");
+				divGrid.classList.add("view-active");
+				btnGrid.classList.add("selected");
 
-    // Default state
-    divGrid.classList.add("view-active");
-    btnGrid.classList.add("selected");
-	
-    btnGrid.addEventListener("click", function () {
-        divGrid.classList.add("view-active");
-        divCal.classList.remove("view-active");
+				btnGrid.addEventListener("click", function () {
+					divGrid.classList.add("view-active");
+					divCal.classList.remove("view-active");
 
-        btnGrid.classList.add("selected");
-        btnCal.classList.remove("selected");
-    });
+					btnGrid.classList.add("selected");
+					btnCal.classList.remove("selected");
+				});
 
-    btnCal.addEventListener("click", function () {
-        divCal.classList.add("view-active");
-        divGrid.classList.remove("view-active");
+				btnCal.addEventListener("click", function () {
+					divCal.classList.add("view-active");
+					divGrid.classList.remove("view-active");
 
-        btnCal.classList.add("selected");
-        btnGrid.classList.remove("selected");
-    });
+					btnCal.classList.add("selected");
+					btnGrid.classList.remove("selected");
+				});
 
-});
-
-
-</script>
-
+			});
+		</script>
 	</body>
 </html>

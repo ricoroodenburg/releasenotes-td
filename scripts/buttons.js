@@ -12,7 +12,6 @@ window.i18nReady.then(() => {
 		{ text: t('terms.about'), id: "openDialogBtn", iconCss: 'e-icons e-circle-info' }
 	];
 
-	// SplitButton aanmaken
 	const moreBtn = new ej.splitbuttons.DropDownButton({
 		items: defaultMoreItems,
 		content: t('terms.more'),
@@ -22,7 +21,7 @@ window.i18nReady.then(() => {
 				a.setAttribute('target', '_blank');
 			}
 		},
-		select: function(args) {
+		select: function (args) {
 			if (args.item.id === "openDialogBtn") {
 				if (window.dialog) {
 					window.dialog.show();
@@ -35,23 +34,15 @@ window.i18nReady.then(() => {
 
 	function updateToolbar() {
 		if (window.innerWidth <= 600) {
-			/*
-			moreBtn.items = [
-				{ text: "Button 1", id: "btn3", onClick: () => alert("Button 1 clicked") },
-				{ text: "Button 2", id: "btn4", onClick: () => alert("Button 2 clicked") },
-				...defaultMoreItems
-			];
-			*/
 			moreBtn.content = null;
 		} else {
 			moreBtn.items = defaultMoreItems;
-			moreBtn.content =  t('terms.more');
+			moreBtn.content = t('terms.more');
 		}
 		moreBtn.dataBind();
 	}
 
-	// Init en bind resize
 	window.addEventListener("resize", updateToolbar);
-	updateToolbar(); // initial call
+	updateToolbar();
 
 });

@@ -1,11 +1,5 @@
-// ========================================================
-// CONFIG
-// ========================================================
 const LISTVIEW_PAGE_SIZE = 20;
 
-// ========================================================
-// INIT (async)
-// ========================================================
 window.addEventListener("load", async () => {
     const root = document.querySelector("#listview");
     const raw = await loadData();
@@ -13,24 +7,21 @@ window.addEventListener("load", async () => {
     renderListView(root, processed);
 });
 
-// ========================================================
-// DATA PREPARATION
-// ========================================================
 function prepareData(data) {
     if (!Array.isArray(data)) return [];
     return data
         .map(item => ({
             title: item.title ?? "",
             description: item.description ?? "",
-			descriptionHtml: item.descriptionHtml ?? "",
+            descriptionHtml: item.descriptionHtml ?? "",
             release: item.release ?? "",
             releaseDate: new Date(item.releaseDate ?? 0),
             category: item.category ?? "",
             subcategory: item.subcategory ?? "",
-			source: item.source ?? "",
-			highlight: item.attentions?.highlight ?? false
+            source: item.source ?? "",
+            highlight: item.attentions?.highlight ?? false
         }))
-        .sort((a, b) => b.releaseDate - a.releaseDate); // newest first
+        .sort((a, b) => b.releaseDate - a.releaseDate);
 }
 
 function trimText(text, max) {
@@ -42,9 +33,6 @@ function formatDate(date) {
     return date.toLocaleDateString();
 }
 
-// ========================================================
-// RENDER ROOT + CONTROLS
-// ========================================================
 function renderListView(root, data) {
     root.innerHTML = `
         
@@ -60,15 +48,14 @@ function renderListView(root, data) {
     let filtered = data;
     let page = 1;
 
-    // REFRESH LIST
-function refreshList(append = false) {
-const start = (page - 1) * LISTVIEW_PAGE_SIZE;
-const end = page * LISTVIEW_PAGE_SIZE;
-const items = filtered.slice(start, end);
-const html = items.map((item, i) => renderListItem(item, start + i)).join("");
+    function refreshList(append = false) {
+        const start = (page - 1) * LISTVIEW_PAGE_SIZE;
+        const end = page * LISTVIEW_PAGE_SIZE;
+        const items = filtered.slice(start, end);
+        const html = items.map((item, i) => renderListItem(item, start + i)).join("");
 
-    if (filtered.length === 0) {
-        listEl.innerHTML = `
+        if (filtered.length === 0) {
+            listEl.innerHTML = `
             <div class='emptyRecordTemplate' style="text-align: center;">
                 <img src="emptyRecordTemplate.svg" class="e-emptyRecord" alt="No record" style="height: 88.2%; max-height: 360px">
                 <br>
@@ -78,32 +65,25 @@ const html = items.map((item, i) => renderListItem(item, start + i)).join("");
                 </div>
             </div>
         `;
-    } else if (append) {
-        listEl.insertAdjacentHTML("beforeend", html);
-    } else {
-        listEl.innerHTML = html;
-        listEl.scrollTop = 0; // reset bij search
+        } else if (append) {
+            listEl.insertAdjacentHTML("beforeend", html);
+        } else {
+            listEl.innerHTML = html;
+            listEl.scrollTop = 0;
+        }
+
+        const newItems = listEl.querySelectorAll(".todo-item:not([data-popup-bound])");
+        newItems.forEach(div => {
+            div.dataset.popupBound = "true";
+            div.onclick = () => {
+                const idx = parseInt(div.dataset.index, 10);
+                const item = filtered[idx];
+                showPopup(item?.category ?? "", item?.descriptionHtml ?? "");
+            };
+        });
+
     }
 
-    // ============================
-    // CLICK HANDLER VOOR POPUP
-    // ============================
-    // selecteer alle items die net gerenderd zijn
-	// alleen nieuw toegevoegde items
-	const newItems = listEl.querySelectorAll(".todo-item:not([data-popup-bound])");
-	newItems.forEach(div => {
-		div.dataset.popupBound = "true";
-		div.onclick = () => {
-			const idx = parseInt(div.dataset.index, 10);
-			const item = filtered[idx];
-			showPopup(item?.category ?? "", item?.descriptionHtml ?? "");
-		};
-	});
-
-}
-
-
-    // SEARCH
     searchEl.addEventListener("input", () => {
         const q = searchEl.value.toLowerCase().trim();
 
@@ -117,7 +97,6 @@ const html = items.map((item, i) => renderListItem(item, start + i)).join("");
         refreshList(false);
     });
 
-    // VIRTUAL SCROLL
     listEl.addEventListener("scroll", () => {
         const atBottom =
             listEl.scrollTop + listEl.clientHeight >= listEl.scrollHeight - 20;
@@ -125,18 +104,14 @@ const html = items.map((item, i) => renderListItem(item, start + i)).join("");
         if (atBottom) {
             if (page * LISTVIEW_PAGE_SIZE < filtered.length) {
                 page++;
-                refreshList(true); // append next page
+                refreshList(true);
             }
         }
     });
 
-    // INITIAL RENDER
     refreshList(false);
 }
 
-// ========================================================
-// ITEM RENDERING (jouw HTML-opmaak 1:1)
-// ========================================================
 function renderListItem(item, globalIndex) {
     const desc = item.description ?? "";
 
@@ -147,7 +122,7 @@ function renderListItem(item, globalIndex) {
                     <div class="brief-description">
 						<h4> 
 							${item.category} ${item.subcategory ? `<span class="status-badge secondary" style="margin-right:5px">${item.subcategory}</span>` : ''} 
-							${item.source === "production" ? `<span class="status-badge secondary" style="margin-right:5px">Feature</span>` : item.source === "api" ? `<span class="status-badge secondary" style="margin-right:5px">API</span>` : '' }
+							${item.source === "production" ? `<span class="status-badge secondary" style="margin-right:5px">Feature</span>` : item.source === "api" ? `<span class="status-badge secondary" style="margin-right:5px">API</span>` : ''}
 						</h4>
                     </div>
                     <div class="task-tag">

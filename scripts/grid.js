@@ -8,22 +8,21 @@ async function initGrid() {
             { text: t('terms.collapseAll'), align: 'Right', tooltipText: t('tooltips.collapseAll'), prefixIcon: 'e-chevron-up', id: 'collapseall' }
         ];
 
-        const filterSettings = { 
-            type: 'Excel' 
+        const filterSettings = {
+            type: 'Excel'
         };
 
-        // Grid aanmaken en globaal beschikbaar maken
         window.grid = new ej.grids.Grid({
             dataSource: data,
             enablePersistence: true,
             enableAdaptiveUI: true,
             adaptiveUIMode: 'Mobile',
             height: '100%',
-            created: function() {
+            created: function () {
                 setTimeout(() => {
                     const searchBar = document.getElementById(grid.element.id + "_searchbar");
                     if (searchBar) {
-                        searchBar.addEventListener('keyup', function(event) {
+                        searchBar.addEventListener('keyup', function (event) {
                             grid.search(event.target.value);
                         });
                     }
@@ -43,7 +42,7 @@ async function initGrid() {
             groupSettings: { columns: ['releaseDate'], showDropArea: false, captionTemplate: '#captiontemplate' },
             allowResizing: true,
             allowReordering: true,
-			emptyRecordTemplate: `
+            emptyRecordTemplate: `
                 <div class='no-results' style="text-align: center;">
                     <img src="emptyRecordTemplate.svg" class="e-emptyRecord" alt="No record" style="height: 88.2%; max-height: 360px">
                     <br>
@@ -53,25 +52,29 @@ async function initGrid() {
             `,
             columns: [
                 { field: "release", headerText: t('terms.release'), width: 100 },
-                { field: "releaseDate", headerText: t('terms.releaseDate'), width: 140, type:'date', format:'yyyy-MM-dd' },
+                { field: "releaseDate", headerText: t('terms.releaseDate'), width: 140, type: 'date', format: 'yyyy-MM-dd' },
                 { field: "descriptionHtml", headerText: t('terms.description'), width: 350, template: d => `<div style="white-space:normal;">${d.descriptionHtml}</div>`, allowGrouping: false },
-                { field: "category", headerText: t('terms.category'), width:150 },
-                { field: "subcategory", headerText: t('terms.subcategory'), width:150 },
-                { headerText: t('terms.source'), width:100, template: d => {
-                    if(d.source==="production") return `<span class="status-badge success">${t('terms.feature')}</span>`;
-                    if(d.source==="api") return `<span class="status-badge primary">${t('terms.api')}</span>`;
-                    return "";
-                }},
-                { headerText:"Hosting", width:150, template: d => {
-                    let html="";
-                    if(d.hosting?.saas) html+= `<span class="status-badge success" style="margin-right:5px">SAAS</span>`;
-                    if(d.hosting?.onpremisesvirtualappliance) html+= `<span class="status-badge danger">Virtual Appliance</span>`;
-                    return html;
-                }},
-                { field:"isTosNote", headerText:"TOS", width:80, template: d => d.isTosNote ? `<span class="status-badge success">${t('terms.true')}</span>` : `<span class="status-badge danger">${t('terms.false')}</span>`, visible:false }
+                { field: "category", headerText: t('terms.category'), width: 150 },
+                { field: "subcategory", headerText: t('terms.subcategory'), width: 150 },
+                {
+                    headerText: t('terms.source'), width: 100, template: d => {
+                        if (d.source === "production") return `<span class="status-badge success">${t('terms.feature')}</span>`;
+                        if (d.source === "api") return `<span class="status-badge primary">${t('terms.api')}</span>`;
+                        return "";
+                    }
+                },
+                {
+                    headerText: "Hosting", width: 150, template: d => {
+                        let html = "";
+                        if (d.hosting?.saas) html += `<span class="status-badge success" style="margin-right:5px">SAAS</span>`;
+                        if (d.hosting?.onpremisesvirtualappliance) html += `<span class="status-badge danger">Virtual Appliance</span>`;
+                        return html;
+                    }
+                },
+                { field: "isTosNote", headerText: "TOS", width: 80, template: d => d.isTosNote ? `<span class="status-badge success">${t('terms.true')}</span>` : `<span class="status-badge danger">${t('terms.false')}</span>`, visible: false }
             ],
-            rowDataBound: function(args) {
-                if(args.data.attentions?.highlight) args.row.classList.add('highlight-row');
+            rowDataBound: function (args) {
+                if (args.data.attentions?.highlight) args.row.classList.add('highlight-row');
             }
         });
 
@@ -83,35 +86,34 @@ async function initGrid() {
 }
 
 function clickHandler(args) {
-	switch (args.item.id){
-	
-		case 'expandall':
-			console.debug(`${args.item.id} invoked`);
-			grid.groupModule.expandAll();
-			break;
+    switch (args.item.id) {
 
-		case 'collapseall':
-			console.debug(`${args.item.id} invoked`);
-			grid.groupModule.collapseAll();
-			break;
-			
-		default:
-			console.info(`No action found for ${args.item.id}`);
-			
-	};
-	
+        case 'expandall':
+            console.debug(`${args.item.id} invoked`);
+            grid.groupModule.expandAll();
+            break;
+
+        case 'collapseall':
+            console.debug(`${args.item.id} invoked`);
+            grid.groupModule.collapseAll();
+            break;
+
+        default:
+            console.info(`No action found for ${args.item.id}`);
+
+    };
+
 }
 
-function template(args) { 
-	const date = args.key;
-	if (!(date instanceof Date)) return `${args.headerText}: ${args.key}`;
+function template(args) {
+    const date = args.key;
+    if (!(date instanceof Date)) return `${args.headerText}: ${args.key}`;
 
-	const day   = String(date.getDate()).padStart(2, '0');
-	const month = String(date.getMonth() + 1).padStart(2, '0');
-	const year  = date.getFullYear();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
 
-	return `${args.headerText}: ${day}-${month}-${year}`;
+    return `${args.headerText}: ${day}-${month}-${year}`;
 }
 
-// Globaal init trigger
 initGrid();
