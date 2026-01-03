@@ -126,7 +126,7 @@ function renderListItem(item, globalIndex) {
 						</h4>
                     </div>
                     <div class="task-tag">
-                        ${desc}${desc.length >= 200 ? "..." : ""}
+                        ${desc.replace(/<[^>]*>/g, '')}${desc.length >= 200 ? "..." : ""}
 					</div>
 					<div class="release-info" style="margin-top: 4px;">
 						<i>${t('messages.releasedOn')} ${formatDate(item.releaseDate)} ${t('messages.inVersion')} ${item.release}</i>

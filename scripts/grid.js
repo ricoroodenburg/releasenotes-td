@@ -1,5 +1,6 @@
 async function initGrid() {
     try {
+
         const data = await loadData();
 
         const toolbarOptions = [
@@ -18,6 +19,7 @@ async function initGrid() {
             enableAdaptiveUI: true,
             adaptiveUIMode: 'Mobile',
             height: '100%',
+            locale: 'nl-NL',
             created: function () {
                 setTimeout(() => {
                     const searchBar = document.getElementById(grid.element.id + "_searchbar");
@@ -64,10 +66,17 @@ async function initGrid() {
                     }
                 },
                 {
-                    headerText: "Hosting", width: 150, template: d => {
+                    field: "hostingType", headerText: "Hosting", width: 100, template: d => {
                         let html = "";
-                        if (d.hosting?.saas) html += `<span class="status-badge success" style="margin-right:5px">SAAS</span>`;
-                        if (d.hosting?.onpremisesvirtualappliance) html += `<span class="status-badge danger">Virtual Appliance</span>`;
+                        if (d.hosting?.saas)
+                            html += `<span class="status-badge success" style="margin-right:5px">SAAS</span>`;
+
+                        if (d.hosting?.["on-premises virtual appliance"])
+                            html += `<span class="status-badge primary" style="margin-right:5px">Virtual Appliance</span>`;
+
+                        if (d.hosting?.["on-premises classic"])
+                            html += `<span class="status-badge danger">Classic</span>`;
+
                         return html;
                     }
                 },
