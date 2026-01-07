@@ -19,7 +19,6 @@ async function initGrid() {
             enableAdaptiveUI: true,
             adaptiveUIMode: 'Mobile',
             height: '100%',
-            locale: 'nl-NL',
             created: function () {
                 setTimeout(() => {
                     const searchBar = document.getElementById(grid.element.id + "_searchbar");
