@@ -1,109 +1,111 @@
 <!DOCTYPE html>
 <html lang="nl">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>TOPdesk Release Notes</title>
-		<link href="https://cdn.syncfusion.com/ej2/32.1.19/fluent2.css" rel="stylesheet">
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-		<link href="./styles/app.css" rel="stylesheet">
-	</head>
-	<body>
-		<div class="header">
-			<div class="header__container">
-				<div class="header__navigation">
-					<slot name="navigation"></slot>
-					<div class="header__text">
-						<slot name="header">
-							<h1 class="header__text-title">
-								<span data-i18n="header.title"></span>
-								<span class="status-badge primary">2601.01.06</span>
-							</h1>
-						</slot>
-						<p class="header__text-body" data-i18n="header.description"></p>
-					</div>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TOPdesk Release Notes</title>
+	<link href="https://cdn.syncfusion.com/ej2/32.1.19/fluent2.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+	<link href="./styles/app.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="header">
+		<div class="header__container">
+			<div class="header__navigation">
+				<slot name="navigation"></slot>
+				<div class="header__text">
+					<slot name="header">
+						<h1 class="header__text-title">
+							<span data-i18n="header.title"></span>
+							<span class="status-badge primary">2601.01.07</span>
+						</h1>
+					</slot>
+					<p class="header__text-body" data-i18n="header.description"></p>
 				</div>
-				<div class="header__actions">
-					<div id="buttonToolbar">
-						<button class="button" id="btn1">
-							<span class="button-content">
-								<span class="svg-button-grid"></span>
-							</span>
-						</button>
-						<button class="button" id="btn2">
-							<span class="button-content">
-								<span class="svg-button-calender"></span>
-							</span>
-						</button>
-						<button class="button more-btn invoker__icon" id="moreBtn"></button>
-					</div>
+			</div>
+			<div class="header__actions">
+				<div id="buttonToolbar">
+					<button class="button" id="btn1">
+						<span class="button-content">
+							<span class="svg-button-grid"></span>
+						</span>
+					</button>
+					<button class="button" id="btn2">
+						<span class="button-content">
+							<span class="svg-button-calender"></span>
+						</span>
+					</button>
+					<button class="button more-btn invoker__icon" id="moreBtn"></button>
 				</div>
 			</div>
 		</div>
-		<div data-v-72cbc74f="" class="content">
-			<script id="captiontemplate" type="text/x-template">
+	</div>
+
+	<div data-v-72cbc74f="" class="content">
+		<script id="captiontemplate" type="text/x-template">
 					${template(data)}
 				</script>
-			<div id="dialog"></div>
-			<!-- <div id="kanban" style="height:600px;"></div> -->
-			<div class="content-desktop">
-				<div id="grid"></div>
-				<div id="calendar"></div>
-			</div>
-			<div class="content-mobile">
-				<div id="listview"></div>
-			</div>
+		<div id="dialog"></div>
+		<div class="content-desktop">
+			<div id="grid"></div>
+			<div id="calendar"></div>
 		</div>
+		<div class="content-mobile">
+			<div id="listview"></div>
+		</div>
+	</div>
 
-		<!--
+	<!--
 		<div class="footer">
 		&copy; 2025 IT Services / TOPdesk Release Viewer
 		</div>
 		-->
 
-		<script src="https://cdn.syncfusion.com/ej2/32.1.19/dist/ej2.min.js"></script>
-		<script>ej.base.registerLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXVVRmBeWUB0VkFWYEs=");</script>
-		<script src="./scripts/i18n.js"></script>
-		<script src="./scripts/dialog.js"></script>
-		<script src="./scripts/buttons.js"></script>
-		<script src="./scripts/topdesk-release-notes.js"></script>
-		<script src="./scripts/grid.js"></script>
-		<script src="./scripts/calendar.js"></script>
-		<script src="./scripts/listview.js"></script>
-		<script src="./scripts/popup.js"></script>
-		<!-- <script src="./scripts/kanban.js"></script> -->
-		<script>
+	<script src="https://cdn.syncfusion.com/ej2/32.1.19/dist/ej2.min.js"></script>
+	<script>ej.base.registerLicense("Ngo9BigBOggjHTQxAR8/V1JGaF5cXGpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWH1ceXVVRmBeWUB0VkFWYEs=");</script>
+	<script src="./scripts/i18n.js"></script>
+	<script src="./scripts/dialog.js"></script>
+	<script src="./scripts/buttons.js"></script>
+	<script src="./scripts/topdesk-release-notes.js"></script>
+	<script src="./scripts/grid.js"></script>
+	<script src="./scripts/calendar.js"></script>
+	<script src="./scripts/listview.js"></script>
+	<script src="./scripts/popup.js"></script>
+	<script>
 
-			document.addEventListener("DOMContentLoaded", function () {
+		document.addEventListener("DOMContentLoaded", function () {
 
-				const btnGrid = document.getElementById("btn1");
-				const btnCal = document.getElementById("btn2");
+			const btnGrid = document.getElementById("btn1");
+			const btnCal = document.getElementById("btn2");
 
-				const divGrid = document.getElementById("grid");
-				const divCal = document.getElementById("calendar");
+			const divGrid = document.getElementById("grid");
+			const divCal = document.getElementById("calendar");
 
+			divGrid.classList.add("view-active");
+			btnGrid.classList.add("selected");
+
+			btnGrid.addEventListener("click", function () {
 				divGrid.classList.add("view-active");
+				divCal.classList.remove("view-active");
+
 				btnGrid.classList.add("selected");
-
-				btnGrid.addEventListener("click", function () {
-					divGrid.classList.add("view-active");
-					divCal.classList.remove("view-active");
-
-					btnGrid.classList.add("selected");
-					btnCal.classList.remove("selected");
-				});
-
-				btnCal.addEventListener("click", function () {
-					divCal.classList.add("view-active");
-					divGrid.classList.remove("view-active");
-
-					btnCal.classList.add("selected");
-					btnGrid.classList.remove("selected");
-				});
-
+				btnCal.classList.remove("selected");
 			});
-		</script>
-	</body>
+
+			btnCal.addEventListener("click", function () {
+				divCal.classList.add("view-active");
+				divGrid.classList.remove("view-active");
+
+				btnCal.classList.add("selected");
+				btnGrid.classList.remove("selected");
+			});
+
+		});
+	</script>
+</body>
+
 </html>

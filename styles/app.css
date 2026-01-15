@@ -1247,16 +1247,32 @@ h4 {
 }
 
 /* Syncfusion Calendar */
+.e-schedule{
+  background: var(--ds-color-bg-default) !important;  
+}
+
+
 .e-schedule .e-month-view .e-work-cells {
   background: var(--ds-color-bg-subtle) !important;
 }
-
-.e-schedule .e-month-view .e-work-cells {
+.e-quick-popup-wrapper .e-event-popup .e-popup-header .e-subject-wrap .e-subject,
+.e-more-popup-wrapper {
+  background: var(--ds-color-bg-subtle) !important;
   color: var(--ds-color-fg-default) !important;
 }
 
 .e-schedule .e-month-view .e-date-header-wrap table td {
   background: var(--ds-color-bg-default) !important;
+  color: var(--ds-color-fg-default) !important;
+}
+
+.e-quick-popup-wrapper .e-event-popup .e-date-time-details,
+.e-quick-popup-wrapper .e-event-popup .e-date-time-icon,
+.e-more-popup-wrapper .e-header-date,
+.e-more-popup-wrapper .e-header-day,
+.e-schedule .e-month-view .e-work-cells,
+.e-schedule .e-month-view .e-more-indicator,
+.e-schedule .e-month-view .e-week-number-wrapper .e-week-number {
   color: var(--ds-color-fg-default) !important;
 }
 
@@ -1611,4 +1627,67 @@ h4 {
   .more-btn.invoker__icon {
     background-image: none;
   }
+}
+
+/* Sidebar: vaste breedte, scrollbar als nodig */
+.orientation-stepper-section {
+  width: 32vh;
+  border-right: 1px solid #dadada;
+  overflow-y: auto;
+  flex-shrink: 0;
+  padding: 24px;
+  box-sizing: border-box;
+  display: 'flex';
+  justify-content: 'space-between';
+  background-Color: var(--ds-color-bg-default);
+  border-bottom: '1px solid #dadada';
+}
+
+/* Zorgt dat stepper 100% hoogte inneemt binnen sidebar */
+.orientation-stepper-control {
+  height: 100%;
+}
+
+/* Content rechts naast sidebar, flex-grow en scroll */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 25px;
+  padding-right: 25px;
+  padding-left: 25px;
+  padding-bottom: 0px;
+  min-width: 0;
+  /* voorkomt horizontale scrollbar door flex */
+}
+
+.stepper-box {
+
+  position: relative;
+  /* 🔑 essentieel! */
+
+  margin: 25px;
+  /* ruimte buiten de rand */
+  border: var(--ds-spacer-border) solid var(--ds-color-border-muted);
+  border-radius: var(--_ds-input-border-radius, calc(var(--ds-spacer-1x) * 2));
+  padding: 16px;
+  box-sizing: border-box;
+  transition: width 0.3s ease;
+  /*overflow: hidden;*/
+  overflow: visible;
+}
+
+.stepper-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  padding-left: 0px;
+  color: var(--ds-color-fg-default);
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.orientation-stepper-section .orientation-stepper-control:has(.e-vertical) {
+  min-height: 100%;
+  max-height: 100%;
 }

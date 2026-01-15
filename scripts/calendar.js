@@ -14,9 +14,11 @@ async function initCalendar() {
 
     const schedule = new ej.schedule.Schedule({
         selectedDate: new Date(),
-        currentView: "Month",
-        views: [{ option: 'Month', showWeekNumber: true, readonly: true  }],
-        enablePersistence: true,
+        width: '100%',
+        height: '100%',
+        //currentView: "Month",
+        views: [{ option: 'Month', showWeekNumber: true, readonly: true }],
+        //enablePersistence: true,
         readonly: true,
         eventSettings: {
             dataSource: calendarData,
